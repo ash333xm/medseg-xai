@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=65.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "medseg-xai"
+version = "1.0.0"
+description = "Explainable, Trust-Audited Medical Image Segmentation Platform (MedSAM-2 Hiera-Large Backbone)"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "Apache-2.0"}
+authors = [
+    {name = "MedSeg-XAI Engineering Team", email = "lead@medseg-xai.org"}
+]
+keywords = [
+    "medical-imaging",
+    "segmentation",
+    "medsam-2",
+    "sam2",
+    "xai",
+    "vision-transformer",
+    "runpod",
+    "fastapi"
+]
+dependencies = [
+    "torch>=2.3.0",
+    "torchvision>=0.18.0",
+    "fastapi>=0.110.0",
+    "uvicorn[standard]>=0.28.0",
+    "pydantic>=2.5.0",
+    "numpy>=1.24.0",
+    "scipy>=1.11.0",
+    "opencv-python-headless>=4.8.0",
+    "nibabel>=5.1.0",
+    "Pillow>=10.0.0",
+    "requests>=2.31.0",
+    "tqdm>=4.66.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "httpx>=0.25.0",
+    "flake8>=6.0.0",
+    "black>=23.0.0"
+]
+
+[project.scripts]
+medseg-server = "api.server:app"
+medseg-download-weights = "scripts.download_weights:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --strict-markers"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["medseg*", "api*"]

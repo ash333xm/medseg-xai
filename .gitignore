@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyTorch / CUDA
+*.pt
+*.pth
+*.bin
+*.onnx
+*.engine
+
+# Datasets & Medical Volumes
+*.nii
+*.nii.gz
+*.dcm
+data/
+raw_data/
+processed_data/
+/runpod-volume/
+weights/
+
+# Logs & Testing
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+runs/
+wandb/
+
+# IDE / OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  medseg-inference:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: medseg-xai/m1-inference:latest
+    container_name: medseg-xai-m1
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - RUNPOD_VOLUME_PATH=/runpod-volume
+      - MODEL_WEIGHTS_PATH=/runpod-volume/weights/medsam2_hiera_large.pt
+      - DATASET_PATH=/runpod-volume/data
+      - PORT=8000
+      - HOST=0.0.0.0
+      - CUDA_VISIBLE_DEVICES=0
+    volumes:
+      # Map host directories to persistent volume mount in container
+      - ./weights:/runpod-volume/weights
+      - ./data:/runpod-volume/data
+      - ./outputs:/runpod-volume/outputs
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

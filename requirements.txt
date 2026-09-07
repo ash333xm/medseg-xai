@@ -1,0 +1,25 @@
+# Core Deep Learning Framework
+torch>=2.3.0
+torchvision>=0.18.0
+
+# API & Web Serving
+fastapi>=0.110.0
+uvicorn[standard]>=0.28.0
+pydantic>=2.5.0
+python-multipart>=0.0.9
+
+# Scientific Computing & Medical Imaging
+numpy>=1.24.0
+scipy>=1.11.0
+nibabel>=5.1.0
+opencv-python-headless>=4.8.0
+Pillow>=10.0.0
+
+# Utilities & Download Management
+requests>=2.31.0
+tqdm>=4.66.0
+
+# Testing & Quality
+pytest>=7.4.0
+pytest-cov>=4.1.0
+httpx>=0.25.0
