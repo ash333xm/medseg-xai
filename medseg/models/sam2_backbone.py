@@ -202,6 +202,10 @@ class MaskDecoder(nn.Module):
             iou_preds: [B, num_masks]
         """
         B, C, H, W = image_embeddings.shape
+        if dense_prompt_embeddings.shape[-2:] != (H, W):
+            dense_prompt_embeddings = F.interpolate(
+                dense_prompt_embeddings, size=(H, W), mode="bilinear", align_corners=False
+            )
         fused_feat = image_embeddings + dense_prompt_embeddings
 
         # If prompt tokens exist, inject mean prompt bias into features

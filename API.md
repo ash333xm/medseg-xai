@@ -1,177 +1,78 @@
-# MedSeg-XAI: Member 1 (M1) Architecture & API Documentation
+# MedSeg-XAI: Multi-Member Architecture & API Documentation
 
-## 1. System Overview & Role Context
+## 1. System Overview & Consortium Workloads
 
-As the **Model Architecture & Inference Lead (M1)** for the MedSeg-XAI platform, this subsystem is responsible for:
-- Containerized foundation model deployment on **RunPod Cloud GPUs** (e.g. NVIDIA A100 / RTX 4090).
-- Zero-copy, memory-mapped loading (`mmap=True`) of **MedSAM-2** with **Hiera-Large** hierarchical vision transformer backbone.
-- 3D-to-2D spatial resampling and dynamic pseudo-video batching formatted strictly as $(B \times T \times C \times H \times W)$.
-- Multi-slice 3D memory attention propagation with zero-shot point/box prompt conditioning.
-- Non-intrusive isolation and guidance of deep Hiera-Large transformer blocks (Stage 3 & Stage 4) for explainability (TMME / Rollout).
-- Deterministic dual-pass VRAM lifecycle management for Live MPRT safety auditing:
-  $$\text{Clean Pass} \implies \text{CUDA Cache Clear} \implies \text{Randomized Pass}$$
+The **MedSeg-XAI** platform unifies four specialized engineering roles across Phase 1 and Phase 2:
+- **Member 1 (M1 - Architecture & Inference Lead)**: MedSAM-2 Hiera-Large memory-mapped loader, 3D-to-2D spatial resampling into $(B \times T \times C \times H \times W)$ pseudo-video batches, zero-shot prompt conditioning, and slice memory propagation.
+- **Member 2 (M2 - Explainability Lead)**: Mapping multi-head self-attention and cross-attention blocks, non-intrusive PyTorch forward hook insertion (`AttentionHookManager`), and clinical prompt extraction from ground-truth masks (`PromptExtractor`).
+- **Member 3 (M3 - Safety Auditing Lead)**: Mathematical evaluation library `metrics.py` (SSIM, Spearman rank correlation $\rho$, Dice score, MSE, HD95) and the 50-volume Edge-Case Stress Corpus curator and tester.
+- **Member 4 (M4 - Full-Stack & Data Lead)**: Cloud GPU infrastructure provisioning (AWS EC2 g5.2xlarge / RunPod NVIDIA A100 $\ge 24$GB), benchmark dataset procurement (BraTS 2023 MRI, BTCV CT, DeepLesion CT), unified multi-modal `dataloader.py`, and clinical preprocessing (`preprocess.py`).
 
 ---
 
-## 2. RunPod Infrastructure & Persistent Volumes
+## 2. Team Workload Interfaces & Module Contracts
 
-### Volume Layout
-On RunPod, model weights and volumetric datasets are mounted to persistent network storage to prevent cold-start re-downloads across container restarts:
-```
-/runpod-volume/
-├── weights/
-│   └── medsam2_hiera_large.pt       # Foundation checkpoint (~2.4 GB)
-├── data/
-│   ├── brats2023/                   # BraTS MRI volumes (.nii.gz)
-│   ├── btcv/                        # BTCV Abdominal CT volumes
-│   └── deeplesion/                  # DeepLesion CT volumes
-└── outputs/                         # Exported masks, logs, DICOM artifacts
-```
+### Interface 1: M4 $\leftrightarrow$ M1 (Data Procurement to Spatial Resampling)
+- **Data Ingestion**: `medseg.data.dataloader.MultiModalMedicalDataset` loads scans from BraTS (MRI), BTCV (CT), and DeepLesion (CT).
+- **Preprocessing Pipeline**: `medseg.data.preprocess.ClinicalPreprocessor` applies:
+  - CT Hounsfield Unit windowing: $I_{HU} = \text{clip}(I, HU_{min}, HU_{max})$
+  - MRI tissue Z-score: $I_{norm} = (I - \mu_{tissue}) / \sigma_{tissue}$
+- **Pseudo-Video Output**: Handed off to `medseg.data.resampler.SpatialResampler3D` generating standardized 5D batches:
+  $$(B \times T \times C \times H \times W)$$
 
-### Environment Variables
-| Variable | Default Value | Description |
-|---|---|---|
-| `RUNPOD_VOLUME_PATH` | `/runpod-volume` | Root path to network storage volume |
-| `MODEL_WEIGHTS_PATH` | `/runpod-volume/weights/medsam2_hiera_large.pt` | Path to MedSAM-2 Hiera-Large weights |
-| `DATASET_PATH` | `/runpod-volume/data` | Path to benchmark datasets |
-| `PORT` | `8000` | HTTP port exposed by FastAPI |
-| `HOST` | `0.0.0.0` | Binding host address |
-| `PRECISION` | `float16` | Precision (`float16`, `bfloat16`, or `float32`) |
-| `FORCE_CPU` | `0` | Set `1` to force CPU mode in non-GPU environments |
+### Interface 2: M1 $\leftrightarrow$ M2 (Model Architecture to XAI Hook Engine)
+- **Attention Mapping**: `medseg.xai.xai_hooks.map_attention_blocks(model)` maps all 49 attention modules (multi-head self-attention in Hiera-Large Stages 1–4 and memory cross-attention).
+- **Hook Attachment**: `medseg.xai.xai_hooks.AttentionHookManager(model).register_hooks(deep_only=True)` registers non-intrusive forward hooks without graph mutation (`retain_graph=True`).
+- **Prompt Feeding**: `medseg.xai.prompt_extractor.PromptExtractor` extracts tight 2D/3D bounding boxes and centroid/distance-transform prompt points from masks, returning `PromptConditioning` objects to M1's `MedSAM2InferenceEngine`.
+
+### Interface 3: M1/M2 $\leftrightarrow$ M3 (Inference to Safety Auditing & Live MPRT)
+- **Mathematical Evaluation**: `medseg.metrics` computes:
+  - `compute_ssim(A, B)`: Structural similarity index for Live MPRT safety gating.
+  - `compute_spearman_rho(A, B)`: Rank correlation between clean and perturbed attention maps.
+  - `compute_dice_score(pred, target)`: Overlap quality score.
+  - `compute_mse(A, B)`: Mean squared error.
+  - `compute_hd95(pred, target)`: 95th percentile Hausdorff distance.
+- **Stress Corpus Auditing**: `medseg.safety.stress_corpus.StressCorpusCurator` synthesizes 50 edge-case volumes (15 motion artifacts, 15 low contrast, 20 streak noise). `StressTester` profiles model degradation under extreme noise.
 
 ---
 
-## 3. REST API Reference (Port 8000)
+## 3. Workflow Junctions & Execution CLI
+
+### Workflow Junction 1 (WJ-1)
+- **File**: [`scripts/validate_wj1.py`](file:///d:/ayush_medseg_workflow/scripts/validate_wj1.py)
+- **Command**: `python scripts/validate_wj1.py`
+- **Scope**:
+  1. Validates cloud GPU / PyTorch runtime.
+  2. Loads MedSAM-2 Hiera-Large via zero-copy memory mapping (`mmap=True`).
+  3. Attaches forward hooks to multi-head self-attention and cross-attention blocks.
+  4. Executes baseline PyTorch forward pass, confirming gradient retention and attention extraction.
+  5. Validates sanity metrics with `medseg.metrics`.
+
+### Workflow Junction 2 (WJ-2)
+- **File**: [`scripts/validate_wj2.py`](file:///d:/ayush_medseg_workflow/scripts/validate_wj2.py)
+- **Command**: `python scripts/validate_wj2.py`
+- **Scope**:
+  1. Sets up benchmark datasets: BraTS 2023 (MRI), BTCV (CT), DeepLesion (CT).
+  2. Merges multi-modal dataloaders and verifies pseudo-video format $(B \times T \times C \times H \times W)$.
+  3. Verifies CT HU windowing and MRI tissue Z-score normalization invariants.
+  4. Verifies clinical bounding box and prompt point extraction on masks.
+  5. Ingests and verifies the 50-volume Edge-Case Stress Corpus.
+
+---
+
+## 4. REST API Reference (Port 8000)
 
 ### `GET /health`
-Returns system status, GPU device information, VRAM telemetry, and checkpoint presence.
-
-#### Response Example
-```json
-{
-  "status": "healthy",
-  "cuda_available": true,
-  "device": "NVIDIA A100-SXM4-80GB",
-  "precision": "float16",
-  "weights_loaded_path": "/runpod-volume/weights/medsam2_hiera_large.pt",
-  "weights_file_exists": true,
-  "vram": {
-    "allocated_mb": 2410.5,
-    "reserved_mb": 3120.0,
-    "peak_mb": 2680.2
-  }
-}
-```
-
----
+Returns system health, GPU hardware, VRAM telemetry, and checkpoint status.
 
 ### `POST /predict/slice`
-Executes single-slice zero-shot prompt inference and extracts deep attention maps.
-
-#### Request Body
-```json
-{
-  "image_shape": [3, 1024, 1024],
-  "points": [
-    {"coords": [512.0, 512.0], "label": 1},
-    {"coords": [400.0, 400.0], "label": 0}
-  ],
-  "bounding_box": [350.0, 350.0, 650.0, 650.0],
-  "extract_attention": true
-}
-```
-
-#### Response Body
-```json
-{
-  "iou_score": 0.942,
-  "mask_shape": [1024, 1024],
-  "positive_voxel_count": 48210,
-  "deep_attention_layers_extracted": [
-    "stage_3.block_34",
-    "stage_3.block_35",
-    "stage_4.block_2",
-    "stage_4.block_3"
-  ],
-  "inference_time_ms": 34.2
-}
-```
-
----
+Performs zero-shot single slice segmentation with point/box prompt conditioning and extracts deep attention maps.
 
 ### `POST /predict/volume`
-Propagates segmentation across a 3D medical volume formatted as sequential pseudo-video batches $(B \times T \times C \times H \times W)$ using SAM 2 memory cross-attention.
-
-#### Request Body
-```json
-{
-  "num_slices": 64,
-  "slice_height": 1024,
-  "slice_width": 1024,
-  "prompt_slice_idx": 32,
-  "bounding_box": [300.0, 300.0, 700.0, 700.0],
-  "modality": "ct",
-  "plane": "axial"
-}
-```
-
-#### Response Body
-```json
-{
-  "volume_shape": [64, 1024, 1024],
-  "prompt_slice_idx": 32,
-  "mean_slice_iou": 0.912,
-  "total_segmented_voxels": 1420890,
-  "inference_time_ms": 520.4
-}
-```
-
----
+Propagates segmentation across 3D pseudo-video batch $(B \times T \times C \times H \times W)$ via SAM 2 memory cross-attention.
 
 ### `POST /audit/dual_pass`
-Executes the Live MPRT (Model Parameter Randomization Test) dual-pass safety verification:
-1. **Clean Pass**: Evaluates slice and extracts Clean Heatmap A.
-2. **CUDA Cache Clear**: Purges GPU cache and intermediate allocations.
-3. **Randomized Pass**: Kaiming Normal resets top-to-bottom layers $\theta_l \sim \mathcal{N}(0, \sqrt{2 / n_l})$ and computes Corrupted Heatmap B.
-4. **Safety Gating**:
-   $$\text{SSIM}(A, B) < 0.30 \implies \text{PASS (Trustworthy)}$$
-   $$\text{SSIM}(A, B) \ge 0.30 \implies \text{REJECT (Superficial Edge Detector)}$$
-5. **State Restoration**: Restores pristine weights and returns telemetry.
-
-#### Request Body
-```json
-{
-  "slice_shape": [3, 512, 512],
-  "bounding_box": [100.0, 100.0, 400.0, 400.0]
-}
-```
-
-#### Response Body
-```json
-{
-  "ssim_score": 0.082,
-  "gating_status": "PASS",
-  "trust_score": 0.9126,
-  "clean_vram_allocated_mb": 2410.5,
-  "inter_pass_vram_allocated_mb": 420.0,
-  "randomized_vram_allocated_mb": 2410.5
-}
-```
-
----
-
-## 4. Cross-Functional Team Interfaces
-
-### Interface with Member 2 (M2 - Explainability Lead)
-- **Deep Attention Layers**: `model.get_deep_attention_layers()` returns Stage 3 and Stage 4 multi-head attention modules.
-- **Hook Integration**: Modules expose `.last_attn_weights` and allow standard forward hook registration without graph disruption (`retain_graph=True`).
-- **Data Flow**: Extracted tensors feed directly into M2's `xai_hooks.py` and `tmme_engine.py`.
-
-### Interface with Member 3 (M3 - Safety Auditing Lead)
-- **Layer Randomization Hook**: `vram_manager.kaiming_randomize_layers()` exposes clean layer resetting.
-- **State Dict Snapshotting**: `vram_manager` captures pre-audit weight backups and guarantees bitwise weight restoration post-audit.
-- **SSIM Metric**: Mathematical calculation matching Capstone formulation.
-
-### Interface with Member 4 (M4 - Full-Stack & Data Lead)
-- **Data Resampling**: `SpatialResampler3D` ingests NIfTI (`.nii`/`.nii.gz`) and DICOM formats, applies CT HU windowing or MRI Z-score normalization, and formats tensors to $(B \times T \times C \times H \times W)$.
-- **Mask Un-resampling**: `inverse_resample_mask()` resamples predicted masks back into original patient coordinates for DICOM/PACS export.
+Executes Live MPRT dual-pass safety verification:
+$$\text{Clean Pass} \implies \text{CUDA Cache Clear} \implies \text{Randomized Pass}$$
+- $\text{SSIM} < 0.30 \implies \mathbf{PASS}$
+- $\text{SSIM} \ge 0.30 \implies \mathbf{REJECT}$
