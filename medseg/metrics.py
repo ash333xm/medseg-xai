@@ -101,6 +101,8 @@ def compute_spearman_rho(
     den = np.sqrt(np.sum((rank_a - mean_a) ** 2) * np.sum((rank_b - mean_b) ** 2))
 
     if den < eps:
+        if np.allclose(arr_a, arr_b, atol=1e-5):
+            return 1.0
         return 0.0
 
     rho = float(num / den)

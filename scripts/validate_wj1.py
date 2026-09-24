@@ -56,6 +56,7 @@ def run_workflow_junction_1_validation() -> bool:
 
     # 4. Baseline PyTorch Forward Pass
     logger.info("[Integration] Executing baseline forward pass on synthetic benchmark slice...")
+    torch.manual_seed(42)
     test_slice = torch.randn(1, 3, 256, 256, device=loader.device, dtype=loader.dtype)
     with torch.no_grad():
         out = model.forward_slice(test_slice)
