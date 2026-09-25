@@ -11,6 +11,8 @@ python-multipart>=0.0.9
 # Scientific Computing & Medical Imaging
 numpy>=1.24.0
 scipy>=1.11.0
+matplotlib>=3.8.0
+pandas>=2.0.0
 nibabel>=5.1.0
 opencv-python-headless>=4.8.0
 Pillow>=10.0.0

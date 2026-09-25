@@ -1,0 +1,610 @@
+{
+  "total_volumes": 50,
+  "categories": {
+    "motion_artifacts": 15,
+    "low_contrast": 15,
+    "streak_noise": 20
+  },
+  "volumes": [
+    {
+      "id": 1,
+      "category": "motion_artifacts",
+      "severity": 0.2,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_001_motion.npy",
+      "path": "data\\stress_corpus\\stress_vol_001_motion.npy"
+    },
+    {
+      "id": 2,
+      "category": "motion_artifacts",
+      "severity": 0.25,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_002_motion.npy",
+      "path": "data\\stress_corpus\\stress_vol_002_motion.npy"
+    },
+    {
+      "id": 3,
+      "category": "motion_artifacts",
+      "severity": 0.30000000000000004,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_003_motion.npy",
+      "path": "data\\stress_corpus\\stress_vol_003_motion.npy"
+    },
+    {
+      "id": 4,
+      "category": "motion_artifacts",
+      "severity": 0.35000000000000003,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_004_motion.npy",
+      "path": "data\\stress_corpus\\stress_vol_004_motion.npy"
+    },
+    {
+      "id": 5,
+      "category": "motion_artifacts",
+      "severity": 0.4,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_005_motion.npy",
+      "path": "data\\stress_corpus\\stress_vol_005_motion.npy"
+    },
+    {
+      "id": 6,
+      "category": "motion_artifacts",
+      "severity": 0.45,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_006_motion.npy",
+      "path": "data\\stress_corpus\\stress_vol_006_motion.npy"
+    },
+    {
+      "id": 7,
+      "category": "motion_artifacts",
+      "severity": 0.5,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_007_motion.npy",
+      "path": "data\\stress_corpus\\stress_vol_007_motion.npy"
+    },
+    {
+      "id": 8,
+      "category": "motion_artifacts",
+      "severity": 0.55,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_008_motion.npy",
+      "path": "data\\stress_corpus\\stress_vol_008_motion.npy"
+    },
+    {
+      "id": 9,
+      "category": "motion_artifacts",
+      "severity": 0.6000000000000001,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_009_motion.npy",
+      "path": "data\\stress_corpus\\stress_vol_009_motion.npy"
+    },
+    {
+      "id": 10,
+      "category": "motion_artifacts",
+      "severity": 0.65,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_010_motion.npy",
+      "path": "data\\stress_corpus\\stress_vol_010_motion.npy"
+    },
+    {
+      "id": 11,
+      "category": "motion_artifacts",
+      "severity": 0.7,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_011_motion.npy",
+      "path": "data\\stress_corpus\\stress_vol_011_motion.npy"
+    },
+    {
+      "id": 12,
+      "category": "motion_artifacts",
+      "severity": 0.75,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_012_motion.npy",
+      "path": "data\\stress_corpus\\stress_vol_012_motion.npy"
+    },
+    {
+      "id": 13,
+      "category": "motion_artifacts",
+      "severity": 0.8,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_013_motion.npy",
+      "path": "data\\stress_corpus\\stress_vol_013_motion.npy"
+    },
+    {
+      "id": 14,
+      "category": "motion_artifacts",
+      "severity": 0.8500000000000001,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_014_motion.npy",
+      "path": "data\\stress_corpus\\stress_vol_014_motion.npy"
+    },
+    {
+      "id": 15,
+      "category": "motion_artifacts",
+      "severity": 0.9000000000000001,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_015_motion.npy",
+      "path": "data\\stress_corpus\\stress_vol_015_motion.npy"
+    },
+    {
+      "id": 16,
+      "category": "low_contrast",
+      "severity": 0.4,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_016_low_contrast.npy",
+      "path": "data\\stress_corpus\\stress_vol_016_low_contrast.npy"
+    },
+    {
+      "id": 17,
+      "category": "low_contrast",
+      "severity": 0.38,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_017_low_contrast.npy",
+      "path": "data\\stress_corpus\\stress_vol_017_low_contrast.npy"
+    },
+    {
+      "id": 18,
+      "category": "low_contrast",
+      "severity": 0.36000000000000004,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_018_low_contrast.npy",
+      "path": "data\\stress_corpus\\stress_vol_018_low_contrast.npy"
+    },
+    {
+      "id": 19,
+      "category": "low_contrast",
+      "severity": 0.34,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_019_low_contrast.npy",
+      "path": "data\\stress_corpus\\stress_vol_019_low_contrast.npy"
+    },
+    {
+      "id": 20,
+      "category": "low_contrast",
+      "severity": 0.32,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_020_low_contrast.npy",
+      "path": "data\\stress_corpus\\stress_vol_020_low_contrast.npy"
+    },
+    {
+      "id": 21,
+      "category": "low_contrast",
+      "severity": 0.30000000000000004,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_021_low_contrast.npy",
+      "path": "data\\stress_corpus\\stress_vol_021_low_contrast.npy"
+    },
+    {
+      "id": 22,
+      "category": "low_contrast",
+      "severity": 0.28,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_022_low_contrast.npy",
+      "path": "data\\stress_corpus\\stress_vol_022_low_contrast.npy"
+    },
+    {
+      "id": 23,
+      "category": "low_contrast",
+      "severity": 0.26,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_023_low_contrast.npy",
+      "path": "data\\stress_corpus\\stress_vol_023_low_contrast.npy"
+    },
+    {
+      "id": 24,
+      "category": "low_contrast",
+      "severity": 0.24000000000000002,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_024_low_contrast.npy",
+      "path": "data\\stress_corpus\\stress_vol_024_low_contrast.npy"
+    },
+    {
+      "id": 25,
+      "category": "low_contrast",
+      "severity": 0.22000000000000003,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_025_low_contrast.npy",
+      "path": "data\\stress_corpus\\stress_vol_025_low_contrast.npy"
+    },
+    {
+      "id": 26,
+      "category": "low_contrast",
+      "severity": 0.2,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_026_low_contrast.npy",
+      "path": "data\\stress_corpus\\stress_vol_026_low_contrast.npy"
+    },
+    {
+      "id": 27,
+      "category": "low_contrast",
+      "severity": 0.18000000000000002,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_027_low_contrast.npy",
+      "path": "data\\stress_corpus\\stress_vol_027_low_contrast.npy"
+    },
+    {
+      "id": 28,
+      "category": "low_contrast",
+      "severity": 0.16000000000000003,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_028_low_contrast.npy",
+      "path": "data\\stress_corpus\\stress_vol_028_low_contrast.npy"
+    },
+    {
+      "id": 29,
+      "category": "low_contrast",
+      "severity": 0.14,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_029_low_contrast.npy",
+      "path": "data\\stress_corpus\\stress_vol_029_low_contrast.npy"
+    },
+    {
+      "id": 30,
+      "category": "low_contrast",
+      "severity": 0.12,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_030_low_contrast.npy",
+      "path": "data\\stress_corpus\\stress_vol_030_low_contrast.npy"
+    },
+    {
+      "id": 31,
+      "category": "streak_noise",
+      "severity": 6,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_031_streak.npy",
+      "path": "data\\stress_corpus\\stress_vol_031_streak.npy"
+    },
+    {
+      "id": 32,
+      "category": "streak_noise",
+      "severity": 7,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_032_streak.npy",
+      "path": "data\\stress_corpus\\stress_vol_032_streak.npy"
+    },
+    {
+      "id": 33,
+      "category": "streak_noise",
+      "severity": 8,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_033_streak.npy",
+      "path": "data\\stress_corpus\\stress_vol_033_streak.npy"
+    },
+    {
+      "id": 34,
+      "category": "streak_noise",
+      "severity": 9,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_034_streak.npy",
+      "path": "data\\stress_corpus\\stress_vol_034_streak.npy"
+    },
+    {
+      "id": 35,
+      "category": "streak_noise",
+      "severity": 10,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_035_streak.npy",
+      "path": "data\\stress_corpus\\stress_vol_035_streak.npy"
+    },
+    {
+      "id": 36,
+      "category": "streak_noise",
+      "severity": 11,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_036_streak.npy",
+      "path": "data\\stress_corpus\\stress_vol_036_streak.npy"
+    },
+    {
+      "id": 37,
+      "category": "streak_noise",
+      "severity": 12,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_037_streak.npy",
+      "path": "data\\stress_corpus\\stress_vol_037_streak.npy"
+    },
+    {
+      "id": 38,
+      "category": "streak_noise",
+      "severity": 13,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_038_streak.npy",
+      "path": "data\\stress_corpus\\stress_vol_038_streak.npy"
+    },
+    {
+      "id": 39,
+      "category": "streak_noise",
+      "severity": 14,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_039_streak.npy",
+      "path": "data\\stress_corpus\\stress_vol_039_streak.npy"
+    },
+    {
+      "id": 40,
+      "category": "streak_noise",
+      "severity": 15,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_040_streak.npy",
+      "path": "data\\stress_corpus\\stress_vol_040_streak.npy"
+    },
+    {
+      "id": 41,
+      "category": "streak_noise",
+      "severity": 16,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_041_streak.npy",
+      "path": "data\\stress_corpus\\stress_vol_041_streak.npy"
+    },
+    {
+      "id": 42,
+      "category": "streak_noise",
+      "severity": 17,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_042_streak.npy",
+      "path": "data\\stress_corpus\\stress_vol_042_streak.npy"
+    },
+    {
+      "id": 43,
+      "category": "streak_noise",
+      "severity": 18,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_043_streak.npy",
+      "path": "data\\stress_corpus\\stress_vol_043_streak.npy"
+    },
+    {
+      "id": 44,
+      "category": "streak_noise",
+      "severity": 19,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_044_streak.npy",
+      "path": "data\\stress_corpus\\stress_vol_044_streak.npy"
+    },
+    {
+      "id": 45,
+      "category": "streak_noise",
+      "severity": 20,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_045_streak.npy",
+      "path": "data\\stress_corpus\\stress_vol_045_streak.npy"
+    },
+    {
+      "id": 46,
+      "category": "streak_noise",
+      "severity": 21,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_046_streak.npy",
+      "path": "data\\stress_corpus\\stress_vol_046_streak.npy"
+    },
+    {
+      "id": 47,
+      "category": "streak_noise",
+      "severity": 22,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_047_streak.npy",
+      "path": "data\\stress_corpus\\stress_vol_047_streak.npy"
+    },
+    {
+      "id": 48,
+      "category": "streak_noise",
+      "severity": 23,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_048_streak.npy",
+      "path": "data\\stress_corpus\\stress_vol_048_streak.npy"
+    },
+    {
+      "id": 49,
+      "category": "streak_noise",
+      "severity": 24,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_049_streak.npy",
+      "path": "data\\stress_corpus\\stress_vol_049_streak.npy"
+    },
+    {
+      "id": 50,
+      "category": "streak_noise",
+      "severity": 25,
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "file_name": "stress_vol_050_streak.npy",
+      "path": "data\\stress_corpus\\stress_vol_050_streak.npy"
+    }
+  ]
+}

@@ -10,6 +10,7 @@ venv/
 build/
 develop-eggs/
 dist/
+!frontend/dist/
 downloads/
 eggs/
 .eggs/
@@ -23,22 +24,37 @@ wheels/
 .installed.cfg
 *.egg
 
-# PyTorch / CUDA
+# Node.js
+node_modules/
+frontend/node_modules/
+.npm/
+npm-debug.log*
+
+# Large Archives & Unpack Duplicates
+*.zip
+medseg_all_datasets/
+medsegxai_google_drive/
+
+# PyTorch / Large Model Weights (Keep code & sample data, ignore large 800MB checkpoints)
 *.pt
 *.pth
 *.bin
 *.onnx
 *.engine
+weights/
 
 # Datasets & Medical Volumes
 *.nii
 *.nii.gz
 *.dcm
-data/
 raw_data/
 processed_data/
 /runpod-volume/
-weights/
+/data/
+
+# Whitelist code and curated Drive benchmark data
+!medseg/data/
+!medsegxai/data/
 
 # Logs & Testing
 .pytest_cache/

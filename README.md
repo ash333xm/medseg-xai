@@ -133,25 +133,54 @@ d:/ayush_medseg_workflow/
 
 ---
 
-## 5. Quick Start & Execution
+## 5. Real-Time Project Execution & Deliverables
 
-### Option A: Run Full Pytest Suite (49 Tests)
+### 🚀 Option A: Launch Interactive React Clinical Dashboard (Recommended)
+Launch the unified full-stack clinical decision support studio (FastAPI + React 19 + Tailwind CSS) with live attention heatmaps, interactive opacity blending, and real-time MPRT safety audit gating:
+
+```bash
+# Windows (Double-click or run from PowerShell / CMD):
+./launch_dashboard.bat
+
+# Linux / Mac / RunPod:
+chmod +x launch_dashboard.sh && ./launch_dashboard.sh
+
+# Or directly with Python:
+python api/dashboard_server.py
+```
+* **Dashboard URL**: [http://localhost:8000](http://localhost:8000)
+* **Features**:
+  * **Panel 1**: Raw Brain MRI (512×512×3) with interactive Bounding Box prompt.
+  * **Panel 2**: MedSAM Segmentation outline with real-time Dice metric ($\text{Dice} \ge 0.94$).
+  * **Panel 3**: Explainability Attention Heatmap (Kushal) with live opacity blending and multiple palettes (`Inferno`, `Viridis`, `Turbo`, `Jet`, `Magma`).
+  * **Panel 4**: Live Adebayo Cascading Randomization Sanity Test (Niyati) with interactive SSIM degradation curve ($1.000 \rightarrow 0.020$) and Green/Red audit badge.
+  * **Adebayo Failure Mode Demo**: 1-click toggle to demonstrate what happens when a naive edge detector is tested (SSIM stays $\approx 0.71 \ge 0.30 \rightarrow$ RED REJECT banner suppresses the heatmap).
+
+---
+
+### 🖼️ Option B: Open Standalone Rendered Heatmaps Catalog
+A completely self-contained, pre-rendered HTML gallery containing all 5 benchmark cases, high-resolution figures, and 4-stage cascading scrambling breakdowns can be opened directly in any browser:
+* **File Location**: [`medsegxai/outputs/HEATMAPS_RENDERED.html`](file:///d:/ayush_medseg_workflow/medsegxai/outputs/HEATMAPS_RENDERED.html)
+* **High-Res Figures**: [`medsegxai/outputs/heatmaps/`](file:///d:/ayush_medseg_workflow/medsegxai/outputs/heatmaps/)
+* **Master Grid Comparison**: [`medsegxai/outputs/cohort_heatmaps_master_grid.png`](file:///d:/ayush_medseg_workflow/medsegxai/outputs/cohort_heatmaps_master_grid.png)
+
+---
+
+### 📓 Option C: Run in Google Colab (Drive Folder Integration)
+Teammates can run the full pipeline in Google Colab using the notebook:
+* **Notebook**: [`medsegxai/notebooks/render_all_heatmaps.ipynb`](file:///d:/ayush_medseg_workflow/medsegxai/notebooks/render_all_heatmaps.ipynb)
+* **Specification Document**: [`medsegxai/CASE_SPECIFICATION.md`](file:///d:/ayush_medseg_workflow/medsegxai/CASE_SPECIFICATION.md)
+
+---
+
+### 🧪 Option D: Verify 4 Core Team Functions
+```bash
+python scripts/test_four_functions.py
+```
+
+### 🔬 Option E: Run Full Pytest Suite (49 Tests)
 ```bash
 python -m pytest tests/ -v
-```
-
-### Option B: Execute Workflow Junctions Standalone
-```bash
-# Workflow Junction 1 (Phase 1 Validation)
-python scripts/validate_wj1.py
-
-# Workflow Junction 2 (Phase 2 Validation)
-python scripts/validate_wj2.py
-```
-
-### Option C: Run Local FastAPI Server
-```bash
-uvicorn api.server:app --host 0.0.0.0 --port 8000
 ```
 
 ---
