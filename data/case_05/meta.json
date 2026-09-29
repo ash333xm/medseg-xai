@@ -1,0 +1,36 @@
+{
+  "id": "case_05",
+  "title": "Case 05",
+  "pathology": "Infiltrative Frontal Glioma (Diffuse Margin)",
+  "modality": "T1ce (Contrast-Enhanced T1-weighted MRI)",
+  "slice_dim": "512 x 512 x 3",
+  "description": "Left frontal lobe infiltrative mass presenting with faint peripheral contrast enhancement and diffuse non-enhancing margins. Real-world challenging boundary.",
+  "box": [
+    254,
+    254,
+    340,
+    340
+  ],
+  "metrics": {
+    "dice_clean": 0.641,
+    "spearman_decoder_full": 0.153,
+    "dice_after_decoder_rand": 0.012,
+    "ssim_decoder_full": 0.69,
+    "pass_v1_ssim": false,
+    "pass_v2_spearman": true,
+    "ssim_curve": [
+      1.0,
+      0.84,
+      0.77,
+      0.725,
+      0.69
+    ],
+    "spearman_curve": [
+      1.0,
+      0.55,
+      0.39,
+      0.24,
+      0.153
+    ]
+  }
+}

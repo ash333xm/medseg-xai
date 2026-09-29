@@ -1,0 +1,20 @@
+{
+  "brats2023": {
+    "modality": "mri",
+    "volume_path": "data\\brats2023\\sample_001_vol.npy",
+    "mask_path": "data\\brats2023\\sample_001_mask.npy",
+    "description": "BraTS 2023 Glioma MRI Benchmark (FLAIR, T1, T1ce, T2)"
+  },
+  "btcv": {
+    "modality": "ct",
+    "volume_path": "data\\btcv\\sample_001_vol.npy",
+    "mask_path": "data\\btcv\\sample_001_mask.npy",
+    "description": "Multi-Atlas Labeling Beyond the Cranial Vault (13 Abdominal Organs)"
+  },
+  "deeplesion": {
+    "modality": "ct",
+    "volume_path": "data\\deeplesion\\sample_001_vol.npy",
+    "mask_path": "data\\deeplesion\\sample_001_mask.npy",
+    "description": "DeepLesion Universal Lesion Benchmark (CT)"
+  }
+}

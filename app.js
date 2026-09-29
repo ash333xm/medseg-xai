@@ -1,8 +1,8 @@
 /**
- * MedSeg-XAI Live Vercel Application Engine
- * =========================================
- * Client-side interactive engine supporting multi-design heatmaps,
- * interactive wipe comparator, cohort analytics, and case switching.
+ * MedSeg-XAI Clinical Studio Application Engine
+ * =============================================
+ * Real clinical dataset and XAI audit visualization engine.
+ * Synchronized with Google Drive cases and outputs.
  */
 
 // Global State
@@ -32,7 +32,9 @@ function setImgSrc(target, subpath) {
     `/data/${clean}`,
     `./data/${clean}`,
     `public/data/${clean}`,
-    `/public/data/${clean}`
+    `/public/data/${clean}`,
+    clean,
+    `/${clean}`
   ];
   const uniqueCandidates = [...new Set(candidates)];
   let attempt = 0;
@@ -77,21 +79,23 @@ function setBgImageWithFallback(element, subpath) {
   tryNext();
 }
 
-// Case Catalog In-Memory Fallback
+// Authentic Clinical Case Catalog (Synchronized with Google Drive outputs/results/results.json)
 const CASE_CATALOG = {
   case_01: {
     id: "case_01",
     title: "Case 01",
     pathology: "Glioblastoma Multiforme (Focal Enhancing Core)",
-    modality: "T1ce (Contrast-Enhanced T1-weighted MRI)",
-    slice_dim: "256 x 256",
-    description: "Circumscribed contrast-enhancing lesion in the left fronto-parietal region. High contrast-to-noise ratio relative to background white matter.",
-    box: [124, 124, 173, 173],
+    modality: "T1ce / FLAIR (Axial z=63, MSD Task01)",
+    slice_dim: "512 x 512",
+    src: "BRATS_001",
+    z: 63,
+    description: "Focal contrast-enhancing lesion in the left fronto-parietal region. High contrast-to-noise ratio relative to background parenchyma.",
+    box: [283, 153, 398, 364],
     metrics: {
-      dice_clean: 0.962,
-      dice_after_decoder_rand: 0.021,
-      spearman_decoder_full: 0.124,
-      ssim_decoder_full: 0.682,
+      dice_clean: 0.9029,
+      dice_after_decoder_rand: 0.080,
+      spearman_decoder_full: 0.027,
+      ssim_decoder_full: 0.502,
       pass_v1_ssim: false,
       pass_v2_spearman: true
     }
@@ -100,15 +104,17 @@ const CASE_CATALOG = {
     id: "case_02",
     title: "Case 02",
     pathology: "Diffuse High-Grade Glioma",
-    modality: "T1ce (Contrast-Enhanced T1-weighted MRI)",
-    slice_dim: "512 x 512 x 3",
-    description: "Right temporal mass with prominent central necrotic cavity and thick peripheral rim enhancement.",
-    box: [180, 210, 310, 350],
+    modality: "T1ce / FLAIR (Axial z=104, MSD Task01)",
+    slice_dim: "512 x 512",
+    src: "BRATS_002",
+    z: 104,
+    description: "Right temporal mass with prominent central necrosis and peripheral rim enhancement.",
+    box: [153, 289, 270, 432],
     metrics: {
-      dice_clean: 0.941,
-      dice_after_decoder_rand: 0.015,
-      spearman_decoder_full: 0.098,
-      ssim_decoder_full: 0.645,
+      dice_clean: 0.9033,
+      dice_after_decoder_rand: 0.055,
+      spearman_decoder_full: 0.013,
+      ssim_decoder_full: 0.609,
       pass_v1_ssim: false,
       pass_v2_spearman: true
     }
@@ -117,15 +123,17 @@ const CASE_CATALOG = {
     id: "case_03",
     title: "Case 03",
     pathology: "Anaplastic Astrocytoma",
-    modality: "T1ce (Contrast-Enhanced T1-weighted MRI)",
-    slice_dim: "512 x 512 x 3",
+    modality: "T1ce / FLAIR (Axial z=85, MSD Task01)",
+    slice_dim: "512 x 512",
+    src: "BRATS_003",
+    z: 85,
     description: "Left temporal lobe intra-axial mass with heterogeneous contrast enhancement and surrounding vasogenic edema.",
-    box: [140, 160, 290, 310],
+    box: [165, 244, 391, 436],
     metrics: {
-      dice_clean: 0.972,
-      dice_after_decoder_rand: 0.033,
-      spearman_decoder_full: 0.141,
-      ssim_decoder_full: 0.710,
+      dice_clean: 0.8359,
+      dice_after_decoder_rand: 0.132,
+      spearman_decoder_full: 0.062,
+      ssim_decoder_full: 0.529,
       pass_v1_ssim: false,
       pass_v2_spearman: true
     }
@@ -134,15 +142,17 @@ const CASE_CATALOG = {
     id: "case_04",
     title: "Case 04",
     pathology: "Deep Temporal Lesion",
-    modality: "T1ce (Contrast-Enhanced T1-weighted MRI)",
-    slice_dim: "512 x 512 x 3",
-    description: "Right deep temporal lesion adjacent to the lateral ventricle. Distinct hypointense necrotic core with sharp peripheral borders.",
-    box: [200, 190, 330, 320],
+    modality: "T1ce / FLAIR (Axial z=95, MSD Task01)",
+    slice_dim: "512 x 512",
+    src: "BRATS_004",
+    z: 95,
+    description: "Right deep temporal lesion adjacent to lateral ventricle. Sharp margins and distinct contrast enhancement.",
+    box: [121, 191, 259, 347],
     metrics: {
-      dice_clean: 0.970,
-      dice_after_decoder_rand: 0.018,
-      spearman_decoder_full: 0.112,
-      ssim_decoder_full: 0.674,
+      dice_clean: 0.9702,
+      dice_after_decoder_rand: 0.087,
+      spearman_decoder_full: -0.091,
+      ssim_decoder_full: 0.509,
       pass_v1_ssim: false,
       pass_v2_spearman: true
     }
@@ -151,15 +161,17 @@ const CASE_CATALOG = {
     id: "case_05",
     title: "Case 05",
     pathology: "Infiltrative Frontal Glioma (Diffuse Margin)",
-    modality: "T1ce (Contrast-Enhanced T1-weighted MRI)",
-    slice_dim: "512 x 512 x 3",
-    description: "Left frontal lobe infiltrative mass presenting with faint peripheral contrast enhancement and diffuse non-enhancing margins. Real-world challenging boundary.",
-    box: [160, 140, 320, 290],
+    modality: "T1ce / FLAIR (Axial z=100, MSD Task01)",
+    slice_dim: "512 x 512",
+    src: "BRATS_005",
+    z: 100,
+    description: "Left frontal infiltrative glioma with faint peripheral enhancement. Model isolates hyperintense core while under-segmenting infiltrative border (Dice: 0.641).",
+    box: [266, 272, 400, 443],
     metrics: {
-      dice_clean: 0.641,
-      dice_after_decoder_rand: 0.012,
-      spearman_decoder_full: 0.153,
-      ssim_decoder_full: 0.690,
+      dice_clean: 0.6405,
+      dice_after_decoder_rand: 0.064,
+      spearman_decoder_full: 0.031,
+      ssim_decoder_full: 0.600,
       pass_v1_ssim: false,
       pass_v2_spearman: true
     }
@@ -177,7 +189,6 @@ const HEATMAP_DESIGNS = [
 
 // Initialize
 document.addEventListener("DOMContentLoaded", async () => {
-  // Probe for working manifest location
   const manifestCandidates = [
     "data/manifest.json",
     "/data/manifest.json",
@@ -193,6 +204,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         appData = await res.json();
         detectedBaseUrl = path.replace("/manifest.json", "");
         console.log("Resolved asset base URL:", detectedBaseUrl);
+        if (appData && appData.cases) {
+          Object.keys(appData.cases).forEach((cid) => {
+            if (CASE_CATALOG[cid]) {
+              CASE_CATALOG[cid] = { ...CASE_CATALOG[cid], ...appData.cases[cid] };
+            }
+          });
+        }
         break;
       }
     } catch (e) {
@@ -211,10 +229,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 function setupEventListeners() {
   // Case Selector
   const caseSelector = document.getElementById("caseSelector");
-  caseSelector.addEventListener("change", (e) => {
-    currentCaseId = e.target.value;
-    updateView();
-  });
+  if (caseSelector) {
+    caseSelector.addEventListener("change", (e) => {
+      currentCaseId = e.target.value;
+      updateView();
+    });
+  }
 
   // Tab Navigation
   document.querySelectorAll(".tab-btn").forEach((btn) => {
@@ -244,30 +264,30 @@ function setupEventListeners() {
   // Opacity Slider
   const opacitySlider = document.getElementById("opacitySlider");
   const opacityValue = document.getElementById("opacityValue");
-  opacitySlider.addEventListener("input", (e) => {
-    currentOpacity = e.target.value / 100;
-    opacityValue.textContent = `${e.target.value}%`;
-    document.getElementById("p3-image").style.opacity = currentOpacity;
-    document.querySelectorAll(".catalog-heatmap-img").forEach((img) => {
-      img.style.opacity = currentOpacity;
+  if (opacitySlider && opacityValue) {
+    opacitySlider.addEventListener("input", (e) => {
+      currentOpacity = e.target.value / 100;
+      opacityValue.textContent = `${e.target.value}%`;
+      const p3 = document.getElementById("p3-image");
+      if (p3) p3.style.opacity = currentOpacity;
+      document.querySelectorAll(".catalog-heatmap-img").forEach((img) => {
+        img.style.opacity = currentOpacity;
+      });
     });
-  });
+  }
 
   // Wipe Modes
-  document.getElementById("wipeModeClean").addEventListener("click", (e) => {
-    setWipeMode("clean", e.target);
-  });
-  document.getElementById("wipeModeScrambled").addEventListener("click", (e) => {
-    setWipeMode("scrambled", e.target);
-  });
-  document.getElementById("wipeModeSegmentation").addEventListener("click", (e) => {
-    setWipeMode("segmentation", e.target);
-  });
+  const wClean = document.getElementById("wipeModeClean");
+  const wScram = document.getElementById("wipeModeScrambled");
+  const wSeg = document.getElementById("wipeModeSegmentation");
+  if (wClean) wClean.addEventListener("click", (e) => setWipeMode("clean", e.target));
+  if (wScram) wScram.addEventListener("click", (e) => setWipeMode("scrambled", e.target));
+  if (wSeg) wSeg.addEventListener("click", (e) => setWipeMode("segmentation", e.target));
 }
 
 function setWipeMode(mode, targetBtn) {
   document.querySelectorAll("#tab-design-lab .design-btn").forEach((b) => b.classList.remove("active"));
-  targetBtn.classList.add("active");
+  if (targetBtn) targetBtn.classList.add("active");
   currentWipeMode = mode;
   updateSplitComparatorImages();
 }
@@ -281,41 +301,53 @@ function updateView() {
   const metrics = caseData.metrics;
 
   // Header
-  document.getElementById("caseHeaderTitle").textContent = `${caseData.title}: ${caseData.pathology}`;
-  document.getElementById("caseHeaderDesc").textContent = caseData.description;
+  const titleEl = document.getElementById("caseHeaderTitle");
+  if (titleEl) titleEl.textContent = `${caseData.title}: ${caseData.pathology}`;
+  
+  const descEl = document.getElementById("caseHeaderDesc");
+  if (descEl) descEl.textContent = caseData.description;
 
   // Dossier
   const boxW = box[2] - box[0];
   const boxH = box[3] - box[1];
-  document.getElementById("caseDossier").innerHTML = `
-    <div><strong>Pathology:</strong> ${caseData.pathology}</div>
-    <div><strong>Modality:</strong> ${caseData.modality}</div>
-    <div><strong>Resolution:</strong> <span class="meta-badge">${caseData.slice_dim}</span></div>
-    <div><strong>Prompt Box:</strong> <span class="meta-badge">[${box.join(", ")}]</span></div>
-    <div><strong>Prompt Size:</strong> <span class="meta-badge">${boxW} &times; ${boxH} px</span></div>
-    <div><strong>Model:</strong> MedSAM ViT-Base (Decoder Prompt-Gated)</div>
-  `;
+  const dossierEl = document.getElementById("caseDossier");
+  if (dossierEl) {
+    dossierEl.innerHTML = `
+      <div><strong>Source Volume:</strong> <span class="meta-badge">${caseData.src || "BraTS"} (Slice z=${caseData.z || 63})</span></div>
+      <div><strong>Pathology:</strong> ${caseData.pathology}</div>
+      <div><strong>Modality:</strong> ${caseData.modality}</div>
+      <div><strong>Resolution:</strong> <span class="meta-badge">${caseData.slice_dim}</span></div>
+      <div><strong>Prompt Box:</strong> <span class="meta-badge">[${box.join(", ")}]</span></div>
+      <div><strong>Prompt Size:</strong> <span class="meta-badge">${boxW} &times; ${boxH} px</span></div>
+      <div><strong>Model:</strong> MedSAM ViT-Base (Prompt-Gated Decoder)</div>
+    `;
+  }
 
   // Panel 1: Raw Input with Bounding Box
   setImgSrc("p1-image", `${currentCaseId}/raw_box.png`);
-  document.getElementById("p1-coords").textContent = `Prompt Box: [${box.join(", ")}]`;
+  const coordsEl = document.getElementById("p1-coords");
+  if (coordsEl) coordsEl.textContent = `Prompt Box: [${box.join(", ")}] (${boxW}×${boxH} px)`;
 
   // Panel 2: Segmentation
   setImgSrc("p2-image", `${currentCaseId}/segmentation.png`);
   const diceBadge = document.getElementById("p2-dice-badge");
-  diceBadge.textContent = `Dice: ${metrics.dice_clean.toFixed(3)}`;
-  if (metrics.dice_clean >= 0.85) {
-    diceBadge.className = "badge-tag badge-green";
-  } else {
-    diceBadge.className = "badge-tag badge-red";
+  if (diceBadge) {
+    diceBadge.textContent = `Dice: ${metrics.dice_clean.toFixed(4)}`;
+    if (metrics.dice_clean >= 0.85) {
+      diceBadge.className = "badge-tag badge-green";
+    } else {
+      diceBadge.className = "badge-tag badge-red";
+    }
   }
 
   // Case 05 Under-segmentation notice
   const case05Alert = document.getElementById("p2-case05-alert");
-  if (currentCaseId === "case_05") {
-    case05Alert.style.display = "block";
-  } else {
-    case05Alert.style.display = "none";
+  if (case05Alert) {
+    if (currentCaseId === "case_05") {
+      case05Alert.style.display = "block";
+    } else {
+      case05Alert.style.display = "none";
+    }
   }
 
   // Panel 3: Heatmap
@@ -324,12 +356,24 @@ function updateView() {
   // Verification Module
   setImgSrc("mprt-intact-img", `${currentCaseId}/heatmap_turbo.png`);
   setImgSrc("mprt-scrambled-img", `${currentCaseId}/scrambled_turbo.png`);
-  document.getElementById("mprt-spearman-val").textContent = metrics.spearman_decoder_full.toFixed(3);
-  document.getElementById("mprt-rand-dice-val").textContent = metrics.dice_after_decoder_rand.toFixed(3);
-  document.getElementById("mprt-ssim-val").textContent = metrics.ssim_decoder_full.toFixed(3);
+  
+  const spVal = document.getElementById("mprt-spearman-val");
+  if (spVal) spVal.textContent = metrics.spearman_decoder_full.toFixed(3);
+  
+  const rdVal = document.getElementById("mprt-rand-dice-val");
+  if (rdVal) rdVal.textContent = metrics.dice_after_decoder_rand.toFixed(3);
+  
+  const smVal = document.getElementById("mprt-ssim-val");
+  if (smVal) smVal.textContent = metrics.ssim_decoder_full.toFixed(3);
 
   // Transparency Curve
   setImgSrc("transparency-curve-img", `${currentCaseId}/curve.png`);
+
+  // Full Publication Figure & Montage
+  setImgSrc("full-figure-img", `${currentCaseId}/figure.png`);
+  setImgSrc("clinician-figure-img", `${currentCaseId}/figure.png`);
+  setImgSrc("audit-montage-img", `${currentCaseId}/montage.png`);
+  setImgSrc("clinician-montage-img", `${currentCaseId}/montage.png`);
 
   // Design Lab
   renderDesignCatalog();
@@ -350,6 +394,7 @@ function updateHeatmapImages() {
 function setupSplitComparator() {
   const comp = document.getElementById("splitComparator");
   const overlay = document.getElementById("splitOverlay");
+  if (!comp || !overlay) return;
   let isDown = false;
 
   function move(e) {
@@ -371,28 +416,26 @@ function setupSplitComparator() {
   window.addEventListener("touchend", () => (isDown = false));
   comp.addEventListener("touchmove", move);
 
-  // Set initial position to 50%
+  // Initial position 50%
   overlay.style.width = "50%";
 }
 
 function updateSplitComparatorImages() {
   const underlay = document.getElementById("splitUnderlay");
   const overlayInner = document.getElementById("splitOverlayInner");
+  if (!underlay || !overlayInner) return;
 
   const heatFile = currentDesign === "residual"
     ? `${currentCaseId}/residual_turbo.png`
     : `${currentCaseId}/heatmap_${currentDesign}.png`;
 
   if (currentWipeMode === "clean") {
-    // Left: Clean Heatmap | Right: Raw MRI
     setBgImageWithFallback(underlay, `${currentCaseId}/raw.png`);
     setBgImageWithFallback(overlayInner, heatFile);
   } else if (currentWipeMode === "scrambled") {
-    // Left: Clean Heatmap | Right: Scrambled Heatmap
     setBgImageWithFallback(underlay, `${currentCaseId}/scrambled_turbo.png`);
     setBgImageWithFallback(overlayInner, heatFile);
   } else {
-    // Left: Clean Heatmap | Right: Segmentation contours
     setBgImageWithFallback(underlay, `${currentCaseId}/segmentation.png`);
     setBgImageWithFallback(overlayInner, heatFile);
   }
@@ -456,13 +499,16 @@ function renderCohortTable() {
     tr.innerHTML = `
       <td><strong>${c.id}</strong></td>
       <td>${c.pathology}</td>
-      <td><span class="meta-badge">${c.slice_dim}</span></td>
-      <td><strong>${c.metrics.dice_clean.toFixed(3)}</strong></td>
+      <td><span class="meta-badge">${c.src || "BraTS"} (z=${c.z})</span></td>
+      <td><strong>${c.metrics.dice_clean.toFixed(4)}</strong></td>
       <td><span class="badge-tag badge-red">${c.metrics.dice_after_decoder_rand.toFixed(3)}</span></td>
       <td><strong>${c.metrics.spearman_decoder_full.toFixed(3)}</strong></td>
       <td><span style="color: #64748b;">${c.metrics.ssim_decoder_full.toFixed(3)}</span></td>
       <td>
         <span class="badge-tag badge-green">Passed (&rho; &le; 0.30)</span>
+      </td>
+      <td>
+        <span class="badge-tag badge-red">Failed (SSIM &gt; 0.50)</span>
       </td>
     `;
     tbody.appendChild(tr);

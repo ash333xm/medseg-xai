@@ -614,3 +614,53 @@ body {
   color: var(--text-sub);
   text-align: center;
 }
+
+/* Panoramic Figure & Montage Viewports */
+.panoramic-card {
+  background: var(--glass-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  padding: 18px 22px;
+  margin-bottom: 22px;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+}
+.panoramic-viewport {
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--glass-border-subtle);
+  padding: 6px;
+  margin: 12px 0 6px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+.panoramic-viewport img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px;
+  object-fit: contain;
+}
+.folder-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(203, 213, 225, 0.9);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--text-main);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+.folder-pill .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #16a34a;
+}

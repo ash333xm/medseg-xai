@@ -30,12 +30,13 @@ frontend/node_modules/
 .npm/
 npm-debug.log*
 
-# Large Archives & Unpack Duplicates
+# Large Archives & Temporary Downloads
 *.zip
 medseg_all_datasets/
 medsegxai_google_drive/
+drive_download/
 
-# PyTorch / Large Model Weights (Keep code & sample data, ignore large 800MB checkpoints)
+# PyTorch Large Model Weights (Keep code & sample data, ignore large 800MB checkpoints)
 *.pt
 *.pth
 *.bin
@@ -50,18 +51,16 @@ weights/
 raw_data/
 processed_data/
 /runpod-volume/
-/data/
 
-# Whitelist code, curated Drive benchmark data, and Vercel web demo assets
+# Whitelist code, curated Drive benchmark data, outputs, and Vercel web demo assets
 !medseg/data/
 !medsegxai/data/
-!/data/case_01/
-!/data/case_02/
-!/data/case_03/
-!/data/case_04/
-!/data/case_05/
-!/data/manifest.json
+!/data/
+!/data/**
 !/public/
+!/public/**
+!/outputs/
+!/outputs/**
 
 # Logs & Testing
 .pytest_cache/

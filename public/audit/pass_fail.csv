@@ -1,0 +1,6 @@
+case,ssim_at_decoder_full,threshold,passed,control_ssim,heads_ssim,restored_maxdiff,seconds
+case_01,0.502,0.5,False,1.0,1.0,0.0,26.6
+case_02,0.609,0.5,False,1.0,1.0,0.0,27.9
+case_03,0.529,0.5,False,1.0,1.0,0.0,28.5
+case_04,0.509,0.5,False,1.0,1.0,0.0,28.2
+case_05,0.6,0.5,False,1.0,1.0,0.0,28.1

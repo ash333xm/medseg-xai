@@ -14,14 +14,13 @@ env/
 medseg/
 medsegxai/
 medsegxai_google_drive/
+medseg_all_datasets/
+drive_download/
 scripts/
 tests/
-outputs/
 
-# Ignore Python binaries and weights
-*.py
-*.npz
-*.npy
+# Large binaries outside public
+weights/
 *.pth
 *.pt
 *.tar
@@ -33,5 +32,13 @@ outputs/
 !public/
 !public/**
 !public/data/**
+!public/audit/**
+!public/cases/**
+!public/heatmap_a/**
+!public/heatmap_A/**
+!public/heatmap_b/**
+!public/heatmap_B/**
+!public/results/**
+!public/segmentation/**
+!public/segmentations/**
 !data/**
-

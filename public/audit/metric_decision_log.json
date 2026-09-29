@@ -1,0 +1,34 @@
+{
+  "generated": "2026-09-28T19:25:17.631039",
+  "log": [
+    {
+      "step": 1,
+      "what": "pre-registered pass/fail rule, fixed BEFORE running the audit",
+      "rule": "SSIM(heatmap A, heatmap B) <= 0.5 at the decoder_full randomization stage",
+      "reasoning": "SSIM is a standard image-similarity metric; 0.5 was chosen as a demo cutoff before seeing any results."
+    },
+    {
+      "step": 2,
+      "what": "result of applying the pre-registered rule",
+      "result": "0 of 5 cases passed. SSIM stayed between 0.50-0.61 at decoder_full across all cases and never dropped much further even at full-model randomization (0.40-0.51 at enc_full)."
+    },
+    {
+      "step": 3,
+      "what": "investigation: is SSIM actually measuring what we want here?",
+      "test": "Compared heatmap A against a plain synthetic Gaussian blob centered on the box prompt (no model involved at all).",
+      "finding": "The fake blob scored SSIM 0.37-0.70 against real heatmap A - statistically indistinguishable from how similar heatmap B (fully randomized model) scored against A (0.43-0.62). This means SSIM gives smooth/blurry maps a high baseline similarity almost regardless of content, because our heatmaps are only 64x64 upsampled to 512x512. SSIM is not a reliable discriminator for this heatmap resolution."
+    },
+    {
+      "step": 4,
+      "what": "metric switch, made AFTER seeing the above result",
+      "new_rule": "Spearman rank correlation(heatmap A, heatmap B) <= 0.3 at decoder_full",
+      "reasoning": "Spearman checks whether bright/dark regions keep the same relative ranking, independent of blur/smoothness. It collapsed from 1.0 (control) to near 0 (-0.09 to 0.06) at decoder_full across all 5 cases, matching visual inspection of heatmap A vs B and matching the collapse in randomized-model Dice (0.90->0.05-0.13).",
+      "result": "5 of 5 cases pass under this rule."
+    },
+    {
+      "step": 5,
+      "what": "limitation to disclose",
+      "text": "Because this switch was made after observing results on these same 5 cases, the 0.3 threshold and the choice of Spearman are NOT independently validated. They are a defensible post-hoc correction, not a pre-registered test. A held-out case set would be needed to validate this rule properly. Additionally, the prompt-encoder (which embeds the box) was never randomized in any stage, so part of any remaining similarity may reflect the box location rather than learned weights."
+    }
+  ]
+}

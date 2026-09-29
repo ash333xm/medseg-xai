@@ -20,11 +20,15 @@
       ]
     },
     {
-      "source": "/data/(.*)",
+      "source": "/(data|audit|cases|heatmap_a|heatmap_b|heatmap_A|heatmap_B|results|segmentation|segmentations)/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
         }
       ]
     }

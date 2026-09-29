@@ -18,12 +18,12 @@
         </svg>
         <div>
           <div class="brand-title">MedSeg-XAI Clinical Studio</div>
-          <div class="brand-sub">Multimodal Neuro-Radiology Audit Platform</div>
+          <div class="brand-sub">Multimodal Neuro-Radiology Audit Platform | MSD Task 01 (BraTS)</div>
         </div>
       </div>
       <div class="header-badges">
         <span class="domain-badge">Custom Domain: pacs.medseg-xai.internal [Configured - SSL Active]</span>
-        <span class="enclave-badge">Zero-VRAM Safe Enclave</span>
+        <span class="enclave-badge">Drive Data Synchronized</span>
       </div>
     </header>
 
@@ -32,6 +32,7 @@
       <button class="tab-btn active" data-tab="clinician">Clinician View & Audit Gate</button>
       <button class="tab-btn" data-tab="design-lab">Heatmap Design Lab</button>
       <button class="tab-btn" data-tab="cohort">Cohort Benchmark & Metric Pivot</button>
+      <button class="tab-btn" data-tab="drive-assets">Google Drive Clinical Repository</button>
       <button class="tab-btn" data-tab="governance">Data Governance & Terms</button>
     </nav>
 
@@ -82,11 +83,15 @@
         </div>
 
         <div class="sidebar-card" style="font-size: 0.76rem; color: #475569; line-height: 1.6;">
-          <div class="sidebar-title" style="margin-bottom: 6px;">Workstation Verification</div>
-          <div>- Mode: Audited Safe-Enclave</div>
-          <div>- Live PyTorch: Disabled (Zero-VRAM)</div>
-          <div>- De-identification: HIPAA Safe Harbor</div>
-          <div>- Sanity Check: Adebayo et al. (MPRT)</div>
+          <div class="sidebar-title" style="margin-bottom: 6px;">Drive Subfolders Active</div>
+          <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 6px;">
+            <div class="folder-pill"><span class="dot"></span>audit/ (curves & montages)</div>
+            <div class="folder-pill"><span class="dot"></span>cases/ (slices & previews)</div>
+            <div class="folder-pill"><span class="dot"></span>heatmap_a/ (intact hooks)</div>
+            <div class="folder-pill"><span class="dot"></span>heatmap_b/ (8-stage ablation)</div>
+            <div class="folder-pill"><span class="dot"></span>results/ (figures & json)</div>
+            <div class="folder-pill"><span class="dot"></span>segmentations/ (masks & dice)</div>
+          </div>
         </div>
       </aside>
 
@@ -133,7 +138,7 @@
             <div class="panel-card">
               <div class="glass-header">
                 <span>Panel 2: Segmentation</span>
-                <span id="p2-dice-badge" class="badge-tag badge-green">Dice: 0.000</span>
+                <span id="p2-dice-badge" class="badge-tag badge-green">Dice: 0.0000</span>
               </div>
               <div class="glass-subtext">MedSAM predicted mask (red outline) vs expert ground truth (green outline).</div>
               <div class="image-viewport">
@@ -144,7 +149,7 @@
                 <span style="font-size: 0.78rem; color: #b91c1c; font-weight: 600;">Red: MedSAM Predicted</span>
               </div>
               <div id="p2-case05-alert" class="alert-case05-glass" style="display: none;">
-                <strong>Audit Notice: Under-Segmentation Observed (Dice: 0.641)</strong><br>
+                <strong>Audit Notice: Under-Segmentation Observed (Dice: 0.6405)</strong><br>
                 Case 05 presents a diffuse, infiltrative frontal glioma. While the model correctly isolates the enhancing core, it under-segments the non-enhancing infiltrative margins. Preserved without suppression for honest failure-mode transparency.
               </div>
             </div>
@@ -160,6 +165,30 @@
                 <img id="p3-image" alt="Decoder Attention Map">
               </div>
               <div class="panel-meta">Strict Label: Decoder Attention Map (Hooks)</div>
+            </div>
+          </div>
+
+          <!-- Multi-Panel Publication Figure Preview -->
+          <div class="panoramic-card">
+            <div class="glass-header">
+              <span>Full Clinical Publication Multi-Panel Figure (Results Subfolder)</span>
+              <span class="badge-tag">512×512 Native Resolution</span>
+            </div>
+            <div class="glass-subtext">Complete publication multi-panel composite from Google Drive results: Raw MRI, Prompt Box, GT vs Pred, and Attention Map.</div>
+            <div class="panoramic-viewport">
+              <img id="clinician-figure-img" alt="Multi-Panel Publication Figure">
+            </div>
+          </div>
+
+          <!-- 8-Stage Progressive Degradation Montage Preview -->
+          <div class="panoramic-card">
+            <div class="glass-header">
+              <span>8-Stage Progressive Parameter Randomization Montage (Audit Subfolder)</span>
+              <span class="badge-tag badge-green">NeurIPS MPRT Protocol</span>
+            </div>
+            <div class="glass-subtext">Cascading weight re-initialization trajectory from intact control through decoder layers down to full encoder randomization.</div>
+            <div class="panoramic-viewport">
+              <img id="clinician-montage-img" alt="Audit Degradation Montage">
             </div>
           </div>
 
@@ -297,7 +326,7 @@
                 <tr>
                   <th>Case ID</th>
                   <th>Pathology</th>
-                  <th>Resolution</th>
+                  <th>Source Volume</th>
                   <th>Clean Dice</th>
                   <th>Scrambled Dice</th>
                   <th>Spearman (A vs B)</th>
@@ -316,26 +345,135 @@
                 <h4 style="font-size: 0.96rem; color: #0f172a; margin-bottom: 8px;">Structural Similarity (SSIM) Sensitivity</h4>
                 <div style="font-size: 0.84rem; color: #334155; line-height: 1.6;">
                   Attention maps extracted from the MedSAM mask decoder cross-attention layers originate on a low-resolution 64x64 grid. Upsampling to 512x512 with Gaussian smoothing removes high-frequency gradients.<br><br>
-                  Because SSIM measures global luminance and contrast variance, smooth noise fields retain an artificially elevated score (<strong>0.645 to 0.710</strong>), failing a sensible sanity threshold.
+                  Because SSIM measures global luminance and contrast variance, smooth noise fields retain an artificially elevated score (<strong>0.502 to 0.609</strong>), failing a sensible sanity threshold.
                 </div>
               </div>
               <div>
                 <h4 style="font-size: 0.96rem; color: #0f172a; margin-bottom: 8px;">Spearman Rank Correlation Resolution</h4>
                 <div style="font-size: 0.84rem; color: #334155; line-height: 1.6;">
                   Spearman correlation evaluates monotonic pixel intensity rank ordering rather than raw values.<br><br>
-                  In a clean model, peak attention ranks concentrate tightly over the tumor. When parameters are randomized, spatial rank ordering completely collapses into uniform noise, driving &rho; down to near zero (<strong>0.098 to 0.153</strong>). 5/5 cases cleanly pass the &rho; &le; 0.30 audit gate.
+                  In a clean model, peak attention ranks concentrate tightly over the tumor. When parameters are randomized, spatial rank ordering completely collapses into uniform noise, driving &rho; down to near zero (<strong>-0.091 to 0.062</strong>). 5/5 cases cleanly pass the &rho; &le; 0.30 audit gate.
                 </div>
               </div>
             </div>
 
             <div class="alert-case05-glass" style="margin-top: 24px;">
-              <strong>Scientific Integrity: Case 05 Under-Segmentation (Dice: 0.641)</strong><br>
-              Case 05 presents a diffuse, infiltrative frontal glioma. While the model isolates the hyperintense core, it under-segments the faint infiltrative margins. The MPRT sanity check remains robust: the scrambled Dice collapses to 0.012 and Spearman correlation drops to 0.153, confirming that the heatmap is parameter-dependent without suppressing real-world limitations.
+              <strong>Scientific Integrity: Case 05 Under-Segmentation (Dice: 0.6405)</strong><br>
+              Case 05 presents a diffuse, infiltrative frontal glioma. While the model isolates the hyperintense core, it under-segments the faint infiltrative margins. The MPRT sanity check remains robust: the scrambled Dice collapses to 0.064 and Spearman correlation drops to 0.031, confirming that the heatmap is parameter-dependent without suppressing real-world limitations.
             </div>
           </div>
         </section>
 
-        <!-- TAB 4: DATA GOVERNANCE & TERMS -->
+        <!-- TAB 4: GOOGLE DRIVE CLINICAL REPOSITORY -->
+        <section id="tab-drive-assets" class="tab-pane" style="display: none;">
+          <div class="glass-card">
+            <div class="glass-header">
+              <span>Google Drive Clinical Repository & Artifact Explorer</span>
+              <span class="badge-tag badge-green">100% Synchronized</span>
+            </div>
+            <div class="glass-subtext">
+              Direct access to all authentic clinical slices, attention matrices, segmentation masks, and audit tables downloaded from the Google Drive repository.
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 16px 0;">
+              <div style="background: rgba(255,255,255,0.8); border: 1px solid rgba(203, 213, 225, 0.9); border-radius: 10px; padding: 12px;">
+                <div style="font-size: 0.82rem; font-weight: 700; color: #0f172a;">cases/ Subfolder</div>
+                <div style="font-size: 0.74rem; color: #64748b; margin: 4px 0;">5 slices (.npz), 5 previews (.png), previews_grid.png</div>
+                <div style="font-family: var(--font-mono); font-size: 0.72rem; color: #0284c7;">512×512×3 uint8 arrays + prompt boxes</div>
+              </div>
+
+              <div style="background: rgba(255,255,255,0.8); border: 1px solid rgba(203, 213, 225, 0.9); border-radius: 10px; padding: 12px;">
+                <div style="font-size: 0.82rem; font-weight: 700; color: #0f172a;">heatmap_a/ & heatmap_b/</div>
+                <div style="font-size: 0.74rem; color: #64748b; margin: 4px 0;">Heatmap A intact (.npy), Heatmap B 8 stages (.npy)</div>
+                <div style="font-family: var(--font-mono); font-size: 0.72rem; color: #0284c7;">512×512 float32 attention distributions</div>
+              </div>
+
+              <div style="background: rgba(255,255,255,0.8); border: 1px solid rgba(203, 213, 225, 0.9); border-radius: 10px; padding: 12px;">
+                <div style="font-size: 0.82rem; font-weight: 700; color: #0f172a;">results/ & audit/</div>
+                <div style="font-size: 0.74rem; color: #64748b; margin: 4px 0;">results.json, dice_table.csv, audit_summary.csv</div>
+                <div style="font-family: var(--font-mono); font-size: 0.72rem; color: #0284c7;">Complete CSV & JSON trial logs</div>
+              </div>
+            </div>
+
+            <!-- Active Case Publication Figure -->
+            <div style="margin-top: 22px;">
+              <div class="glass-header">
+                <span>Active Case Publication Figure (outputs/results/case_XX_figure.png)</span>
+              </div>
+              <div class="panoramic-viewport">
+                <img id="full-figure-img" alt="Active Case Figure">
+              </div>
+            </div>
+
+            <!-- Active Case Audit Montage -->
+            <div style="margin-top: 22px;">
+              <div class="glass-header">
+                <span>Active Case 8-Stage Audit Montage (outputs/audit/case_XX_montage.png)</span>
+              </div>
+              <div class="panoramic-viewport">
+                <img id="audit-montage-img" alt="Active Case Montage">
+              </div>
+            </div>
+
+            <!-- Subfolder Data Directory Table -->
+            <div style="margin-top: 24px;">
+              <div class="glass-header">
+                <span>Direct Data Endpoints (Public Directory)</span>
+              </div>
+              <table class="clinical-table" style="font-size: 0.8rem; margin-top: 10px;">
+                <thead>
+                  <tr>
+                    <th>Folder</th>
+                    <th>Available Files</th>
+                    <th>Format</th>
+                    <th>Direct Route</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>audit/</strong></td>
+                    <td>audit_summary.csv, audit_long.csv, metric_decision_log.json, case_01-05_curve.png, case_01-05_montage.png</td>
+                    <td>CSV / JSON / PNG</td>
+                    <td><code>/audit/audit_summary.csv</code></td>
+                  </tr>
+                  <tr>
+                    <td><strong>cases/</strong></td>
+                    <td>case_01.npz - case_05.npz, case_01-05_preview.png, previews_grid.png</td>
+                    <td>NPZ / PNG</td>
+                    <td><code>/cases/case_01.npz</code></td>
+                  </tr>
+                  <tr>
+                    <td><strong>heatmap_a/</strong></td>
+                    <td>case_01-05_heatmap_A.npy, case_01-05_heatmap_A_overlay.png, heatmap_A_checks.csv</td>
+                    <td>NPY / PNG / CSV</td>
+                    <td><code>/heatmap_a/case_01_heatmap_A.npy</code></td>
+                  </tr>
+                  <tr>
+                    <td><strong>heatmap_b/</strong></td>
+                    <td>case_01-05 stages 0 through 7 (control, heads, final_attn, dec_layer1, decoder_full, enc_last2, enc_last6, enc_full)</td>
+                    <td>NPY (40 files)</td>
+                    <td><code>/heatmap_b/case_01_stage4_decoder_full.npy</code></td>
+                  </tr>
+                  <tr>
+                    <td><strong>results/</strong></td>
+                    <td>results.json, results_table.csv, case_01-05_figure.png</td>
+                    <td>JSON / CSV / PNG</td>
+                    <td><code>/results/results.json</code></td>
+                  </tr>
+                  <tr>
+                    <td><strong>segmentations/</strong></td>
+                    <td>dice_table.csv, case_01-05_pred_mask.npy, case_01-05_overlay.png</td>
+                    <td>CSV / NPY / PNG</td>
+                    <td><code>/segmentation/dice_table.csv</code></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- TAB 5: DATA GOVERNANCE & TERMS -->
         <section id="tab-governance" class="tab-pane" style="display: none;">
           <div class="glass-card">
             <div class="glass-header">

@@ -1,0 +1,6 @@
+case,dice_clean,ssim_decoder_full,spearman_decoder_full,ssim_enc_full,spearman_enc_full,dice_after_decoder_rand,pass_v1_ssim<=0.5,pass_v2_spearman<=0.3,seg_seconds,audit_seconds(3 seeds)
+case_01,0.9029,0.502,0.027,0.478,-0.017,0.08,False,True,0.51,26.6
+case_02,0.9033,0.609,0.013,0.502,-0.023,0.055,False,True,0.44,27.9
+case_03,0.8359,0.529,0.062,0.401,-0.004,0.132,False,True,0.44,28.5
+case_04,0.9702,0.509,-0.091,0.451,-0.05,0.087,False,True,0.46,28.2
+case_05,0.6405,0.6,0.031,0.508,-0.038,0.064,False,True,0.46,28.1

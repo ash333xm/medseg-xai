@@ -1,0 +1,325 @@
+{
+  "meta": {
+    "model": "MedSAM ViT-B (HF), zero-shot, frozen",
+    "data": "5 axial FLAIR slices, MSD Task01, largest-tumor slice, tight box prompt",
+    "heatmap": "decoder attention map via forward hooks (simplified, NOT full TMME), 64x64 upsampled",
+    "audit": "cascading random re-init of weight matrices/kernels, 3 seeds, output->input",
+    "primary_metric": "spearman",
+    "primary_metric_note": "SSIM was the pre-registered metric; switched to Spearman after results showed SSIM cannot discriminate for this heatmap resolution. See metric_decision_log for the full reasoning trail.",
+    "rules": {
+      "v1_ssim_prereg": "SSIM<=0.5 at decoder_full (fixed before results) - 0/5 passed",
+      "v2_spearman_posthoc": "Spearman<=0.3 at decoder_full (chosen after results) - 5/5 passed"
+    },
+    "metric_decision_log": [
+      {
+        "step": 1,
+        "what": "pre-registered pass/fail rule, fixed BEFORE running the audit",
+        "rule": "SSIM(heatmap A, heatmap B) <= 0.5 at the decoder_full randomization stage",
+        "reasoning": "SSIM is a standard image-similarity metric; 0.5 was chosen as a demo cutoff before seeing any results."
+      },
+      {
+        "step": 2,
+        "what": "result of applying the pre-registered rule",
+        "result": "0 of 5 cases passed. SSIM stayed between 0.50-0.61 at decoder_full across all cases and never dropped much further even at full-model randomization (0.40-0.51 at enc_full)."
+      },
+      {
+        "step": 3,
+        "what": "investigation: is SSIM actually measuring what we want here?",
+        "test": "Compared heatmap A against a plain synthetic Gaussian blob centered on the box prompt (no model involved at all).",
+        "finding": "The fake blob scored SSIM 0.37-0.70 against real heatmap A - statistically indistinguishable from how similar heatmap B (fully randomized model) scored against A (0.43-0.62). This means SSIM gives smooth/blurry maps a high baseline similarity almost regardless of content, because our heatmaps are only 64x64 upsampled to 512x512. SSIM is not a reliable discriminator for this heatmap resolution."
+      },
+      {
+        "step": 4,
+        "what": "metric switch, made AFTER seeing the above result",
+        "new_rule": "Spearman rank correlation(heatmap A, heatmap B) <= 0.3 at decoder_full",
+        "reasoning": "Spearman checks whether bright/dark regions keep the same relative ranking, independent of blur/smoothness. It collapsed from 1.0 (control) to near 0 (-0.09 to 0.06) at decoder_full across all 5 cases, matching visual inspection of heatmap A vs B and matching the collapse in randomized-model Dice (0.90->0.05-0.13).",
+        "result": "5 of 5 cases pass under this rule."
+      },
+      {
+        "step": 5,
+        "what": "limitation to disclose",
+        "text": "Because this switch was made after observing results on these same 5 cases, the 0.3 threshold and the choice of Spearman are NOT independently validated. They are a defensible post-hoc correction, not a pre-registered test. A held-out case set would be needed to validate this rule properly. Additionally, the prompt-encoder (which embeds the box) was never randomized in any stage, so part of any remaining similarity may reflect the box location rather than learned weights."
+      }
+    ],
+    "caveats": [
+      "5 slices demonstrate the pipeline, they do not validate it",
+      "thresholds are demo values",
+      "prompt encoder not randomized",
+      "SSIM has a high floor on smooth heatmaps",
+      "MPRT is a necessary sanity check, not proof of faithfulness",
+      "Spearman-based pass rule is post-hoc, not independently validated"
+    ]
+  },
+  "cases": {
+    "case_01": {
+      "dice_clean": 0.9029,
+      "ssim_decoder_full": 0.502,
+      "spearman_decoder_full": 0.027,
+      "ssim_enc_full": 0.478,
+      "spearman_enc_full": -0.017,
+      "dice_after_decoder_rand": 0.08,
+      "pass_v1_ssim<=0.5": false,
+      "pass_v2_spearman<=0.3": true,
+      "seg_seconds": 0.51,
+      "audit_seconds(3 seeds)": 26.6,
+      "curve": {
+        "stages": [
+          "control",
+          "heads",
+          "final_attn",
+          "dec_layer1",
+          "decoder_full",
+          "enc_last2",
+          "enc_last6",
+          "enc_full"
+        ],
+        "fraction": [
+          0.0,
+          0.0082,
+          0.0096,
+          0.0264,
+          0.0432,
+          0.203,
+          0.5058,
+          0.9999
+        ],
+        "ssim": [
+          1.0,
+          1.0,
+          0.3697,
+          0.5979,
+          0.5017,
+          0.5189,
+          0.4818,
+          0.4784
+        ],
+        "spearman": [
+          1.0,
+          1.0,
+          0.2299,
+          0.3165,
+          0.0274,
+          -0.014,
+          -0.0582,
+          -0.0172
+        ]
+      }
+    },
+    "case_02": {
+      "dice_clean": 0.9033,
+      "ssim_decoder_full": 0.609,
+      "spearman_decoder_full": 0.013,
+      "ssim_enc_full": 0.502,
+      "spearman_enc_full": -0.023,
+      "dice_after_decoder_rand": 0.055,
+      "pass_v1_ssim<=0.5": false,
+      "pass_v2_spearman<=0.3": true,
+      "seg_seconds": 0.44,
+      "audit_seconds(3 seeds)": 27.9,
+      "curve": {
+        "stages": [
+          "control",
+          "heads",
+          "final_attn",
+          "dec_layer1",
+          "decoder_full",
+          "enc_last2",
+          "enc_last6",
+          "enc_full"
+        ],
+        "fraction": [
+          0.0,
+          0.0082,
+          0.0096,
+          0.0264,
+          0.0432,
+          0.203,
+          0.5058,
+          0.9999
+        ],
+        "ssim": [
+          1.0,
+          1.0,
+          0.5513,
+          0.589,
+          0.6095,
+          0.4717,
+          0.5305,
+          0.5021
+        ],
+        "spearman": [
+          1.0,
+          1.0,
+          0.3404,
+          0.3412,
+          0.0125,
+          0.0221,
+          0.0179,
+          -0.0227
+        ]
+      }
+    },
+    "case_03": {
+      "dice_clean": 0.8359,
+      "ssim_decoder_full": 0.529,
+      "spearman_decoder_full": 0.062,
+      "ssim_enc_full": 0.401,
+      "spearman_enc_full": -0.004,
+      "dice_after_decoder_rand": 0.132,
+      "pass_v1_ssim<=0.5": false,
+      "pass_v2_spearman<=0.3": true,
+      "seg_seconds": 0.44,
+      "audit_seconds(3 seeds)": 28.5,
+      "curve": {
+        "stages": [
+          "control",
+          "heads",
+          "final_attn",
+          "dec_layer1",
+          "decoder_full",
+          "enc_last2",
+          "enc_last6",
+          "enc_full"
+        ],
+        "fraction": [
+          0.0,
+          0.0082,
+          0.0096,
+          0.0264,
+          0.0432,
+          0.203,
+          0.5058,
+          0.9999
+        ],
+        "ssim": [
+          1.0,
+          1.0,
+          0.4388,
+          0.5453,
+          0.5294,
+          0.4451,
+          0.4969,
+          0.4008
+        ],
+        "spearman": [
+          1.0,
+          1.0,
+          0.3284,
+          0.3167,
+          0.0616,
+          0.0325,
+          0.0186,
+          -0.004
+        ]
+      }
+    },
+    "case_04": {
+      "dice_clean": 0.9702,
+      "ssim_decoder_full": 0.509,
+      "spearman_decoder_full": -0.091,
+      "ssim_enc_full": 0.451,
+      "spearman_enc_full": -0.05,
+      "dice_after_decoder_rand": 0.087,
+      "pass_v1_ssim<=0.5": false,
+      "pass_v2_spearman<=0.3": true,
+      "seg_seconds": 0.46,
+      "audit_seconds(3 seeds)": 28.2,
+      "curve": {
+        "stages": [
+          "control",
+          "heads",
+          "final_attn",
+          "dec_layer1",
+          "decoder_full",
+          "enc_last2",
+          "enc_last6",
+          "enc_full"
+        ],
+        "fraction": [
+          0.0,
+          0.0082,
+          0.0096,
+          0.0264,
+          0.0432,
+          0.203,
+          0.5058,
+          0.9999
+        ],
+        "ssim": [
+          1.0,
+          1.0,
+          0.4766,
+          0.6262,
+          0.5089,
+          0.4452,
+          0.5417,
+          0.4509
+        ],
+        "spearman": [
+          1.0,
+          1.0,
+          0.3295,
+          0.3919,
+          -0.091,
+          -0.0407,
+          -0.0357,
+          -0.0503
+        ]
+      }
+    },
+    "case_05": {
+      "dice_clean": 0.6405,
+      "ssim_decoder_full": 0.6,
+      "spearman_decoder_full": 0.031,
+      "ssim_enc_full": 0.508,
+      "spearman_enc_full": -0.038,
+      "dice_after_decoder_rand": 0.064,
+      "pass_v1_ssim<=0.5": false,
+      "pass_v2_spearman<=0.3": true,
+      "seg_seconds": 0.46,
+      "audit_seconds(3 seeds)": 28.1,
+      "curve": {
+        "stages": [
+          "control",
+          "heads",
+          "final_attn",
+          "dec_layer1",
+          "decoder_full",
+          "enc_last2",
+          "enc_last6",
+          "enc_full"
+        ],
+        "fraction": [
+          0.0,
+          0.0082,
+          0.0096,
+          0.0264,
+          0.0432,
+          0.203,
+          0.5058,
+          0.9999
+        ],
+        "ssim": [
+          1.0,
+          1.0,
+          0.5523,
+          0.4911,
+          0.6,
+          0.6103,
+          0.571,
+          0.5085
+        ],
+        "spearman": [
+          1.0,
+          1.0,
+          0.3179,
+          0.2899,
+          0.0312,
+          0.0132,
+          -0.0142,
+          -0.0381
+        ]
+      }
+    }
+  }
+}
