@@ -2,12 +2,13 @@
 MedSeg-XAI Clinical Studio
 ==========================
 Precomputed Multimodal Neuro-Radiology Audit and Model Parameter Randomization Test (MPRT)
-Bespoke Liquid Glass Clinical PACS Dashboard.
+Bespoke Liquid Glass (Frosted Glassmorphism) Clinical PACS Dashboard.
 
 Strict Compliance Requirements:
 - Pure precomputed asset ingestion (Zero Live PyTorch, Zero SamModel instantiation).
 - Modern Liquid Glass (Frosted Glassmorphism) PACS Design System.
 - High-contrast controls and distinct segmented navigation (no washed-out white-on-white).
+- Unified single-element base64 cards preventing Streamlit DOM tearing.
 - Zero syntax errors or leaked HTML code blocks in data policies.
 - Zero emojis in UI headings, tabs, labels, and text.
 - Zero em dashes; standard hyphens used exclusively.
@@ -17,10 +18,11 @@ Strict Compliance Requirements:
 - Custom domain connection and custom favicon placeholders.
 """
 
+import base64
 import io
 import json
 import os
-from typing import Dict, Any
+from typing import Dict, Any, Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -37,7 +39,6 @@ plt.rcParams["axes.linewidth"] = 0.8
 # -----------------------------------------------------------------------------
 # STREAMLIT PAGE CONFIGURATION & CUSTOM FAVICON PLACEHOLDER
 # -----------------------------------------------------------------------------
-# Custom Favicon: Clean High-Resolution Medical Diagnostic Cross SVG
 CUSTOM_FAVICON_SVG = (
     "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230284c7'>"
     "<path d='M19 10.5V8.8C19 4.7 15.7 1.4 11.6 1.4 7.5 1.4 4.2 4.7 4.2 8.8v1.7C2.4 11.2 1.2 13 1.2 15.1"
@@ -58,15 +59,18 @@ st.markdown(
     """
     <style>
     /* Base Canvas - Subtle Cool Slate Gradient with Depth */
-    .stApp {
-        background-color: #f1f5f9;
-        background-image: 
-            radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.65) 0, transparent 50%),
-            radial-gradient(at 100% 100%, rgba(226, 232, 240, 0.85) 0, transparent 50%),
-            radial-gradient(at 50% 30%, rgba(248, 250, 252, 0.6) 0, transparent 100%);
-        background-attachment: fixed;
-        color: #0f172a;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    [data-testid="stAppViewContainer"] {
+        background: radial-gradient(circle at 10% 20%, rgba(219, 234, 254, 0.8) 0%, rgba(241, 245, 249, 0.95) 90%),
+                    linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 50%, #f1f5f9 100%) !important;
+        background-attachment: fixed !important;
+        color: #0f172a !important;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+    }
+    
+    .main .block-container {
+        padding-top: 1.5rem !important;
+        padding-bottom: 3.5rem !important;
+        max-width: 1440px !important;
     }
     
     /* Remove default Streamlit framework chrome and watermarks */
@@ -79,17 +83,17 @@ st.markdown(
     
     /* Top Enterprise Header Bar */
     .enterprise-bar {
-        background: rgba(255, 255, 255, 0.82);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
+        background: rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(20px) saturate(160%);
+        -webkit-backdrop-filter: blur(20px) saturate(160%);
         border: 1px solid rgba(255, 255, 255, 0.95);
-        border-radius: 12px;
-        padding: 12px 20px;
-        margin-bottom: 20px;
+        border-radius: 14px;
+        padding: 14px 22px;
+        margin-bottom: 22px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 4px 6px -2px rgba(15, 23, 42, 0.03), inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
     }
     
     .brand-title {
@@ -99,35 +103,37 @@ st.markdown(
         letter-spacing: -0.02em;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
     }
     
     .domain-pill {
         font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-        font-size: 0.76rem;
-        background: rgba(2, 132, 199, 0.08);
+        font-size: 0.78rem;
+        background: rgba(2, 132, 199, 0.09);
         color: #0369a1;
-        border: 1px solid rgba(2, 132, 199, 0.25);
-        padding: 4px 12px;
+        border: 1px solid rgba(2, 132, 199, 0.3);
+        padding: 5px 14px;
         border-radius: 20px;
-        font-weight: 500;
+        font-weight: 600;
+        box-shadow: 0 1px 3px rgba(2, 132, 199, 0.08);
     }
     
     /* Liquid Glass Cards */
     .glass-card {
-        background: rgba(255, 255, 255, 0.78);
-        backdrop-filter: blur(18px);
-        -webkit-backdrop-filter: blur(18px);
-        border: 1px solid rgba(255, 255, 255, 0.95);
-        border-radius: 14px;
-        padding: 20px 22px;
-        margin-bottom: 20px;
-        box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.02), inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
-        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        background: rgba(255, 255, 255, 0.72) !important;
+        backdrop-filter: blur(20px) saturate(160%) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.9) !important;
+        border-radius: 16px !important;
+        padding: 22px 24px !important;
+        margin-bottom: 22px !important;
+        box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.03), inset 0 1px 1px 0 rgba(255, 255, 255, 0.95) !important;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
     
     .glass-card:hover {
-        box-shadow: 0 14px 30px -5px rgba(15, 23, 42, 0.08), inset 0 1px 1px 0 rgba(255, 255, 255, 1.0);
+        box-shadow: 0 16px 36px -6px rgba(15, 23, 42, 0.12), inset 0 1px 1px 0 rgba(255, 255, 255, 1.0) !important;
+        transform: translateY(-2px);
     }
     
     .glass-header {
@@ -136,7 +142,7 @@ st.markdown(
         color: #0f172a;
         margin-bottom: 6px;
         padding-bottom: 8px;
-        border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+        border-bottom: 1px solid rgba(226, 232, 240, 0.9);
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -146,29 +152,29 @@ st.markdown(
         font-size: 0.82rem;
         color: #475569;
         margin-bottom: 12px;
-        line-height: 1.4;
+        line-height: 1.45;
     }
     
     /* High-Contrast Segmented Navigation Bar */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 8px !important;
+        gap: 10px !important;
         background: rgba(255, 255, 255, 0.75) !important;
         backdrop-filter: blur(16px) !important;
         -webkit-backdrop-filter: blur(16px) !important;
-        padding: 6px 8px !important;
-        border-radius: 12px !important;
-        border: 1px solid rgba(203, 213, 225, 0.85) !important;
-        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04) !important;
-        margin-bottom: 22px !important;
+        padding: 8px 12px !important;
+        border-radius: 14px !important;
+        border: 1.5px solid rgba(203, 213, 225, 0.9) !important;
+        box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05) !important;
+        margin-bottom: 24px !important;
     }
     
     .stTabs [data-baseweb="tab"] {
-        padding: 10px 22px !important;
+        padding: 10px 24px !important;
         font-weight: 600 !important;
-        font-size: 0.88rem !important;
+        font-size: 0.92rem !important;
         color: #334155 !important;
-        border-radius: 8px !important;
-        border: none !important;
+        border-radius: 10px !important;
+        border: 1px solid transparent !important;
         background: transparent !important;
         transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
@@ -176,77 +182,79 @@ st.markdown(
     .stTabs [data-baseweb="tab"]:hover {
         color: #0284c7 !important;
         background: rgba(241, 245, 249, 0.8) !important;
+        border-color: rgba(203, 213, 225, 0.6) !important;
     }
     
     .stTabs [aria-selected="true"] {
         color: #ffffff !important;
-        background: #0284c7 !important; /* Medical Sapphire Blue */
-        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.32) !important;
+        background: #0284c7 !important;
+        border-color: #0284c7 !important;
+        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35) !important;
     }
     
     /* High-Contrast Inputs & Selectors (Fix for washed-out options) */
     div[data-baseweb="select"] > div {
         background: rgba(255, 255, 255, 0.95) !important;
-        border: 1.5px solid #cbd5e1 !important;
+        border: 1.5px solid #94a3b8 !important;
         border-radius: 8px !important;
-        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06) !important;
+        box-shadow: 0 2px 5px rgba(15, 23, 42, 0.06) !important;
         color: #0f172a !important;
         font-weight: 600 !important;
     }
     
     div[data-baseweb="select"] > div:hover {
         border-color: #0284c7 !important;
+        box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2) !important;
+    }
+    
+    div[data-baseweb="select"] span {
+        color: #0f172a !important;
+        font-weight: 600 !important;
     }
     
     div[data-baseweb="popover"] {
         background: rgba(255, 255, 255, 0.98) !important;
         backdrop-filter: blur(20px) !important;
         -webkit-backdrop-filter: blur(20px) !important;
-        border: 1px solid #cbd5e1 !important;
-        border-radius: 8px !important;
-        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12) !important;
+        border: 1.5px solid #94a3b8 !important;
+        border-radius: 10px !important;
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.15) !important;
     }
     
-    li[data-baseweb="menu-item"] {
+    div[data-baseweb="popover"] li {
         color: #0f172a !important;
         font-weight: 500 !important;
-        padding: 8px 14px !important;
+        padding: 10px 14px !important;
+        border-bottom: 1px solid #f1f5f9 !important;
     }
     
-    li[data-baseweb="menu-item"]:hover {
-        background: #f1f5f9 !important;
-        color: #0284c7 !important;
+    div[data-baseweb="popover"] li:hover {
+        background: #e0f2fe !important;
+        color: #0369a1 !important;
     }
     
     /* Frosted Glass Sidebar */
-    section[data-testid="stSidebar"] {
-        background-color: rgba(255, 255, 255, 0.85) !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        border-right: 1px solid rgba(203, 213, 225, 0.8) !important;
-        box-shadow: 2px 0 16px rgba(15, 23, 42, 0.04) !important;
-    }
-    
-    /* High-Fidelity Image Displays */
-    div[data-testid="stImage"] img {
-        border-radius: 8px !important;
-        border: 1px solid rgba(203, 213, 225, 0.7) !important;
-        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06) !important;
+    [data-testid="stSidebar"] {
+        background: rgba(255, 255, 255, 0.78) !important;
+        backdrop-filter: blur(25px) !important;
+        -webkit-backdrop-filter: blur(25px) !important;
+        border-right: 1.5px solid rgba(203, 213, 225, 0.85) !important;
+        box-shadow: 4px 0 24px rgba(15, 23, 42, 0.05) !important;
     }
     
     /* Metric Readout Badges */
     .metric-badge {
         background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid #cbd5e1;
-        border-radius: 10px;
-        padding: 12px 16px;
-        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: 1.5px solid #cbd5e1;
+        border-radius: 12px;
+        padding: 14px 18px;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
     }
     
     .metric-label {
-        font-size: 0.74rem;
+        font-size: 0.75rem;
         text-transform: uppercase;
         letter-spacing: 0.05em;
         color: #64748b;
@@ -255,14 +263,14 @@ st.markdown(
     }
     
     .metric-value {
-        font-size: 1.35rem;
+        font-size: 1.45rem;
         font-weight: 700;
         color: #0f172a;
         font-family: "SFMono-Regular", Consolas, monospace;
     }
     
     .metric-sub {
-        font-size: 0.72rem;
+        font-size: 0.74rem;
         color: #64748b;
         margin-top: 4px;
     }
@@ -271,7 +279,7 @@ st.markdown(
     .badge-tag {
         display: inline-block;
         padding: 3px 10px;
-        font-size: 0.72rem;
+        font-size: 0.74rem;
         font-weight: 600;
         border-radius: 20px;
         background: rgba(2, 132, 199, 0.1);
@@ -293,11 +301,11 @@ st.markdown(
     
     .panel-meta {
         font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-        font-size: 0.78rem;
+        font-size: 0.8rem;
         color: #334155;
-        background: rgba(241, 245, 249, 0.9);
-        border: 1px solid #e2e8f0;
-        padding: 4px 10px;
+        background: rgba(241, 245, 249, 0.95);
+        border: 1px solid #cbd5e1;
+        padding: 5px 12px;
         border-radius: 6px;
         display: inline-block;
         margin-top: 10px;
@@ -305,46 +313,46 @@ st.markdown(
     
     /* Verdict Banners */
     .verdict-glass-pass {
-        background: rgba(240, 253, 244, 0.85);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        background: rgba(240, 253, 244, 0.9);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
         border: 1.5px solid #86efac;
         color: #166534;
-        border-radius: 10px;
-        padding: 14px 18px;
-        margin-bottom: 16px;
-        box-shadow: 0 4px 12px rgba(22, 101, 52, 0.06);
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin-bottom: 18px;
+        box-shadow: 0 4px 14px rgba(22, 101, 52, 0.08);
     }
     
     .verdict-glass-title {
         font-weight: 700;
-        font-size: 0.96rem;
+        font-size: 1rem;
         margin-bottom: 4px;
     }
     
     .verdict-glass-body {
-        font-size: 0.85rem;
+        font-size: 0.88rem;
         line-height: 1.45;
     }
     
     /* Clinical Case 05 Warning Banner */
     .alert-case05-glass {
-        background: rgba(254, 243, 199, 0.88);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        background: rgba(254, 243, 199, 0.92);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
         border: 1.5px solid #fcd34d;
         color: #92400e;
-        border-radius: 8px;
+        border-radius: 10px;
         padding: 12px 16px;
         margin-top: 12px;
         font-size: 0.82rem;
         line-height: 1.45;
-        box-shadow: 0 2px 8px rgba(146, 64, 14, 0.05);
+        box-shadow: 0 2px 8px rgba(146, 64, 14, 0.06);
     }
     
     /* Decision Log & Scope Disclaimer Callouts */
     .decision-log-glass {
-        background: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.92);
         border-left: 4px solid #0284c7;
         padding: 14px 18px;
         margin: 14px 0;
@@ -358,7 +366,7 @@ st.markdown(
     }
     
     .scope-box-glass {
-        background: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.92);
         border-left: 4px solid #64748b;
         padding: 14px 18px;
         margin: 14px 0;
@@ -382,12 +390,12 @@ st.markdown(
     """
     <div class="enterprise-bar">
         <div class="brand-title">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="#0284c7" style="flex-shrink: 0;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="#0284c7" style="flex-shrink: 0;">
                 <path d="M19 10.5V8.8C19 4.7 15.7 1.4 11.6 1.4 7.5 1.4 4.2 4.7 4.2 8.8v1.7C2.4 11.2 1.2 13 1.2 15.1c0 2.8 2.2 5 5 5h11.6c2.8 0 5-2.2 5-5 0-2.1-1.2-3.9-3-4.6zM11 7h2v3h3v2h-3v3h-2v-3H8v-2h3V7z"/>
             </svg>
             <span>MedSeg-XAI Clinical Studio</span>
         </div>
-        <div style="display: flex; gap: 10px; align-items: center;">
+        <div style="display: flex; gap: 12px; align-items: center;">
             <span class="domain-pill">Custom Domain: pacs.medseg-xai.internal [Configured - SSL Active]</span>
             <span class="badge-tag badge-green">Zero-VRAM Safe Enclave</span>
         </div>
@@ -505,7 +513,6 @@ def render_panel1_raw_input(case_id: str) -> bytes:
     base_img = get_normalized_base_image(data["image"])
     box = data["box"]
 
-    # Convert to PIL Image and draw crisp bounding box
     pil_img = Image.fromarray(base_img)
     draw = ImageDraw.Draw(pil_img)
     draw.rectangle([box[0], box[1], box[2], box[3]], outline="#eab308", width=2)
@@ -526,7 +533,6 @@ def render_panel2_segmentation(case_id: str) -> bytes:
     fig, ax = plt.subplots(figsize=(5, 5), dpi=140)
     ax.imshow(base_img)
 
-    # Plot vector contours
     if np.any(true_mask > 0):
         ax.contour(true_mask > 0, levels=[0.5], colors=["#16a34a"], linewidths=2.0)
     if np.any(pred_mask > 0):
@@ -584,20 +590,125 @@ def render_scrambled_heatmap_b(case_id: str, colormap: str = "turbo", alpha: flo
 
 
 # -----------------------------------------------------------------------------
+# UNIFIED BASE64 LIQUID GLASS CARD RENDERERS (PREVENTS DOM TEARING)
+# -----------------------------------------------------------------------------
+def render_panel1_card_html(case_id: str, box: list) -> str:
+    """Compose Panel 1 as a single unified contiguous liquid glass card."""
+    img_bytes = render_panel1_raw_input(case_id)
+    b64 = base64.b64encode(img_bytes).decode()
+    return f"""<div class="glass-card">
+    <div class="glass-header">
+        <span>Panel 1: Raw Input</span>
+        <span class="badge-tag">Bounding Box</span>
+    </div>
+    <div class="glass-subtext">Axial T1ce MRI slice with prompt coordinates overlaid in amber.</div>
+    <div style="border-radius: 10px; overflow: hidden; border: 1px solid rgba(203, 213, 225, 0.7); box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);">
+        <img src="data:image/png;base64,{b64}" style="width: 100%; display: block;"/>
+    </div>
+    <div class="panel-meta">Prompt Box: [{box[0]}, {box[1]}, {box[2]}, {box[3]}]</div>
+</div>"""
+
+
+def render_panel2_card_html(case_id: str, dice_score: float) -> str:
+    """Compose Panel 2 as a single unified contiguous liquid glass card."""
+    img_bytes = render_panel2_segmentation(case_id)
+    b64 = base64.b64encode(img_bytes).decode()
+    badge_style = "badge-green" if dice_score >= 0.85 else "badge-red"
+    
+    underseg_html = ""
+    if case_id == "case_05":
+        underseg_html = """<div class="alert-case05-glass">
+        <strong>Audit Notice: Under-Segmentation Observed (Dice: 0.641)</strong><br>
+        Case 05 presents a diffuse, infiltrative frontal glioma. While the model correctly isolates the enhancing core, it under-segments the non-enhancing infiltrative margins. This case is intentionally preserved without suppression to demonstrate honest failure-mode transparency.
+    </div>"""
+
+    return f"""<div class="glass-card">
+    <div class="glass-header">
+        <span>Panel 2: Segmentation</span>
+        <span class="badge-tag {badge_style}">Dice: {dice_score:.3f}</span>
+    </div>
+    <div class="glass-subtext">MedSAM predicted mask (red outline) vs expert ground truth (green outline).</div>
+    <div style="border-radius: 10px; overflow: hidden; border: 1px solid rgba(203, 213, 225, 0.7); box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);">
+        <img src="data:image/png;base64,{b64}" style="width: 100%; display: block;"/>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+        <div style="font-size: 0.78rem; color: #166534; font-weight: 600;">Green: Expert Ground Truth</div>
+        <div style="font-size: 0.78rem; color: #b91c1c; font-weight: 600;">Red: MedSAM Predicted</div>
+    </div>
+    {underseg_html}
+</div>"""
+
+
+def render_panel3_card_html(case_id: str, colormap: str = "turbo", alpha: float = 0.55) -> str:
+    """Compose Panel 3 as a single unified contiguous liquid glass card."""
+    img_bytes = render_panel3_heatmap(case_id, colormap=colormap, alpha=alpha)
+    b64 = base64.b64encode(img_bytes).decode()
+    return f"""<div class="glass-card">
+    <div class="glass-header">
+        <span>Panel 3: Heatmap</span>
+        <span class="badge-tag">Attention Attribution</span>
+    </div>
+    <div class="glass-subtext"><strong>Decoder Attention Map (Hooks)</strong> overlaid on axial MRI slice.</div>
+    <div style="border-radius: 10px; overflow: hidden; border: 1px solid rgba(203, 213, 225, 0.7); box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);">
+        <img src="data:image/png;base64,{b64}" style="width: 100%; display: block;"/>
+    </div>
+    <div class="panel-meta">Strict Label: Decoder Attention Map (Hooks)</div>
+</div>"""
+
+
+def render_mprt_comparison_html(case_id: str, colormap: str = "turbo", alpha: float = 0.55) -> Tuple[str, str]:
+    """Compose MPRT side-by-side comparison cards."""
+    img_a_bytes = render_panel3_heatmap(case_id, colormap=colormap, alpha=alpha)
+    b64_a = base64.b64encode(img_a_bytes).decode()
+    card_a = f"""<div class="glass-card">
+    <div class="glass-header">
+        <span>Heatmap A: Intact Model (Baseline)</span>
+        <span class="badge-tag badge-green">Learned Weights</span>
+    </div>
+    <div class="glass-subtext">Saliency distribution using fully trained MedSAM decoder parameters. Focus is sharply centered on the target lesion.</div>
+    <div style="border-radius: 10px; overflow: hidden; border: 1px solid rgba(203, 213, 225, 0.7); box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);">
+        <img src="data:image/png;base64,{b64_a}" style="width: 100%; display: block;"/>
+    </div>
+    <div class="panel-meta">Intact Model Parameters</div>
+</div>"""
+
+    img_b_bytes = render_scrambled_heatmap_b(case_id, colormap=colormap, alpha=alpha)
+    b64_b = base64.b64encode(img_b_bytes).decode()
+    card_b = f"""<div class="glass-card">
+    <div class="glass-header">
+        <span>Heatmap B: Scrambled Model (Stage 4 Full Decoder)</span>
+        <span class="badge-tag badge-red">Randomized Weights</span>
+    </div>
+    <div class="glass-subtext">Saliency distribution after complete decoder parameter randomization. Spatial structure collapses into diffuse background noise.</div>
+    <div style="border-radius: 10px; overflow: hidden; border: 1px solid rgba(203, 213, 225, 0.7); box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);">
+        <img src="data:image/png;base64,{b64_b}" style="width: 100%; display: block;"/>
+    </div>
+    <div class="panel-meta">Stage 4: Full Decoder Randomized</div>
+</div>"""
+    return card_a, card_b
+
+
+# -----------------------------------------------------------------------------
 # SIDEBAR CONTROL CONSOLE WITH LIQUID GLASS POLISH
 # -----------------------------------------------------------------------------
 with st.sidebar:
     st.markdown(
         """
-        <div style="padding-bottom: 12px; border-bottom: 1px solid #cbd5e1; margin-bottom: 16px;">
-            <div style="font-size: 1.15rem; font-weight: 700; color: #0f172a; letter-spacing: -0.01em;">Diagnostic Controls</div>
+        <div style="padding-bottom: 12px; border-bottom: 1px solid #94a3b8; margin-bottom: 16px;">
+            <div style="font-size: 1.18rem; font-weight: 700; color: #0f172a; letter-spacing: -0.01em;">Diagnostic Controls</div>
             <div style="font-size: 0.78rem; color: #64748b;">Clinical Workstation PACS Feed</div>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
-    st.markdown("#### Select Clinical Case")
+    st.markdown(
+        """
+        <div style="background: rgba(255, 255, 255, 0.85); border: 1.5px solid #cbd5e1; border-radius: 12px; padding: 14px; margin-bottom: 16px; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);">
+            <div style="font-size: 0.82rem; font-weight: 700; color: #0f172a; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em;">Active Case Selector</div>
+        """,
+        unsafe_allow_html=True,
+    )
     case_keys = list(CASE_CATALOG.keys())
     selected_case = st.selectbox(
         "Active Case Identifier",
@@ -606,33 +717,43 @@ with st.sidebar:
         index=0,
         label_visibility="collapsed",
     )
+    st.markdown("</div>", unsafe_allow_html=True)
 
     case_info = CASE_CATALOG[selected_case]
     case_raw_data = load_case_data(selected_case)
     box_coords = case_raw_data["box"].tolist() if "box" in case_raw_data else [0, 0, 0, 0]
 
-    st.markdown("---")
-    st.markdown("#### Case Pathology Dossier")
     st.markdown(
         f"""
-        **Pathology**: {case_info['pathology']}  
-        **Modality**: {case_info['modality']}  
-        **Slice Resolution**: `{case_info['slice_dim']}`  
-        **Prompt Bounding Box**: `[{box_coords[0]}, {box_coords[1]}, {box_coords[2]}, {box_coords[3]}]`  
-        **Prompt Dimensions**: `{box_coords[2] - box_coords[0]} x {box_coords[3] - box_coords[1]} px`  
-        **Model Backbone**: `MedSAM ViT-Base (Prompt-Gated Decoder)`  
-        """
+        <div style="background: rgba(255, 255, 255, 0.85); border: 1.5px solid #cbd5e1; border-radius: 12px; padding: 14px; margin-bottom: 16px; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);">
+            <div style="font-size: 0.82rem; font-weight: 700; color: #0f172a; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em;">Case Pathology Dossier</div>
+            <div style="font-size: 0.82rem; color: #334155; line-height: 1.6;">
+                <strong>Pathology</strong>: {case_info['pathology']}<br>
+                <strong>Modality</strong>: {case_info['modality']}<br>
+                <strong>Slice Resolution</strong>: <code>{case_info['slice_dim']}</code><br>
+                <strong>Prompt Box</strong>: <code>[{box_coords[0]}, {box_coords[1]}, {box_coords[2]}, {box_coords[3]}]</code><br>
+                <strong>Prompt Size</strong>: <code>{box_coords[2] - box_coords[0]} x {box_coords[3] - box_coords[1]} px</code><br>
+                <strong>Backbone</strong>: MedSAM ViT-Base (Decoder Prompt-Gated)
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
 
-    st.markdown("---")
-    st.markdown("#### Rendering Controls")
-    selected_cmap = st.selectbox("Heatmap Colormap", ["turbo", "plasma", "inferno", "viridis"], index=0)
-    selected_alpha = st.slider("Heatmap Opacity", min_value=0.20, max_value=0.85, value=0.55, step=0.05)
-
-    st.markdown("---")
     st.markdown(
         """
-        <div style="font-size: 0.74rem; color: #475569; line-height: 1.5; background: rgba(241, 245, 249, 0.8); padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1;">
+        <div style="background: rgba(255, 255, 255, 0.85); border: 1.5px solid #cbd5e1; border-radius: 12px; padding: 14px; margin-bottom: 16px; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);">
+            <div style="font-size: 0.82rem; font-weight: 700; color: #0f172a; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em;">Rendering Controls</div>
+        """,
+        unsafe_allow_html=True,
+    )
+    selected_cmap = st.selectbox("Heatmap Colormap", ["turbo", "plasma", "inferno", "viridis"], index=0)
+    selected_alpha = st.slider("Heatmap Opacity", min_value=0.20, max_value=0.85, value=0.55, step=0.05)
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    st.markdown(
+        """
+        <div style="font-size: 0.74rem; color: #475569; line-height: 1.5; background: rgba(241, 245, 249, 0.9); padding: 12px; border-radius: 10px; border: 1.5px solid #cbd5e1;">
             <strong>Workstation Verification:</strong><br>
             - Mode: Audited Safe-Enclave<br>
             - Live PyTorch: Disabled (Zero-VRAM)<br>
@@ -665,7 +786,7 @@ with tab_clinician:
     # Page Header Banner inside Liquid Glass Container
     st.markdown(
         f"""
-        <div class="glass-card" style="padding: 16px 20px; margin-bottom: 20px;">
+        <div class="glass-card" style="padding: 16px 22px; margin-bottom: 22px;">
             <div style="display: flex; justify-content: space-between; align-items: flex-end;">
                 <div>
                     <h2 style="margin: 0; font-size: 1.45rem; font-weight: 700; color: #0f172a;">
@@ -686,7 +807,7 @@ with tab_clinician:
     )
 
     # -------------------------------------------------------------------------
-    # PART 1: THE CLINICIAN'S VIEW (THREE SYNCHRONIZED PANELS)
+    # PART 1: THE CLINICIAN'S VIEW (THREE SYNCHRONIZED UNIFIED PANELS)
     # -------------------------------------------------------------------------
     st.markdown("### The Clinician's View")
     st.markdown(
@@ -696,93 +817,20 @@ with tab_clinician:
 
     col_raw, col_seg, col_xai = st.columns(3)
 
-    # Panel 1: Raw Input
     with col_raw:
-        st.markdown(
-            """
-            <div class='glass-card'>
-                <div class='glass-header'>
-                    <span>Panel 1: Raw Input</span>
-                    <span class='badge-tag'>Bounding Box</span>
-                </div>
-                <div class='glass-subtext'>Axial T1ce MRI slice with prompt coordinates overlaid in amber.</div>
-            """,
-            unsafe_allow_html=True,
-        )
-        img_p1 = render_panel1_raw_input(selected_case)
-        st.image(img_p1, use_container_width=True)
-        st.markdown(
-            f"""
-                <div class='panel-meta'>Prompt Box: [{box_coords[0]}, {box_coords[1]}, {box_coords[2]}, {box_coords[3]}]</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+        html_p1 = render_panel1_card_html(selected_case, box_coords)
+        st.markdown(html_p1, unsafe_allow_html=True)
 
-    # Panel 2: The Segmentation
     with col_seg:
         dice_score = case_metrics.get("dice_clean", 0.0)
-        badge_style = "badge-green" if dice_score >= 0.85 else "badge-red"
-        st.markdown(
-            f"""
-            <div class='glass-card'>
-                <div class='glass-header'>
-                    <span>Panel 2: Segmentation</span>
-                    <span class='badge-tag {badge_style}'>Dice: {dice_score:.3f}</span>
-                </div>
-                <div class='glass-subtext'>MedSAM predicted mask (red outline) vs expert ground truth (green outline).</div>
-            """,
-            unsafe_allow_html=True,
-        )
-        img_p2 = render_panel2_segmentation(selected_case)
-        st.image(img_p2, use_container_width=True)
-        st.markdown(
-            """
-                <div style='display: flex; justify-content: space-between; align-items: center; margin-top: 10px;'>
-                    <div style='font-size: 0.78rem; color: #166534; font-weight: 600;'>Green: Expert Ground Truth</div>
-                    <div style='font-size: 0.78rem; color: #b91c1c; font-weight: 600;'>Red: MedSAM Predicted</div>
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+        html_p2 = render_panel2_card_html(selected_case, dice_score)
+        st.markdown(html_p2, unsafe_allow_html=True)
 
-        # Highlight under-segmentation on Case 05
-        if selected_case == "case_05":
-            st.markdown(
-                """
-                <div class='alert-case05-glass'>
-                    <strong>Audit Notice: Under-Segmentation Observed (Dice: 0.641)</strong><br>
-                    Case 05 presents a diffuse, infiltrative frontal glioma. While the model correctly isolates the enhancing core, it under-segments the non-enhancing infiltrative margins. This case is intentionally preserved without suppression to demonstrate honest failure-mode transparency.
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-
-    # Panel 3: The XAI Heatmap
     with col_xai:
-        st.markdown(
-            f"""
-            <div class='glass-card'>
-                <div class='glass-header'>
-                    <span>Panel 3: Heatmap</span>
-                    <span class='badge-tag'>Attention Attribution</span>
-                </div>
-                <div class='glass-subtext'><strong>Decoder Attention Map (Hooks)</strong> overlaid on axial MRI slice.</div>
-            """,
-            unsafe_allow_html=True,
-        )
-        img_p3 = render_panel3_heatmap(selected_case, colormap=selected_cmap, alpha=selected_alpha)
-        st.image(img_p3, use_container_width=True)
-        st.markdown(
-            """
-                <div class='panel-meta'>Strict Label: Decoder Attention Map (Hooks)</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+        html_p3 = render_panel3_card_html(selected_case, colormap=selected_cmap, alpha=selected_alpha)
+        st.markdown(html_p3, unsafe_allow_html=True)
 
-    st.markdown("---")
+    st.markdown("<hr style='border: none; border-top: 1.5px solid rgba(203, 213, 225, 0.7); margin: 28px 0;'>", unsafe_allow_html=True)
 
     # -------------------------------------------------------------------------
     # PART 2: THE AUDIT / VERIFICATION MODULE (SANITY CHECK)
@@ -801,39 +849,14 @@ with tab_clinician:
     rand_dice_val = case_metrics.get("dice_after_decoder_rand", 0.0)
     ssim_val = case_metrics.get("ssim_decoder_full", 0.0)
 
-    # Verification Side-by-Side Comparison
     col_verif_a, col_verif_b = st.columns(2)
+    card_mprt_a, card_mprt_b = render_mprt_comparison_html(selected_case, colormap=selected_cmap, alpha=selected_alpha)
 
     with col_verif_a:
-        st.markdown(
-            """
-            <div class='glass-card'>
-                <div class='glass-header'>
-                    <span>Heatmap A: Intact Model (Baseline)</span>
-                    <span class='badge-tag badge-green'>Learned Weights</span>
-                </div>
-                <div class='glass-subtext'>Saliency distribution using fully trained MedSAM decoder parameters. Focus is sharply centered on the target lesion.</div>
-            """,
-            unsafe_allow_html=True,
-        )
-        st.image(img_p3, use_container_width=True)
-        st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown(card_mprt_a, unsafe_allow_html=True)
 
     with col_verif_b:
-        st.markdown(
-            """
-            <div class='glass-card'>
-                <div class='glass-header'>
-                    <span>Heatmap B: Scrambled Model (Stage 4 Full Decoder)</span>
-                    <span class='badge-tag badge-red'>Randomized Weights</span>
-                </div>
-                <div class='glass-subtext'>Saliency distribution after complete decoder parameter randomization. Spatial structure collapses into diffuse background noise.</div>
-            """,
-            unsafe_allow_html=True,
-        )
-        img_scrambled = render_scrambled_heatmap_b(selected_case, colormap=selected_cmap, alpha=selected_alpha)
-        st.image(img_scrambled, use_container_width=True)
-        st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown(card_mprt_b, unsafe_allow_html=True)
 
     # Verdict Banner
     st.markdown(
@@ -887,7 +910,7 @@ with tab_clinician:
             unsafe_allow_html=True,
         )
 
-    st.markdown("---")
+    st.markdown("<hr style='border: none; border-top: 1.5px solid rgba(203, 213, 225, 0.7); margin: 28px 0;'>", unsafe_allow_html=True)
 
     # -------------------------------------------------------------------------
     # PART 3: TRANSPARENCY AUDIT & METRIC DECISION LOG
@@ -904,10 +927,18 @@ with tab_clinician:
             curve_path = os.path.join("outputs", f"{selected_case}_curve.png")
 
         if os.path.exists(curve_path):
-            st.image(
-                curve_path,
-                caption=f"Figure: Progressive randomization trajectory for {selected_case}. Blue curve illustrates Spearman rank correlation collapse across stages, while red dashed line shows SSIM remaining falsely elevated.",
-                use_container_width=True,
+            with open(curve_path, "rb") as f_curve:
+                b64_c = base64.b64encode(f_curve.read()).decode()
+            st.markdown(
+                f"""
+                <div style="background: rgba(255,255,255,0.7); border: 1.5px solid rgba(203, 213, 225, 0.8); border-radius: 12px; padding: 16px; margin: 12px 0;">
+                    <img src="data:image/png;base64,{b64_c}" style="width: 100%; border-radius: 8px; display: block;"/>
+                    <div style="font-size: 0.78rem; color: #64748b; margin-top: 8px; text-align: center;">
+                        Figure: Progressive randomization trajectory for {selected_case}. Blue curve illustrates Spearman rank correlation collapse across stages, while red dashed line shows SSIM remaining falsely elevated.
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
             )
 
         # Mandatory Metric Decision Log verbatim callout
@@ -965,7 +996,7 @@ with tab_cohort:
     df_cohort = pd.DataFrame(table_data)
     st.dataframe(df_cohort, use_container_width=True, hide_index=True)
 
-    st.markdown("---")
+    st.markdown("<hr style='border: none; border-top: 1.5px solid rgba(203, 213, 225, 0.7); margin: 28px 0;'>", unsafe_allow_html=True)
     st.markdown("### The Technical Pivot: Why SSIM Failed on Upsampled Attention Maps")
 
     col_math, col_rationale = st.columns([1, 1])
@@ -1007,7 +1038,7 @@ with tab_cohort:
             """
         )
 
-    st.markdown("---")
+    st.markdown("<hr style='border: none; border-top: 1.5px solid rgba(203, 213, 225, 0.7); margin: 28px 0;'>", unsafe_allow_html=True)
     st.markdown("### Scientific Integrity: Case 05 Under-Segmentation Analysis")
     st.markdown(
         """
@@ -1027,7 +1058,6 @@ with tab_cohort:
 with tab_privacy:
     st.markdown("### Clinical Data Governance and De-Identification Policy")
     
-    # Formatted with zero leading whitespace on any line to prevent raw code block interpretation
     hipaa_content = (
         '<div class="glass-card">\n'
         '<div class="glass-header">HIPAA Safe Harbor Compliance Framework</div>\n'
@@ -1077,7 +1107,6 @@ with tab_privacy:
 with tab_terms:
     st.markdown("### Terms and Conditions of Clinical Decision Support (CDS)")
     
-    # Formatted with zero leading whitespace on any line to prevent raw code block interpretation
     terms_content = (
         '<div class="glass-card">\n'
         '<div class="glass-header">Software-as-a-Medical-Device (SaMD) Research Disclaimer</div>\n'
@@ -1126,7 +1155,7 @@ with tab_terms:
 # -----------------------------------------------------------------------------
 st.markdown(
     """
-    <div style="margin-top: 36px; padding: 20px 0; border-top: 1px solid rgba(203, 213, 225, 0.8); font-size: 0.76rem; color: #64748b; text-align: center;">
+    <div style="margin-top: 36px; padding: 20px 0; border-top: 1.5px solid rgba(203, 213, 225, 0.8); font-size: 0.76rem; color: #64748b; text-align: center;">
         MedSeg-XAI Multimodal Neuro-Radiology Studio - Built for Academic Viva Defense and Clinical Safety Auditing.<br>
         Pure Precomputed Pipeline - Zero Live PyTorch - HIPAA Safe Harbor Compliant.
     </div>

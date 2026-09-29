@@ -1,0 +1,15 @@
+[theme]
+primaryColor = "#0284c7"
+backgroundColor = "#edf2f7"
+secondaryBackgroundColor = "#e2e8f0"
+textColor = "#0f172a"
+font = "sans serif"
+
+[server]
+port = 8501
+headless = true
+enableCORS = false
+enableXsrfProtection = false
+
+[browser]
+gatherUsageStats = false
