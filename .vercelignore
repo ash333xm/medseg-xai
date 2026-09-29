@@ -1,5 +1,6 @@
 # Ignore Python Backend and ML dependencies on Vercel
 api/
+backend/
 pyproject.toml
 requirements.txt
 setup.py
@@ -16,7 +17,6 @@ medsegxai_google_drive/
 scripts/
 tests/
 outputs/
-data/
 
 # Ignore Python binaries and weights
 *.py
@@ -26,4 +26,12 @@ data/
 *.pt
 *.tar
 *.gz
-*.md
+*.nii
+*.nii.gz
+
+# Explicitly ensure web assets are included
+!public/
+!public/**
+!public/data/**
+!data/**
+

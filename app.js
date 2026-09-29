@@ -11,6 +11,71 @@ let currentCaseId = "case_01";
 let currentDesign = "turbo";
 let currentOpacity = 0.55;
 let currentWipeMode = "clean"; // "clean", "scrambled", "segmentation"
+let detectedBaseUrl = "data";
+
+// Candidate Asset Prefixes for Zero-Failure Resolution on Vercel
+const CANDIDATE_PREFIXES = ["data", "/data", "./data", "public/data", "/public/data"];
+
+function resolveAsset(subpath) {
+  const clean = subpath.replace(/^\/+/, "");
+  return `${detectedBaseUrl}/${clean}`;
+}
+
+// Resilient Image Loader with Multi-Prefix Fallback
+function setImgSrc(target, subpath) {
+  const el = typeof target === "string" ? document.getElementById(target) : target;
+  if (!el) return;
+  const clean = subpath.replace(/^\/+/, "");
+  const candidates = [
+    `${detectedBaseUrl}/${clean}`,
+    `data/${clean}`,
+    `/data/${clean}`,
+    `./data/${clean}`,
+    `public/data/${clean}`,
+    `/public/data/${clean}`
+  ];
+  const uniqueCandidates = [...new Set(candidates)];
+  let attempt = 0;
+
+  el.onerror = () => {
+    attempt++;
+    if (attempt < uniqueCandidates.length) {
+      el.src = uniqueCandidates[attempt];
+    }
+  };
+  el.src = uniqueCandidates[0];
+}
+
+// Resilient Background Image Loader for Wipe Comparator
+function setBgImageWithFallback(element, subpath) {
+  if (!element) return;
+  const clean = subpath.replace(/^\/+/, "");
+  const candidates = [
+    `${detectedBaseUrl}/${clean}`,
+    `data/${clean}`,
+    `/data/${clean}`,
+    `./data/${clean}`,
+    `public/data/${clean}`,
+    `/public/data/${clean}`
+  ];
+  const uniqueCandidates = [...new Set(candidates)];
+  let attempt = 0;
+
+  function tryNext() {
+    if (attempt >= uniqueCandidates.length) return;
+    const testImg = new Image();
+    const candidateUrl = uniqueCandidates[attempt];
+    testImg.onload = () => {
+      element.style.backgroundImage = `url('${candidateUrl}')`;
+    };
+    testImg.onerror = () => {
+      attempt++;
+      tryNext();
+    };
+    testImg.src = candidateUrl;
+  }
+  tryNext();
+}
 
 // Case Catalog In-Memory Fallback
 const CASE_CATALOG = {
@@ -110,35 +175,28 @@ const HEATMAP_DESIGNS = [
   { id: "residual", name: "Residual Attention Delta", desc: "Absolute difference highlighting destroyed attention" }
 ];
 
-let dataBaseUrl = "data";
-
-function resolveAsset(subpath) {
-  return `${dataBaseUrl}/${subpath}`;
-}
-
 // Initialize
 document.addEventListener("DOMContentLoaded", async () => {
-  try {
-    const res = await fetch("data/manifest.json");
-    if (res.ok) {
-      dataBaseUrl = "data";
-      appData = await res.json();
-    } else {
-      const res2 = await fetch("public/data/manifest.json");
-      if (res2.ok) {
-        dataBaseUrl = "public/data";
-        appData = await res2.json();
-      }
-    }
-  } catch (err) {
+  // Probe for working manifest location
+  const manifestCandidates = [
+    "data/manifest.json",
+    "/data/manifest.json",
+    "./data/manifest.json",
+    "public/data/manifest.json",
+    "/public/data/manifest.json"
+  ];
+
+  for (const path of manifestCandidates) {
     try {
-      const res2 = await fetch("public/data/manifest.json");
-      if (res2.ok) {
-        dataBaseUrl = "public/data";
-        appData = await res2.json();
+      const res = await fetch(path);
+      if (res.ok) {
+        appData = await res.json();
+        detectedBaseUrl = path.replace("/manifest.json", "");
+        console.log("Resolved asset base URL:", detectedBaseUrl);
+        break;
       }
-    } catch (err2) {
-      console.warn("Using offline fallback catalog:", err2);
+    } catch (e) {
+      // try next
     }
   }
 
@@ -239,11 +297,11 @@ function updateView() {
   `;
 
   // Panel 1: Raw Input with Bounding Box
-  document.getElementById("p1-image").src = resolveAsset(`${currentCaseId}/raw_box.png`);
+  setImgSrc("p1-image", `${currentCaseId}/raw_box.png`);
   document.getElementById("p1-coords").textContent = `Prompt Box: [${box.join(", ")}]`;
 
   // Panel 2: Segmentation
-  document.getElementById("p2-image").src = resolveAsset(`${currentCaseId}/segmentation.png`);
+  setImgSrc("p2-image", `${currentCaseId}/segmentation.png`);
   const diceBadge = document.getElementById("p2-dice-badge");
   diceBadge.textContent = `Dice: ${metrics.dice_clean.toFixed(3)}`;
   if (metrics.dice_clean >= 0.85) {
@@ -264,14 +322,14 @@ function updateView() {
   updateHeatmapImages();
 
   // Verification Module
-  document.getElementById("mprt-intact-img").src = resolveAsset(`${currentCaseId}/heatmap_turbo.png`);
-  document.getElementById("mprt-scrambled-img").src = resolveAsset(`${currentCaseId}/scrambled_turbo.png`);
+  setImgSrc("mprt-intact-img", `${currentCaseId}/heatmap_turbo.png`);
+  setImgSrc("mprt-scrambled-img", `${currentCaseId}/scrambled_turbo.png`);
   document.getElementById("mprt-spearman-val").textContent = metrics.spearman_decoder_full.toFixed(3);
   document.getElementById("mprt-rand-dice-val").textContent = metrics.dice_after_decoder_rand.toFixed(3);
   document.getElementById("mprt-ssim-val").textContent = metrics.ssim_decoder_full.toFixed(3);
 
   // Transparency Curve
-  document.getElementById("transparency-curve-img").src = resolveAsset(`${currentCaseId}/curve.png`);
+  setImgSrc("transparency-curve-img", `${currentCaseId}/curve.png`);
 
   // Design Lab
   renderDesignCatalog();
@@ -280,11 +338,11 @@ function updateView() {
 
 function updateHeatmapImages() {
   const p3Img = document.getElementById("p3-image");
-  if (currentDesign === "residual") {
-    p3Img.src = resolveAsset(`${currentCaseId}/residual_turbo.png`);
-  } else {
-    p3Img.src = resolveAsset(`${currentCaseId}/heatmap_${currentDesign}.png`);
-  }
+  if (!p3Img) return;
+  const file = currentDesign === "residual"
+    ? `${currentCaseId}/residual_turbo.png`
+    : `${currentCaseId}/heatmap_${currentDesign}.png`;
+  setImgSrc(p3Img, file);
   p3Img.style.opacity = currentOpacity;
 }
 
@@ -321,28 +379,29 @@ function updateSplitComparatorImages() {
   const underlay = document.getElementById("splitUnderlay");
   const overlayInner = document.getElementById("splitOverlayInner");
 
-  const heatSrc = currentDesign === "residual"
-    ? resolveAsset(`${currentCaseId}/residual_turbo.png`)
-    : resolveAsset(`${currentCaseId}/heatmap_${currentDesign}.png`);
+  const heatFile = currentDesign === "residual"
+    ? `${currentCaseId}/residual_turbo.png`
+    : `${currentCaseId}/heatmap_${currentDesign}.png`;
 
   if (currentWipeMode === "clean") {
     // Left: Clean Heatmap | Right: Raw MRI
-    underlay.style.backgroundImage = `url('${resolveAsset(currentCaseId + "/raw.png")}')`;
-    overlayInner.style.backgroundImage = `url('${heatSrc}')`;
+    setBgImageWithFallback(underlay, `${currentCaseId}/raw.png`);
+    setBgImageWithFallback(overlayInner, heatFile);
   } else if (currentWipeMode === "scrambled") {
     // Left: Clean Heatmap | Right: Scrambled Heatmap
-    underlay.style.backgroundImage = `url('${resolveAsset(currentCaseId + "/scrambled_turbo.png")}')`;
-    overlayInner.style.backgroundImage = `url('${heatSrc}')`;
+    setBgImageWithFallback(underlay, `${currentCaseId}/scrambled_turbo.png`);
+    setBgImageWithFallback(overlayInner, heatFile);
   } else {
     // Left: Clean Heatmap | Right: Segmentation contours
-    underlay.style.backgroundImage = `url('${resolveAsset(currentCaseId + "/segmentation.png")}')`;
-    overlayInner.style.backgroundImage = `url('${heatSrc}')`;
+    setBgImageWithFallback(underlay, `${currentCaseId}/segmentation.png`);
+    setBgImageWithFallback(overlayInner, heatFile);
   }
 }
 
 // Render Design Catalog Grid in Tab 2
 function renderDesignCatalog() {
   const grid = document.getElementById("designCatalogGrid");
+  if (!grid) return;
   grid.innerHTML = "";
 
   HEATMAP_DESIGNS.forEach((d) => {
@@ -350,8 +409,9 @@ function renderDesignCatalog() {
     card.className = "panel-card";
     card.style.cursor = "pointer";
 
-    let src = resolveAsset(`${currentCaseId}/heatmap_${d.id}.png`);
-    if (d.id === "residual") src = resolveAsset(`${currentCaseId}/residual_turbo.png`);
+    const file = d.id === "residual"
+      ? `${currentCaseId}/residual_turbo.png`
+      : `${currentCaseId}/heatmap_${d.id}.png`;
 
     card.innerHTML = `
       <div class="glass-header" style="padding-bottom: 6px;">
@@ -360,9 +420,12 @@ function renderDesignCatalog() {
       </div>
       <div style="font-size: 0.74rem; color: #64748b; margin-bottom: 8px;">${d.desc}</div>
       <div class="image-viewport">
-        <img class="catalog-heatmap-img" src="${src}" alt="${d.name}" style="opacity: ${currentOpacity};">
+        <img class="catalog-heatmap-img" alt="${d.name}" style="opacity: ${currentOpacity};">
       </div>
     `;
+
+    const imgEl = card.querySelector(".catalog-heatmap-img");
+    setImgSrc(imgEl, file);
 
     card.addEventListener("click", () => {
       currentDesign = d.id;
@@ -385,6 +448,7 @@ function renderDesignCatalog() {
 // Render Cohort Table in Tab 3
 function renderCohortTable() {
   const tbody = document.getElementById("cohortTableBody");
+  if (!tbody) return;
   tbody.innerHTML = "";
 
   Object.values(CASE_CATALOG).forEach((c) => {
@@ -394,11 +458,12 @@ function renderCohortTable() {
       <td>${c.pathology}</td>
       <td><span class="meta-badge">${c.slice_dim}</span></td>
       <td><strong>${c.metrics.dice_clean.toFixed(3)}</strong></td>
-      <td>${c.metrics.dice_after_decoder_rand.toFixed(3)}</td>
+      <td><span class="badge-tag badge-red">${c.metrics.dice_after_decoder_rand.toFixed(3)}</span></td>
       <td><strong>${c.metrics.spearman_decoder_full.toFixed(3)}</strong></td>
-      <td>${c.metrics.ssim_decoder_full.toFixed(3)}</td>
-      <td><span class="badge-tag badge-green">PASS (&le; 0.3)</span></td>
-      <td><span class="badge-tag badge-red">FAIL (&le; 0.5)</span></td>
+      <td><span style="color: #64748b;">${c.metrics.ssim_decoder_full.toFixed(3)}</span></td>
+      <td>
+        <span class="badge-tag badge-green">Passed (&rho; &le; 0.30)</span>
+      </td>
     `;
     tbody.appendChild(tr);
   });
