@@ -3,6 +3,7 @@
   "version": "1.0.4",
   "description": "MedSeg-XAI Clinical Studio - Multimodal Neuro-Radiology Audit Platform",
   "scripts": {
+    "build": "echo 'Static build ready'",
     "start": "npx serve ."
   },
   "keywords": [
