@@ -1,0 +1,29 @@
+# Ignore Python Backend and ML dependencies on Vercel
+api/
+pyproject.toml
+requirements.txt
+setup.py
+Pipfile
+Pipfile.lock
+.venv/
+venv/
+env/
+
+# Ignore local Python packages and test suites
+medseg/
+medsegxai/
+medsegxai_google_drive/
+scripts/
+tests/
+outputs/
+data/
+
+# Ignore Python binaries and weights
+*.py
+*.npz
+*.npy
+*.pth
+*.pt
+*.tar
+*.gz
+*.md
