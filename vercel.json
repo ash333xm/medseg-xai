@@ -1,9 +1,7 @@
 {
-  "version": 2,
-  "name": "medseg-xai",
-  "public": true,
   "cleanUrls": true,
   "trailingSlash": false,
+  "outputDirectory": "public",
   "headers": [
     {
       "source": "/(.*)",
