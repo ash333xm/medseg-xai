@@ -1,0 +1,112 @@
+{
+  "case_01": {
+    "dice_clean": 0.962,
+    "spearman_decoder_full": 0.124,
+    "dice_after_decoder_rand": 0.021,
+    "ssim_decoder_full": 0.682,
+    "pass_v1_ssim": false,
+    "pass_v2_spearman": true,
+    "ssim_curve": [
+      1.0,
+      0.825,
+      0.76,
+      0.71,
+      0.682
+    ],
+    "spearman_curve": [
+      1.0,
+      0.54,
+      0.38,
+      0.22,
+      0.124
+    ]
+  },
+  "case_02": {
+    "dice_clean": 0.941,
+    "spearman_decoder_full": 0.098,
+    "dice_after_decoder_rand": 0.015,
+    "ssim_decoder_full": 0.645,
+    "pass_v1_ssim": false,
+    "pass_v2_spearman": true,
+    "ssim_curve": [
+      1.0,
+      0.81,
+      0.745,
+      0.69,
+      0.645
+    ],
+    "spearman_curve": [
+      1.0,
+      0.51,
+      0.34,
+      0.19,
+      0.098
+    ]
+  },
+  "case_03": {
+    "dice_clean": 0.972,
+    "spearman_decoder_full": 0.141,
+    "dice_after_decoder_rand": 0.033,
+    "ssim_decoder_full": 0.71,
+    "pass_v1_ssim": false,
+    "pass_v2_spearman": true,
+    "ssim_curve": [
+      1.0,
+      0.85,
+      0.79,
+      0.745,
+      0.71
+    ],
+    "spearman_curve": [
+      1.0,
+      0.56,
+      0.41,
+      0.25,
+      0.141
+    ]
+  },
+  "case_04": {
+    "dice_clean": 0.97,
+    "spearman_decoder_full": 0.112,
+    "dice_after_decoder_rand": 0.018,
+    "ssim_decoder_full": 0.674,
+    "pass_v1_ssim": false,
+    "pass_v2_spearman": true,
+    "ssim_curve": [
+      1.0,
+      0.83,
+      0.755,
+      0.705,
+      0.674
+    ],
+    "spearman_curve": [
+      1.0,
+      0.525,
+      0.36,
+      0.21,
+      0.112
+    ]
+  },
+  "case_05": {
+    "dice_clean": 0.641,
+    "spearman_decoder_full": 0.153,
+    "dice_after_decoder_rand": 0.012,
+    "ssim_decoder_full": 0.69,
+    "pass_v1_ssim": false,
+    "pass_v2_spearman": true,
+    "ssim_curve": [
+      1.0,
+      0.84,
+      0.77,
+      0.725,
+      0.69
+    ],
+    "spearman_curve": [
+      1.0,
+      0.55,
+      0.39,
+      0.24,
+      0.153
+    ]
+  }
+}
