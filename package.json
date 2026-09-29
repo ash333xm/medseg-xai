@@ -1,15 +1,17 @@
 {
-  "name": "ayush_medseg_workflow",
-  "version": "1.0.0",
-  "description": "[![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)\r [![PyTorch 2.3](https://img.shields.io/badge/PyTorch-2.3.0%2BCUDA12.1-red.svg)](https://pytorch.org/)\r [![RunPod / AWS EC2](https://img.shields.io/badge/Cloud%20GPU-RunPod%20%7C%20AWS%20EC2-purple.svg)](https://www.runpod.io/)\r [![FastAPI](https://img.shields.io/badge/FastAPI-Port%208000-teal.svg)](https://fastapi.tiangolo.com/)\r [![Tests Passing](https://img.shields.io/badge/pytest-49%20passed-brightgreen.svg)](https://github.com/ash333xm/medseg-xai)",
-  "main": "index.js",
-  "directories": {
-    "test": "tests"
-  },
+  "name": "medseg-xai",
+  "version": "1.0.4",
+  "description": "MedSeg-XAI Clinical Studio - Multimodal Neuro-Radiology Audit Platform",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npx serve ."
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "keywords": [
+    "medsam",
+    "xai",
+    "neuro-radiology",
+    "mprt",
+    "mri"
+  ],
+  "author": "MedSeg-XAI Team",
+  "license": "MIT"
 }

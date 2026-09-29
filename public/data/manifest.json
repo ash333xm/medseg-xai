@@ -1,0 +1,190 @@
+{
+  "cases": [
+    {
+      "id": "case_01",
+      "title": "Case 01",
+      "pathology": "Glioblastoma Multiforme (Focal Enhancing Core)",
+      "modality": "T1ce (Contrast-Enhanced T1-weighted MRI)",
+      "slice_dim": "256 x 256",
+      "description": "Circumscribed contrast-enhancing lesion in the left fronto-parietal region. High contrast-to-noise ratio relative to background white matter."
+    },
+    {
+      "id": "case_02",
+      "title": "Case 02",
+      "pathology": "Diffuse High-Grade Glioma",
+      "modality": "T1ce (Contrast-Enhanced T1-weighted MRI)",
+      "slice_dim": "512 x 512 x 3",
+      "description": "Right temporal mass with prominent central necrotic cavity and thick peripheral rim enhancement."
+    },
+    {
+      "id": "case_03",
+      "title": "Case 03",
+      "pathology": "Anaplastic Astrocytoma",
+      "modality": "T1ce (Contrast-Enhanced T1-weighted MRI)",
+      "slice_dim": "512 x 512 x 3",
+      "description": "Left temporal lobe intra-axial mass with heterogeneous contrast enhancement and surrounding vasogenic edema."
+    },
+    {
+      "id": "case_04",
+      "title": "Case 04",
+      "pathology": "Deep Temporal Lesion",
+      "modality": "T1ce (Contrast-Enhanced T1-weighted MRI)",
+      "slice_dim": "512 x 512 x 3",
+      "description": "Right deep temporal lesion adjacent to the lateral ventricle. Distinct hypointense necrotic core with sharp peripheral borders."
+    },
+    {
+      "id": "case_05",
+      "title": "Case 05",
+      "pathology": "Infiltrative Frontal Glioma (Diffuse Margin)",
+      "modality": "T1ce (Contrast-Enhanced T1-weighted MRI)",
+      "slice_dim": "512 x 512 x 3",
+      "description": "Left frontal lobe infiltrative mass presenting with faint peripheral contrast enhancement and diffuse non-enhancing margins. Real-world challenging boundary."
+    }
+  ],
+  "metrics": {
+    "case_01": {
+      "dice_clean": 0.962,
+      "spearman_decoder_full": 0.124,
+      "dice_after_decoder_rand": 0.021,
+      "ssim_decoder_full": 0.682,
+      "pass_v1_ssim": false,
+      "pass_v2_spearman": true,
+      "ssim_curve": [
+        1.0,
+        0.825,
+        0.76,
+        0.71,
+        0.682
+      ],
+      "spearman_curve": [
+        1.0,
+        0.54,
+        0.38,
+        0.22,
+        0.124
+      ]
+    },
+    "case_02": {
+      "dice_clean": 0.941,
+      "spearman_decoder_full": 0.098,
+      "dice_after_decoder_rand": 0.015,
+      "ssim_decoder_full": 0.645,
+      "pass_v1_ssim": false,
+      "pass_v2_spearman": true,
+      "ssim_curve": [
+        1.0,
+        0.81,
+        0.745,
+        0.69,
+        0.645
+      ],
+      "spearman_curve": [
+        1.0,
+        0.51,
+        0.34,
+        0.19,
+        0.098
+      ]
+    },
+    "case_03": {
+      "dice_clean": 0.972,
+      "spearman_decoder_full": 0.141,
+      "dice_after_decoder_rand": 0.033,
+      "ssim_decoder_full": 0.71,
+      "pass_v1_ssim": false,
+      "pass_v2_spearman": true,
+      "ssim_curve": [
+        1.0,
+        0.85,
+        0.79,
+        0.745,
+        0.71
+      ],
+      "spearman_curve": [
+        1.0,
+        0.56,
+        0.41,
+        0.25,
+        0.141
+      ]
+    },
+    "case_04": {
+      "dice_clean": 0.97,
+      "spearman_decoder_full": 0.112,
+      "dice_after_decoder_rand": 0.018,
+      "ssim_decoder_full": 0.674,
+      "pass_v1_ssim": false,
+      "pass_v2_spearman": true,
+      "ssim_curve": [
+        1.0,
+        0.83,
+        0.755,
+        0.705,
+        0.674
+      ],
+      "spearman_curve": [
+        1.0,
+        0.525,
+        0.36,
+        0.21,
+        0.112
+      ]
+    },
+    "case_05": {
+      "dice_clean": 0.641,
+      "spearman_decoder_full": 0.153,
+      "dice_after_decoder_rand": 0.012,
+      "ssim_decoder_full": 0.69,
+      "pass_v1_ssim": false,
+      "pass_v2_spearman": true,
+      "ssim_curve": [
+        1.0,
+        0.84,
+        0.77,
+        0.725,
+        0.69
+      ],
+      "spearman_curve": [
+        1.0,
+        0.55,
+        0.39,
+        0.24,
+        0.153
+      ]
+    }
+  },
+  "heatmap_designs": [
+    {
+      "id": "turbo",
+      "name": "Thermal Turbo",
+      "description": "Standard clinical high-dynamic-range radiology spectrum"
+    },
+    {
+      "id": "plasma",
+      "name": "Medical Plasma",
+      "description": "High-contrast perceptually uniform saliency gradient"
+    },
+    {
+      "id": "inferno",
+      "name": "Solar Inferno",
+      "description": "Deep black-purple-red-gold margin emphasis"
+    },
+    {
+      "id": "viridis",
+      "name": "Diagnostic Viridis",
+      "description": "Colorblind-friendly green-yellow medical baseline"
+    },
+    {
+      "id": "contour",
+      "name": "Topographic Iso-Contour",
+      "description": "Heatmap with vector attention field isolines"
+    },
+    {
+      "id": "residual",
+      "name": "Residual Attention Delta",
+      "description": "Absolute difference highlighting destroyed attention during MPRT audit"
+    }
+  ],
+  "version": "1.0.4",
+  "domain": "pacs.medseg-xai.internal"
+}

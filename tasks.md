@@ -11,6 +11,7 @@
 | **M5: Precomputed Pipeline** | Precompute 5-case benchmark artifacts (`outputs/`) | Team | Completed | 2026-09-29 |
 | **M6: Liquid Glass PACS UI** | Streamlit diagnostic studio with glassmorphism & zero live PyTorch | Team | Completed | 2026-09-30 |
 | **M7: Viva Documentation** | Comprehensive academic defense and architecture documentation | Team | Completed | 2026-09-30 |
+| **M8: Live Vercel Web App** | Standalone multi-design web application with interactive wipe comparator | Team | Completed | 2026-09-30 |
 
 ---
 
@@ -78,3 +79,11 @@
 - [x] Synchronize `design.md` with Liquid Glass PACS visual design specification.
 - [x] Synchronize `tasks.md` with completed WBS and verification milestones.
 - [x] Synchronize `memory.md` with mathematical SSIM/Spearman analysis and viva defense talking points.
+
+### Milestone 8: Live Vercel Web Application & Multi-Design Heatmap Lab
+- [x] Implement standalone client-side web application (`index.html`, `style.css`, `app.js`) with Liquid Glass PACS visual design.
+- [x] Export complete precomputed web assets across all 5 benchmark cases via `scripts/export_vercel_assets.py`.
+- [x] Build Multi-Design Heatmap Lab supporting 6 distinct clinical designs (Turbo, Plasma, Inferno, Viridis, Contour Isolines, Residual Delta).
+- [x] Implement interactive horizontal Saliency Wipe Comparator allowing real-time dragging between raw MRI anatomy and attention saliency.
+- [x] Configure `vercel.json` and `package.json` for zero-config global CDN deployment on Vercel.
+- [x] Verify local execution on port 3000 (`HTTP 200 OK`).

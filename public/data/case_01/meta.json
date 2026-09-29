@@ -1,0 +1,36 @@
+{
+  "id": "case_01",
+  "title": "Case 01",
+  "pathology": "Glioblastoma Multiforme (Focal Enhancing Core)",
+  "modality": "T1ce (Contrast-Enhanced T1-weighted MRI)",
+  "slice_dim": "256 x 256",
+  "description": "Circumscribed contrast-enhancing lesion in the left fronto-parietal region. High contrast-to-noise ratio relative to background white matter.",
+  "box": [
+    124,
+    124,
+    173,
+    173
+  ],
+  "metrics": {
+    "dice_clean": 0.962,
+    "spearman_decoder_full": 0.124,
+    "dice_after_decoder_rand": 0.021,
+    "ssim_decoder_full": 0.682,
+    "pass_v1_ssim": false,
+    "pass_v2_spearman": true,
+    "ssim_curve": [
+      1.0,
+      0.825,
+      0.76,
+      0.71,
+      0.682
+    ],
+    "spearman_curve": [
+      1.0,
+      0.54,
+      0.38,
+      0.22,
+      0.124
+    ]
+  }
+}
