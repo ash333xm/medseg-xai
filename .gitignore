@@ -51,6 +51,8 @@ weights/
 raw_data/
 processed_data/
 /runpod-volume/
+medsegxai/data/prepared_frames/
+medsegxai/data/raw_nifti/
 
 # Whitelist code, curated Drive benchmark data, outputs, and Vercel web demo assets
 !medseg/data/

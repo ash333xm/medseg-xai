@@ -1,0 +1,2 @@
+case_id,gt_voxels,pred_voxels,dice_3d,duration_sec
+BRATS_001,100778,68824,0.8116,3.98
