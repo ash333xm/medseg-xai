@@ -1,3 +1,5 @@
 timestamp,script,case_id,duration_sec,gpu_memory_mb,notes
 2026-10-11T22:30:27.205387,01_prepare.py,BRATS_001,3.24,0.00,"Prepared 155 frames (512x512), max_slice=43"
 2026-10-11T22:31:39.419082,02_segment.py,BRATS_001,3.98,0.00,"3D Dice=0.8116, GT=100778 vox, Pred=68824 vox"
+2026-11-09T18:10:54.081313,BRATS_001,03_tmme,0.31,0.00,
+2026-11-09T18:11:29.816211,BRATS_001,04_mprt,3.77,0.00,

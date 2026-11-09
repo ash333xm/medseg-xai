@@ -1,0 +1,9 @@
+Stage,Mean_Spearman,Std_Spearman,Mean_SSIM,Std_SSIM
+control,1.0,0.0,1.0,0.0
+mask_decoder_heads,0.8221,0.0,0.8789,0.0
+final_decoder_attention,0.539,0.0,0.5624,0.0
+one_decoder_layer,0.2264,0.0,0.2269,0.0
+full_decoder,0.0,0.0,0.0043,0.0
+memory_attn_and_encoder,-0.0011,0.0,0.0083,0.0
+last_few_hiera_blocks,0.0009,0.0,0.01,0.0
+full_hiera_encoder,-0.0009,0.0,0.0088,0.0

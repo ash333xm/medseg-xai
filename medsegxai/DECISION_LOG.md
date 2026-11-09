@@ -50,3 +50,26 @@ This log documents all architectural decisions, parameter adjustments, and scope
 * **Change**: Frame propagation occurs at $512 \times 512$ (native SAM2 video resolution); all 3D masks are resized back to the original $240 \times 240 \times 155$ voxel grid before computing Whole-Tumour Dice.
 * **Reason**: Computing Dice at $512 \times 512$ introduces interpolation artifacts and distorts clinical benchmarking against the MSD Task 01 ground-truth annotations.
 * **Evidence**: Interface contract specification: `segment_volume(case_id) -> masks_3d (240x240x155 bool), dice (float)`.
+
+---
+
+### Decision 6: TMME Explainability Formulation (Chefer et al. Rollout)
+* **Date**: Week 2–3 (Oct 2026)
+* **Status**: Implemented & Pre-registered
+* **Change**: Replaced naive raw attention visualization with Transformer Multi-Modal & Multi-Layer Relevance Explainability (TMME).
+* **Formulation**:
+  $$\bar{A}^{(l)} = \mathbb{E}_h \left[ \max(0, A_h^{(l)} \odot \nabla_{A_h^{(l)}} \mathcal{L}) \right], \quad R^{(l)} = R^{(l-1)} + \bar{A}^{(l)} \cdot R^{(l-1)}$$
+* **Reason**: Raw transformer attention maps are non-faithful, noisy, and display significant background token entanglement. TMME uses the gradient of the segmentation loss with respect to attention weights, filtered by ReLU, ensuring that only positive relevance directly driving the lesion mask is rolled out.
+* **Evidence**: Chefer et al. (CVPR 2021, ICCV 2021).
+
+---
+
+### Decision 7: MPRT Safety Auditing Gate & Clinical Presentation Policy
+* **Date**: Week 3–4 (Oct 2026)
+* **Status**: Implemented & Pre-registered
+* **Policy**:
+  - **Segmentation Mask**: ALWAYS displayed to the clinician (primary diagnostic output).
+  - **TMME Heatmap**: DISPLAYED if and only if the MPRT Audit PASSES.
+  - **Audit Failure Policy**: If the MPRT audit FAILS (Spearman correlation at full decoder $> 0.30$ or control $< 0.99$), the heatmap is **WITHHELD** from the diagnostic panel with an explicit safety warning stating that the visual saliency map is unfaithful to the model's learned weights.
+* **Reason**: Clinicians may develop false confidence in an AI segmentation if shown a visually plausible heatmap that actually originates from edge biases or random artifacts rather than trained weights (Adebayo et al. "Sanity Checks for Saliency Maps"). Withholding unverified explanations prevents clinical misguidance while preserving the segmentation mask.
+* **Evidence**: Adebayo et al. (NeurIPS 2018); FDA draft guidance on AI/ML-enabled medical devices.

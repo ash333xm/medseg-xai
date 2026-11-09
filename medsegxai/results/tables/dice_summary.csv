@@ -1,0 +1,8 @@
+Metric,Value
+Mean Dice,0.7677
+Median Dice,0.8128
+Std Dice,0.1155
+IQR Dice,0.097
+Min Dice,0.542
+Max Dice,0.892
+Total Cases,8.0

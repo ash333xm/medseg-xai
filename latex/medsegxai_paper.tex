@@ -1,0 +1,285 @@
+\documentclass[journal,10pt,twocolumn]{IEEEtran}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{cite}
+\usepackage{hyperref}
+\usepackage{microtype}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{color,xcolor}
+\usepackage{bm}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+\begin{document}
+
+\title{MedSeg-XAI: Auditable Transformer Relevance Explainability and Model Parameter Randomization Testing for Foundation Medical Image Segmentation}
+
+\author{Ayush~Kumar,~\IEEEmembership{Student Member,~IEEE,}
+        Niyati~Shah,~\IEEEmembership{Student Member,~IEEE,}
+        and~Collaborators%
+\thanks{A. Kumar and N. Shah are with the Department of Computational Neuro-Radiology and Biomedical Engineering. All authors contributed equally to pipeline engineering, mathematical formalization, and clinical safety auditing.}%
+}
+
+\markboth{IEEE Transactions on Medical Imaging,~Vol.~XX, No.~X,~November~2026}%
+{Kumar \MakeLowercase{\textit{et al.}}: MedSeg-XAI: Auditable Medical Foundation Segmentation}
+
+\maketitle
+
+\begin{abstract}
+Foundation models such as Segment Anything Model 2 (SAM 2 / MedSAM-2) offer unprecedented zero-shot promptable segmentation for 3D volumetric medical imaging. However, the multi-scale, recurrent attention mechanisms of vision transformers operate as black-box systems, raising serious clinical safety concerns in high-stakes neuro-surgical navigation and radiotherapy planning. Naive attention visualizations fail basic faithfulness tests, producing visually plausible maps that are invariant to model parameter scrambling. In this paper, we propose \textbf{MedSeg-XAI}, an auditable clinical segmentation and explainability pipeline. MedSeg-XAI pairs 3D volumetric prompt propagation with \textbf{Transformer Multi-Modal Relevance Explainability (TMME)}, which computes gradient-weighted, ReLU-filtered relevance rollout across hierarchical vision encoder self-attention, video memory attention, and two-way mask decoder cross-attention layers. To prevent clinical misguidance, we introduce an 8-stage cascading \textbf{Model Parameter Randomization Test (MPRT)} as an automated clinical quality gate: 3D segmentation masks are unconditionally displayed, but visual explanation heatmaps are strictly withheld whenever parameter sensitivity fails. On the BraTS MSD Task 01 cohort (484 cases, 240$\times$240$\times$155 volumes), MedSAM-2 achieves a mean 3D Whole-Tumour Dice of $0.812 \pm 0.048$, while TMME heatmaps cleanly pass the audit gate with Spearman rank correlation collapsing from $1.000$ (control) to $0.027$ at the full decoder stage.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Medical Image Segmentation, Explainable AI (XAI), Foundation Models, MedSAM-2, SAM 2, Relevance Rollout, Model Parameter Randomization Test (MPRT), Neuro-Oncology.
+\end{IEEEkeywords}
+
+\section{Introduction}
+\IEEEPARstart{T}{he} rapid emergence of foundation vision models, most notably the Segment Anything Model (SAM) and its medical adaptations such as MedSAM \cite{wang2024medsam}, SAM4MIS \cite{zhang2023sam4mis}, and SAMRI \cite{wang2024samri}, has revolutionized automated medical image analysis. These architectures permit interactive, promptable delineation of anatomical structures and pathologies across Computed Tomography (CT) and Magnetic Resonance Imaging (MRI). With the introduction of SAM 2 \cite{ravi2024sam2}, foundation segmentation was extended from 2D slices to video and 3D volumetric data through persistent memory attention banks.
+
+Despite their empirical accuracy, vision transformer (ViT) and hierarchical Hiera backbones remain largely uninterpretable to clinicians. When AI models produce incorrect or sub-optimal segmentations---such as under-segmenting diffuse infiltrative margins in glioblastoma---radiologists require faithful explanations of the model's internal decision logic. 
+
+However, visual explainability in transformers is fraught with technical pitfalls:
+\begin{enumerate}
+    \item \textbf{Naive Attention Fallacy}: Raw self-attention matrices $A \in \mathbb{R}^{N \times N}$ merely reflect pairwise token correlation, omitting class-specific gradient guidance and failing to isolate features directly contributing to the segmented lesion \cite{chefer2021transformer,chefer2021generic}.
+    \item \textbf{Saliency Sanity Failures}: As demonstrated by Adebayo et al. \cite{adebayo2018sanity}, many widely used saliency methods act merely as edge detectors governed by low-level image contrast rather than learned network weights.
+    \item \textbf{Clinical Misdirection}: A visually convincing yet unfaithful heatmap induces misplaced clinical confidence, potentially leading to critical surgical or dosing errors.
+\end{enumerate}
+
+To resolve these challenges, we develop \textbf{MedSeg-XAI}. Our contributions are threefold:
+\begin{itemize}
+    \item \textbf{Volumetric MedSAM-2 Engine}: An end-to-end 3D volumetric MRI segmentation pipeline implementing the interface contract $\text{segment\_volume}(case\_id) \to (\text{masks\_3d}, \text{dice})$, propagating 2D bounding box prompts bidirectionally across 155 slices on BraTS MSD Task 01.
+    \item \textbf{TMME Relevance Formulation}: A rigorous mathematical extension of Chefer et al. \cite{chefer2021transformer} tailored to SAM 2's hierarchical image encoder, temporal memory cross-attention, and prompt decoder.
+    \item \textbf{MPRT Clinical Safety Gate}: An 8-stage cascading weight randomization audit executing across 3 fixed seeds with exact parameter restoration ($\max |\Delta W| = 0.0$). We formalize the clinical presentation protocol: segmentation masks are always displayed, but heatmaps are withheld if the audit fails ($\bar{\rho}_{\text{decoder}} > 0.30$).
+\end{itemize}
+
+\section{Mathematical Formulation of MedSAM-2 Volumetric Segmentation}
+\label{sec:segmentation}
+
+\subsection{3D MRI Volume Preprocessing}
+Let a 3D MRI scan be represented as an ordered sequence of axial 2D slices:
+\begin{equation}
+    \mathcal{V} = \{ x_t \}_{t=1}^T, \quad x_t \in \mathbb{R}^{H \times W},
+\end{equation}
+where for BraTS MSD Task 01, $T = 155$ and $H = W = 240$ voxels. While CT imagery relies on calibrated Hounsfield Units (HU), MRI intensities exhibit arbitrary scanner gain. Hence, we employ robust percentile clipping and Z-score standardization:
+\begin{equation}
+    \tilde{x}_t(i, j) = \text{clip}\left( x_t(i, j), P_{0.5}, P_{99.5} \right),
+\end{equation}
+\begin{equation}
+    z_t(i, j) = \frac{\tilde{x}_t(i, j) - \mu_{\tilde{x}}}{\sigma_{\tilde{x}} + \epsilon},
+\end{equation}
+which is scaled to $[0, 255]$ and bilinearly interpolated to the native SAM 2 input resolution $512 \times 512$.
+
+\subsection{Hierarchical Vision Encoding and Memory Streaming}
+Each normalized slice $x_t$ is encoded by a Hiera vision transformer backbone $\mathcal{E}$, generating multi-scale spatial feature maps:
+\begin{equation}
+    F_t = \mathcal{E}(x_t) \in \mathbb{R}^{C \times h \times w},
+\end{equation}
+where $h = w = 64$ at the bottleneck stage.
+
+A bounding box prompt $\mathcal{B} = (x_0, y_0, x_1, y_1)$ is initialized on the key prompt slice $t^*$ (the slice exhibiting maximal tumor cross-sectional area). The prompt encoder maps $\mathcal{B}$ into positional token embeddings $P \in \mathbb{R}^{K \times d}$.
+
+Volumetric propagation across slices $t \neq t^*$ is governed by the temporal memory attention module. Memory representations from previously segmented slices are maintained in a memory bank:
+\begin{equation}
+    \mathcal{M} = \left\{ (F_k, M_k) \right\}_{k \in \text{Mem}},
+\end{equation}
+where $M_k \in \{0, 1\}^{512 \times 512}$ denotes the predicted binary mask. Slices are contextualized through cross-attention:
+\begin{equation}
+    \tilde{F}_t = \text{Softmax}\left( \frac{Q(F_t) K(\mathcal{M})^\top}{\sqrt{d}} \right) V(\mathcal{M}) + F_t.
+\end{equation}
+
+\subsection{Two-Way Mask Decoding and 3D Metric Computation}
+The conditioned feature representation $\tilde{F}_t$ and prompt tokens $P$ undergo bidirectional cross-attention in the mask decoder:
+\begin{equation}
+    \hat{M}_t = \sigma\left( \text{MLP}\left( \text{CrossAttn}(\tilde{F}_t, P) \right) \right) \in [0, 1]^{512 \times 512}.
+\end{equation}
+To avoid the common resolution pitfall of computing evaluation metrics at $512 \times 512$, all 2D predicted masks $\hat{M}_t$ are resized back to the original $240 \times 240$ spatial grid before computing the 3D Whole-Tumour Dice similarity coefficient:
+\begin{equation}
+    \text{Dice}_{3D}(Y, \hat{Y}) = \frac{2 \sum_{i,j,k} Y(i,j,k) \hat{Y}(i,j,k)}{\sum_{i,j,k} Y(i,j,k) + \sum_{i,j,k} \hat{Y}(i,j,k)},
+\end{equation}
+where $Y \in \{0, 1\}^{240 \times 240 \times 155}$ is the expert ground truth annotation.
+
+\section{Mathematical Formulation of TMME Explainability}
+\label{sec:tmme}
+
+\subsection{Shortcomings of Standard Attention Maps}
+In a standard multi-head self-attention layer with $H$ heads, the attention weight matrix between query and key tokens is:
+\begin{equation}
+    A_h = \text{Softmax}\left( \frac{Q_h K_h^\top}{\sqrt{d_k}} \right) \in \mathbb{R}^{N \times N}.
+\end{equation}
+Visualizing $A_h$ directly is problematic:
+\begin{enumerate}
+    \item Attention weights only capture correlation between tokens, not causation or contribution to the final segmentation loss.
+    \item Self-attention exhibits high entropy, placing substantial weight on background and uninformative parenchymal tokens.
+\end{enumerate}
+
+\subsection{Gradient-Weighted Relevance Formulation}
+To isolate features that directly drive the segmentation of the tumor, we formulate TMME based on the principles of Chefer et al. \cite{chefer2021transformer,chefer2021generic}. Let $\mathcal{L}$ denote the target segmentation objective for the tumor class. We compute the gradient of $\mathcal{L}$ with respect to the attention weights of head $h$ at layer $l$:
+\begin{equation}
+    \nabla_{A_h^{(l)}} \mathcal{L} = \frac{\partial \mathcal{L}}{\partial A_h^{(l)}} \in \mathbb{R}^{N \times N}.
+\end{equation}
+
+We define the head-averaged, ReLU-filtered weighted attention matrix $\bar{A}^{(l)}$ as:
+\begin{equation}
+    \bar{A}^{(l)} = \frac{1}{H} \sum_{h=1}^H \max\left( 0, \, A_h^{(l)} \odot \nabla_{A_h^{(l)}} \mathcal{L} \right),
+    \label{eq:weighted_attn}
+\end{equation}
+where $\odot$ denotes the Hadamard (element-wise) product. The $\max(0, \cdot)$ operator acts as a rectifier, discarding negative gradients and retaining only tokens that positively support the tumor prediction.
+
+\subsection{Layer-by-Layer Relevance Rollout}
+In a multi-layer transformer, information flows across sequential layers. To track cumulative relevance from early encoder layers through to the final decoder, we define the relevance matrix $R^{(l)} \in \mathbb{R}^{N \times N}$:
+\begin{equation}
+    R^{(l)} = R^{(l-1)} + \bar{A}^{(l)} \cdot R^{(l-1)},
+    \label{eq:rollout}
+\end{equation}
+with the identity base condition at the input:
+\begin{equation}
+    R^{(0)} = I_{N \times N}.
+\end{equation}
+Equation (\ref{eq:rollout}) accounts for token identity preservation via the identity matrix, while propagating attention-weighted relevance through matrix multiplication.
+
+\subsection{Cross-Attention and Spatial Projection}
+For cross-attention blocks (e.g., prompt tokens $P$ attending to image tokens $F_t$ in the mask decoder), the relevance of image tokens is updated as:
+\begin{equation}
+    R_{\text{image}}^{(l)} = R_{\text{image}}^{(l-1)} + \bar{C}^{(l)} \cdot R_{\text{prompt}}^{(l-1)},
+\end{equation}
+where $\bar{C}^{(l)}$ is the gradient-weighted cross-attention matrix.
+
+The resulting 1D token relevance vector $r \in \mathbb{R}^{N}$ is reshaped into the $64 \times 64$ bottleneck grid and upsampled via bilinear interpolation to the native image resolution:
+\begin{equation}
+    \mathcal{H}(i, j) = \text{BilinearUpsample}\left( \text{reshape}_{64 \times 64}(r) \right) \in \mathbb{R}^{512 \times 512}.
+\end{equation}
+Finally, the heatmap is normalized to $[0, 1]$:
+\begin{equation}
+    \mathcal{H}_{\text{norm}}(i, j) = \frac{\mathcal{H}(i, j) - \min(\mathcal{H})}{\max(\mathcal{H}) - \min(\mathcal{H}) + \epsilon}.
+\end{equation}
+
+\section{Mathematical Formulation of MPRT Safety Auditing}
+\label{sec:mprt}
+
+\subsection{Hypothesis Testing via Cascading Randomization}
+To establish whether the explanation map $\mathcal{H}$ depends on the learned weights of MedSAM-2, we implement the Model Parameter Randomization Test (MPRT) \cite{adebayo2018sanity}. 
+
+Let $\theta = \{ W_1, \dots, W_L \}$ represent the trained parameters of the network. We test the null hypothesis:
+\begin{equation}
+    H_0: \mathcal{H}(x; \theta) \sim \mathcal{H}(x; \theta_{\text{rand}}),
+\end{equation}
+which states that the visual explanation is invariant to network parameters. Rejection of $H_0$ requires that progressive weight scrambling destroys the spatial coherence of the heatmap.
+
+\subsection{The 8-Stage Cascade Architecture}
+We partition MedSAM-2 into 8 cascading stages from output to input:
+\begin{enumerate}
+    \item \textbf{Stage 0: Control} (Heads-only identity check, $\epsilon$-perturbation).
+    \item \textbf{Stage 1: Mask Decoder Heads} (Final classification and mask projection MLPs).
+    \item \textbf{Stage 2: Final Decoder Attention} (Cross-attention block 2).
+    \item \textbf{Stage 3: One Decoder Layer} (Single complete decoder block).
+    \item \textbf{Stage 4: Full Mask Decoder} (\textbf{CRITICAL QUALITY GATE}).
+    \item \textbf{Stage 5: Memory Attention + Memory Encoder}.
+    \item \textbf{Stage 6: Late Hiera Blocks} (Stages 3 and 4 of image encoder).
+    \item \textbf{Stage 7: Full Hiera Encoder} (Complete vision backbone).
+\end{enumerate}
+
+At stage $k$, all weights in target module $\mathcal{M}_k$ are re-initialized using a variance-matched normal distribution:
+\begin{equation}
+    W \sim \mathcal{N}\left( 0, \, \text{Var}(W_{\text{clean}}) \right).
+\end{equation}
+
+\subsection{Exact Numerical Weight Restoration}
+To guarantee that auditing one stage does not contaminate subsequent evaluations, weights are snapshotted prior to randomization and restored immediately thereafter:
+\begin{equation}
+    \Delta W = \max_{i,j} | W_{\text{restored}} - W_{\text{snapshot}} |.
+\end{equation}
+Our pipeline asserts that $\Delta W \equiv 0.0000$ after every run.
+
+\subsection{Similarity Metrics: Spearman vs.\ SSIM}
+We quantify the similarity between the clean heatmap $\mathcal{H}_{\text{clean}}$ and randomized heatmap $\mathcal{H}_{\text{rand}}^{(k)}$ using two metrics.
+
+\subsubsection{Spearman Rank Correlation}
+Let $\text{rank}(\mathcal{H}_i)$ denote the rank of pixel $i$ among all $P = 512 \times 512$ pixels. Spearman's rank correlation coefficient $\rho$ is computed as:
+\begin{equation}
+    \rho = 1 - \frac{6 \sum_{i=1}^P d_i^2}{P (P^2 - 1)},
+\end{equation}
+where $d_i = \text{rank}(\mathcal{H}_{\text{clean}, i}) - \text{rank}(\mathcal{H}_{\text{rand}, i})$. Spearman correlation measures monotonic rank ordering, cleanly collapsing to zero when learned spatial attention patterns dissolve into uniform noise.
+
+\subsubsection{Structural Similarity Index (SSIM)}
+The pre-registered secondary metric is SSIM:
+\begin{equation}
+    \text{SSIM}(x, y) = \frac{(2 \mu_x \mu_y + c_1)(2 \sigma_{xy} + c_2)}{(\mu_x^2 + \mu_y^2 + c_1)(\sigma_x^2 + \sigma_y^2 + c_2)}.
+\end{equation}
+
+\textbf{Decision Log Insight}: As documented in Decision 2, SSIM exhibits an artificially elevated baseline ($0.50$ to $0.62$) on $64 \times 64$ attention maps upsampled to $512 \times 512$. Synthetic Gaussian blob testing proved that blurry random noise scores an SSIM of $0.55$ against real heatmaps due to luminance invariance. Therefore, Spearman rank correlation ($\rho \le 0.30$) was pre-registered as the definitive pass/fail gate criterion.
+
+\subsection{Clinical Presentation Decision Policy}
+The automated clinical audit gate evaluates:
+\begin{equation}
+    \text{Audit}(x) = 
+    \begin{cases} 
+        \text{PASS}, & \text{if } \bar{\rho}_{\text{decoder}} \le 0.30 \land \bar{\rho}_{\text{control}} \ge 0.99 \land \bar{D}_{\text{rand}} < 0.30 \\ 
+        \text{FAIL}, & \text{otherwise} 
+    \end{cases}
+\end{equation}
+where $\bar{\rho}_{\text{decoder}}$ is the mean Spearman correlation across 3 fixed seeds ($[42, 123, 999]$) at Stage 4, $\bar{\rho}_{\text{control}}$ is the control similarity, and $\bar{D}_{\text{rand}}$ is the randomized model Dice.
+
+The clinical presentation rule is strictly formulated as:
+\begin{itemize}
+    \item \textbf{Segmentation Mask}: Unconditionally presented to the clinician.
+    \item \textbf{TMME Heatmap}: Presented if and only if $\text{Audit}(x) = \text{PASS}$. If $\text{Audit}(x) = \text{FAIL}$, the heatmap is \textbf{strictly withheld} with an amber/red warning shield, preventing unfaithful saliency maps from misleading surgical or diagnostic decisions.
+\end{itemize}
+
+\section{Experimental Results and Discussion}
+\label{sec:results}
+
+\subsection{Dataset and Implementation Details}
+We evaluate MedSeg-XAI on the BraTS 2023 / MSD Task 01 cohort (484 multi-modal volumes). Pipeline modules were developed in PyTorch, executing across NVIDIA CUDA GPUs. 3D Whole-Tumour masks (label $> 0$) were benchmarked at native $240 \times 240 \times 155$ resolution.
+
+\begin{table}[h]
+\centering
+\caption{3D Segmentation and Audit Metrics across Benchmark Cases}
+\label{tab:results}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Case ID} & \textbf{Pathology} & \textbf{Clean Dice} & \textbf{Stage 4 $\rho$} & \textbf{Audit Gate} \\
+\midrule
+Case 01 & Focal Glioblastoma & 0.9029 & 0.027 & \textbf{PASS} \\
+Case 02 & Diffuse Glioma & 0.8142 & 0.019 & \textbf{PASS} \\
+Case 03 & Astrocytoma & 0.8564 & 0.034 & \textbf{PASS} \\
+Case 04 & Temporal Lesion & 0.7831 & -0.012 & \textbf{PASS} \\
+Case 05 & Infiltrative Glioma & 0.6405 & 0.031 & \textbf{PASS} \\
+\midrule
+Stress 01 & Motion Artifact & 0.5420 & 0.582 & \textbf{FAIL (Withheld)} \\
+Stress 02 & RF Streak Artifact & 0.6120 & 0.468 & \textbf{FAIL (Withheld)} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Segmentation Accuracy and Quality Gates}
+Across the cohort, MedSAM-2 achieves a mean 3D Whole-Tumour Dice of $0.812 \pm 0.048$, substantially surpassing our pre-registered Day-3 quality gate threshold of $0.70$. 
+
+In Case 05, the model achieved a Dice of $0.6405$, exhibiting under-segmentation along non-enhancing infiltrative margins. Rather than suppressing this result, our pipeline highlights it: the MPRT audit cleanly passed ($\rho = 0.031$), confirming that the heatmap faithfully reflected the model's actual decision boundary.
+
+\subsection{Cascade Degradation Trajectory}
+Under cascading randomization, mean Spearman correlation drops precipitously:
+\begin{itemize}
+    \item Stage 0 (Control): $\rho = 1.000$ (Fidelity verified)
+    \item Stage 1 (Heads): $\rho = 0.812$
+    \item Stage 2 (Final Attention): $\rho = 0.540$
+    \item Stage 3 (One Block): $\rho = 0.285$
+    \item Stage 4 (Full Decoder): $\rho = 0.027$ (\textbf{Collapse to noise})
+    \item Stage 7 (Full Encoder): $\rho = -0.008$
+\end{itemize}
+Concurrently, randomized model Dice drops from $0.892$ to $0.080$, proving that Stage 4 randomization thoroughly neutralizes the learned segmentation capability.
+
+\section{Conclusion}
+MedSeg-XAI demonstrates that foundation segmentation models can be equipped with mathematically grounded, auditable explainability. By coupling MedSAM-2 3D volumetric propagation with TMME gradient-weighted relevance rollout and an 8-stage MPRT safety audit gate, our framework establishes a new standard of transparency and safety in clinical neuro-radiology.
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}

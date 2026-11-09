@@ -79,3 +79,6 @@ wandb/
 *.swo
 .DS_Store
 Thumbs.db
+
+# Standalone Ayush repo
+standalone_medsegxai/

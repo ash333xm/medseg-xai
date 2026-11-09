@@ -1,0 +1,4 @@
+Role,Case ID,Dice,Audit Status,Clinical Note
+Strong Case,case_01,0.892,PASS,"High-contrast focal lesion, sharp segmentation boundary"
+Weak Case,case_04,0.783,PASS,"Low-contrast diffuse boundary, slight boundary uncertainty"
+Audit/Stress Case,stress_002_streak,0.612,FAIL/CORRUPT,Motion/streak artifact triggers severe degradation or audit failure
