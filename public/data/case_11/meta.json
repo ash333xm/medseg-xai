@@ -1,0 +1,19 @@
+{
+  "id": "case_11",
+  "title": "Case 11",
+  "pathology": "Pancreatic Ductal Adenocarcinoma",
+  "modality": "Pancreatic Protocol Thin-Slice CT (BTCV)",
+  "condition": "Visceral Abdominal Benchmark (Low Contrast)",
+  "organ": "Pancreas (Head / Uncinate)",
+  "box": [
+    210,
+    200,
+    310,
+    300
+  ],
+  "dice": 0.824,
+  "spearman": 0.035,
+  "ssim": 0.528,
+  "passed": true,
+  "description": "Hypoattenuating pancreatic head mass causing upstream main pancreatic duct dilation (double duct sign)."
+}

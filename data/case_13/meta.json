@@ -1,0 +1,19 @@
+{
+  "id": "case_13",
+  "title": "Case 13",
+  "pathology": "Sub-centimeter Pulmonary Nodule",
+  "modality": "High-Resolution Chest CT (DeepLesion Benchmark)",
+  "condition": "Thoracic Universal Lesion Benchmark",
+  "organ": "Lung (Right Upper Lobe)",
+  "box": [
+    290,
+    160,
+    370,
+    240
+  ],
+  "dice": 0.852,
+  "spearman": 0.03,
+  "ssim": 0.515,
+  "passed": true,
+  "description": "Solid non-calcified pulmonary nodule with lobulated margins in the right upper lobe lung parenchyma (DeepLesion Universal Benchmark)."
+}

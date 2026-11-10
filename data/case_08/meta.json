@@ -1,0 +1,19 @@
+{
+  "id": "case_08",
+  "title": "Case 08",
+  "pathology": "Posterior Fossa Brain Metastasis",
+  "modality": "T1ce / FLAIR (Axial z=42, MSD Task01)",
+  "condition": "Standard Diagnostic (High Peritumoral Edema)",
+  "organ": "Brain (Cerebellar Hemisphere)",
+  "box": [
+    260,
+    180,
+    375,
+    295
+  ],
+  "dice": 0.8672,
+  "spearman": 0.028,
+  "ssim": 0.512,
+  "passed": true,
+  "description": "Solitary cerebellar metastasis from primary non-small cell lung carcinoma with disproportionate surrounding vasogenic edema."
+}

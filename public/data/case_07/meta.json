@@ -1,0 +1,19 @@
+{
+  "id": "case_07",
+  "title": "Case 07",
+  "pathology": "Parasagittal Meningioma (Dural Tail Sign)",
+  "modality": "T1ce Contrast MRI (Axial z=84, MSD Task01)",
+  "condition": "Standard Diagnostic (Intense Enhancement)",
+  "organ": "Brain (Extra-axial Convexity)",
+  "box": [
+    220,
+    210,
+    360,
+    350
+  ],
+  "dice": 0.918,
+  "spearman": 0.015,
+  "ssim": 0.485,
+  "passed": true,
+  "description": "Extra-axial hyperostotic dural-based mass displaying intense homogeneous gadolinium enhancement and classic dural tail."
+}

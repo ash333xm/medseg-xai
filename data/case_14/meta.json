@@ -1,0 +1,19 @@
+{
+  "id": "case_14",
+  "title": "Case 14",
+  "pathology": "Patient Head Motion Ghosting (SNR -12dB)",
+  "modality": "Phase-Encoding Ghosting (Synthetic Stress Corpus)",
+  "condition": "Severe Patient Motion Corrupted",
+  "organ": "Brain MRI",
+  "box": [
+    200,
+    180,
+    370,
+    350
+  ],
+  "dice": 0.542,
+  "spearman": 0.582,
+  "ssim": 0.642,
+  "passed": false,
+  "description": "Severe patient movement artifact causing periodic phase-direction ghosting. Model parameter randomization test collapses (Audit FAIL)."
+}

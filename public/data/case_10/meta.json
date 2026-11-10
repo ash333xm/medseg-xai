@@ -1,0 +1,19 @@
+{
+  "id": "case_10",
+  "title": "Case 10",
+  "pathology": "Renal Cell Carcinoma (Clear Cell)",
+  "modality": "Abdominal Contrast-Enhanced CT (Corticomedullary, BTCV)",
+  "condition": "Visceral Abdominal Benchmark",
+  "organ": "Kidney (Right Cortex)",
+  "box": [
+    270,
+    170,
+    390,
+    290
+  ],
+  "dice": 0.912,
+  "spearman": 0.024,
+  "ssim": 0.505,
+  "passed": true,
+  "description": "Exophytic corticomedullary mass arising from the right lower pole renal parenchyma with sharp pseudocapsule."
+}

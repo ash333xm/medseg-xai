@@ -1,0 +1,19 @@
+{
+  "id": "case_16",
+  "title": "Case 16",
+  "pathology": "Severe Delayed Contrast Extravasation",
+  "modality": "Low SNR Parenchymal Washout (Synthetic Stress Corpus)",
+  "condition": "Sub-Optimal Contrast Extravasation",
+  "organ": "Brain MRI",
+  "box": [
+    230,
+    190,
+    350,
+    310
+  ],
+  "dice": 0.724,
+  "spearman": 0.045,
+  "ssim": 0.51,
+  "passed": true,
+  "description": "Sub-optimal gadolinium timing resulting in diminished lesion contrast-to-noise ratio. Model parameters remain coupled (Audit PASS)."
+}

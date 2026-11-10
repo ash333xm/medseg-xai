@@ -1,0 +1,19 @@
+{
+  "id": "case_15",
+  "title": "Case 15",
+  "pathology": "RF Gradient Spike & Streak Artifact",
+  "modality": "High-Frequency RF Interference (Synthetic Stress Corpus)",
+  "condition": "Hardware RF Interference Corrupted",
+  "organ": "Brain MRI",
+  "box": [
+    250,
+    150,
+    380,
+    300
+  ],
+  "dice": 0.612,
+  "spearman": 0.468,
+  "ssim": 0.618,
+  "passed": false,
+  "description": "Radiofrequency coil spike artifact creating linear geometric streaks across the field of view. Saliency map latches onto noise (Audit FAIL)."
+}

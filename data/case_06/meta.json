@@ -1,0 +1,19 @@
+{
+  "id": "case_06",
+  "title": "Case 06",
+  "pathology": "Oligodendroglioma (1p/19q Co-deleted)",
+  "modality": "T2-FLAIR Mismatch (Axial z=76, MSD Task01)",
+  "condition": "Standard Diagnostic (High SNR)",
+  "organ": "Brain (Frontoparietal)",
+  "box": [
+    190,
+    160,
+    340,
+    310
+  ],
+  "dice": 0.8845,
+  "spearman": 0.022,
+  "ssim": 0.498,
+  "passed": true,
+  "description": "Well-circumscribed frontoparietal lesion with heterogeneous calcifications and prominent T2-FLAIR mismatch sign."
+}

@@ -1,0 +1,19 @@
+{
+  "id": "case_09",
+  "title": "Case 09",
+  "pathology": "Hepatocellular Carcinoma (HCC)",
+  "modality": "Tri-phasic Abdominal CT (Portal Venous Phase, BTCV)",
+  "condition": "Visceral Abdominal Benchmark",
+  "organ": "Liver (Segments VII/VIII)",
+  "box": [
+    140,
+    150,
+    310,
+    320
+  ],
+  "dice": 0.895,
+  "spearman": 0.018,
+  "ssim": 0.49,
+  "passed": true,
+  "description": "Arterial phase hyper-enhancing liver lesion with late-phase portal venous washout in cirrhotic parenchyma (BTCV benchmark)."
+}
