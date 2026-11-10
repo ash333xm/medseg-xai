@@ -33,7 +33,6 @@
       <button class="tab-btn" data-tab="tmme-lab">USP 1: TMME Explainability Lab</button>
       <button class="tab-btn" data-tab="mprt-audit">USP 2: MPRT Safety Audit Suite</button>
       <button class="tab-btn" data-tab="cohort">Cohort Benchmark & Stress Corpus</button>
-      <button class="tab-btn" data-tab="paper">Research Paper & Mathematics</button>
       <button class="tab-btn" data-tab="drive-assets">Clinical Drive Repository</button>
       <button class="tab-btn" data-tab="governance">Data Governance & Terms</button>
     </nav>
@@ -470,91 +469,7 @@
           </div>
         </section>
 
-        <!-- TAB 5: RESEARCH PAPER & MATHEMATICAL DOSSIER -->
-        <section id="tab-paper" class="tab-pane" style="display: none;">
-          <div class="glass-card" style="margin-bottom: 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <h3 style="font-size: 1.25rem; font-weight: 700; color: #0f172a;">MedSeg-XAI: Research Paper & Mathematical Foundations</h3>
-                <div style="font-size: 0.84rem; color: #64748b;">Publication-ready scientific manuscript with rigorous derivations and proofs.</div>
-              </div>
-              <div style="display: flex; gap: 10px;">
-                <a href="/medsegxai_paper.tex" download class="design-btn" style="text-decoration: none;">Download LaTeX (.tex)</a>
-                <a href="/references.bib" download class="design-btn" style="text-decoration: none;">Download BibTeX (.bib)</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Academic Paper Container -->
-          <article class="academic-paper-container">
-            <h1 class="paper-title">MedSeg-XAI: Auditable Transformer Relevance Explainability and Model Parameter Randomization Testing for Foundation Medical Image Segmentation</h1>
-            
-            <div class="paper-authors">
-              <strong>Ayush Kumar<sup>1</sup>, Niyati Shah<sup>1</sup>, and the MedSeg-XAI Collaboration</strong><br>
-              <span style="font-size: 0.82rem; color: #64748b;">Department of Computational Radiology & Biomedical Engineering</span>
-            </div>
-
-            <div class="paper-abstract-box">
-              <strong>Abstract&mdash;</strong> Foundation segmentation models such as MedSAM-2 and SAM 2.1 demonstrate remarkable zero-shot capability across multimodal volumetric MRI scans. However, the black-box nature of multi-scale attention mechanisms limits their adoption in high-stakes neuro-surgical planning. Naive attention maps are known to suffer from background token noise and fail basic faithfulness sanity checks. In this work, we introduce <strong>MedSeg-XAI</strong>, an auditable clinical segmentation and explainability pipeline. MedSeg-XAI couples 3D volumetric prompt propagation with <strong>Transformer Multi-Modal Relevance Explainability (TMME)</strong>, which computes gradient-weighted, ReLU-filtered relevance rollout across encoder self-attention, video memory attention, and mask decoder cross-attention layers. To ensure clinical safety, we integrate an 8-stage cascading <strong>Model Parameter Randomization Test (MPRT)</strong> as an automated clinical quality gate: segmentation masks are always presented, but visual heatmaps are strictly withheld if the model fails parameter sensitivity checks. Evaluated on the BraTS MSD Task 01 cohort, MedSAM-2 achieves a mean 3D Whole-Tumour Dice of 0.812 &plusmn; 0.048, while TMME heatmaps cleanly pass the audit gate with Spearman rank correlation collapsing from 1.000 (control) to 0.027 (full decoder).
-            </div>
-
-            <h2 class="paper-h2">1. Mathematical Formulation of MedSAM-2 3D Segmentation</h2>
-            <p class="paper-p">
-              Let a 3D volumetric MRI scan be denoted as a sequential stream of axial slices \( \mathcal{V} = \{ x_t \}_{t=1}^T \), where each slice \( x_t \in \mathbb{R}^{H \times W} \). In our clinical pipeline for MSD Task 01 (BraTS), \( T = 155 \) slices at native resolution \( 240 \times 240 \), preprocessed using percentile clipping \( [P_{0.5}, P_{99.5}] \) and z-score intensity normalization.
-            </p>
-            <p class="paper-p">
-              The MedSAM-2 architecture processes the volume through a hierarchical Hiera vision transformer encoder, yielding multi-scale feature embeddings \( f_t = \mathcal{E}(x_t) \). Prompt conditioning is provided on key slice \( t^* \) via a bounding box prompt \( \mathcal{B} = (x_0, y_0, x_1, y_1) \). The mask decoder computes cross-attention between prompt tokens \( p \) and image features \( f_{t^*} \), producing prediction mask \( M_{t^*} \). Bidirectional volumetric propagation is achieved via the memory attention bank:
-            </p>
-            <div class="paper-math-block">
-              \[ m_t = \text{Softmax}\left( \frac{Q(f_t) K(\mathcal{M})^\top}{\sqrt{d}} \right) V(\mathcal{M}) \]
-            </div>
-            <p class="paper-p">
-              where \( \mathcal{M} = \{ (f_k, M_k) \}_{k \in \text{Mem}} \) encodes past and future slice predictions, preserving 3D spatial continuity.
-            </p>
-
-            <h2 class="paper-h2">2. Mathematical Formulation of TMME Explainability</h2>
-            <p class="paper-p">
-              Standard transformer attention maps \( A \in \mathbb{R}^{H \times N \times N} \) visualize raw token pairwise affinity but fail to isolate tokens actively driving the predicted segmentation mask. Following Chefer et al., we formulate TMME by weighting attention maps by the backward gradient of the target lesion score \( \mathcal{L} \):
-            </p>
-            <div class="paper-math-block">
-              \[ \bar{A}^{(l)} = \frac{1}{H} \sum_{h=1}^H \max\left( 0, A_h^{(l)} \odot \nabla_{A_h^{(l)}} \mathcal{L} \right) \]
-            </div>
-            <p class="paper-p">
-              where \( \nabla_{A_h^{(l)}} \mathcal{L} = \frac{\partial \mathcal{L}}{\partial A_h^{(l)}} \), \( \odot \) represents Hadamard element-wise multiplication, and \( \max(0, \cdot) \) is a ReLU operator ensuring that only features exerting positive gradient contribution towards the tumor segmentation are retained.
-            </p>
-            <p class="paper-p">
-              To account for multi-layer depth, relevance is propagated forward from layer \( 1 \) to \( L \) using identity-initialized rollout:
-            </p>
-            <div class="paper-math-block">
-              \[ R^{(l)} = R^{(l-1)} + \bar{A}^{(l)} \cdot R^{(l-1)}, \quad R^{(0)} = I_{N \times N} \]
-            </div>
-            <p class="paper-p">
-              For cross-attention blocks (prompt-to-image and memory-to-image), token relevance is projected onto the 2D image grid and bilinearly upsampled to \( 512 \times 512 \), normalized to \( [0, 1] \).
-            </p>
-
-            <h2 class="paper-h2">3. Mathematical Formulation of MPRT Safety Auditing</h2>
-            <p class="paper-p">
-              To guard against spurious, edge-dependent saliency artifacts (Adebayo et al., 2018), we implement an 8-stage cascading Model Parameter Randomization Test. At each stage \( k \in \{0, \dots, 7\} \), weights of module group \( \mathcal{W}_k \) are re-initialized from a Gaussian distribution preserving empirical variance:
-            </p>
-            <div class="paper-math-block">
-              \[ W_{ij} \sim \mathcal{N}\left( 0, \, \text{Var}(W_{\text{clean}}) \right) \]
-            </div>
-            <p class="paper-p">
-              The fidelity of the explanation is evaluated by computing the Spearman rank correlation \( \rho \) between the clean heatmap \( H_{\text{clean}} \) and scrambled heatmap \( H_{\text{rand}}^{(k)} \):
-            </p>
-            <div class="paper-math-block">
-              \[ \rho = 1 - \frac{6 \sum_{i=1}^P d_i^2}{P (P^2 - 1)} \]
-            </div>
-            <p class="paper-p">
-              where \( d_i = \text{rank}(H_{\text{clean}, i}) - \text{rank}(H_{\text{rand}, i}) \) over all \( P = 512 \times 512 \) pixels. The pre-registered audit decision function is:
-            </p>
-            <div class="paper-math-block">
-              \[ \text{Audit}(x) = \begin{cases} \text{PASS (Display Heatmap)}, & \text{if } \bar{\rho}_{\text{decoder}} \le 0.30 \land \bar{\rho}_{\text{control}} \ge 0.99 \land \bar{D}_{\text{rand}} < 0.30 \\ \text{FAIL (Withhold Heatmap)}, & \text{otherwise} \end{cases} \]
-            </div>
-          </article>
-        </section>
-
-        <!-- TAB 6: GOOGLE DRIVE CLINICAL REPOSITORY -->
+        <!-- TAB 5: GOOGLE DRIVE CLINICAL REPOSITORY -->
         <section id="tab-drive-assets" class="tab-pane" style="display: none;">
           <div class="glass-card">
             <div class="glass-header">
