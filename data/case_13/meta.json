@@ -15,5 +15,7 @@
   "spearman": 0.03,
   "ssim": 0.515,
   "passed": true,
-  "description": "Solid non-calcified pulmonary nodule with lobulated margins in the right upper lobe lung parenchyma (DeepLesion Universal Benchmark)."
+  "description": "Solid non-calcified pulmonary nodule with lobulated margins in the right upper lobe lung parenchyma (DeepLesion Universal Benchmark).",
+  "type": "ct",
+  "ct_key": "lung"
 }

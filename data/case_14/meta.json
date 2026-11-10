@@ -15,5 +15,6 @@
   "spearman": 0.582,
   "ssim": 0.642,
   "passed": false,
-  "description": "Severe patient movement artifact causing periodic phase-direction ghosting. Model parameter randomization test collapses (Audit FAIL)."
+  "description": "Severe patient movement artifact causing periodic phase-direction ghosting. Model parameter randomization test collapses (Audit FAIL).",
+  "type": "stress_motion"
 }

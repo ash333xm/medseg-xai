@@ -755,6 +755,7 @@ function renderActiveCase() {
   // Split Comparator & Design Grid
   updateWipeComparatorImages();
   updateDesignCatalogGrid(c.id);
+  populateVisualCaseGrid();
 }
 
 // Apply Clinical Presentation Policy

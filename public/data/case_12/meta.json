@@ -1,19 +1,21 @@
 {
   "id": "case_12",
   "title": "Case 12",
-  "pathology": "Splenomegaly & Wedge Infarct",
-  "modality": "Abdominal CT with IV Contrast (BTCV)",
+  "pathology": "Splenomegaly & Acute Focal Infarction",
+  "modality": "Abdominal Contrast-Enhanced CT (BTCV)",
   "condition": "Visceral Abdominal Benchmark",
   "organ": "Spleen",
   "box": [
-    110,
     200,
-    260,
-    350
+    290,
+    330,
+    420
   ],
   "dice": 0.879,
   "spearman": 0.021,
   "ssim": 0.497,
   "passed": true,
-  "description": "Peripherally-based wedge-shaped hypoattenuation in the splenic parenchyma representing acute focal ischemia."
+  "description": "Peripherally-based wedge-shaped hypoattenuation in the splenic parenchyma representing acute focal ischemia.",
+  "type": "ct",
+  "ct_key": "spleen"
 }

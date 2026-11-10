@@ -15,5 +15,8 @@
   "spearman": 0.015,
   "ssim": 0.485,
   "passed": true,
-  "description": "Extra-axial hyperostotic dural-based mass displaying intense homogeneous gadolinium enhancement and classic dural tail."
+  "description": "Extra-axial hyperostotic dural-based mass displaying intense homogeneous gadolinium enhancement and classic dural tail.",
+  "type": "brain",
+  "src_idx": 3,
+  "flip": false
 }

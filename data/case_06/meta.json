@@ -15,5 +15,8 @@
   "spearman": 0.022,
   "ssim": 0.498,
   "passed": true,
-  "description": "Well-circumscribed frontoparietal lesion with heterogeneous calcifications and prominent T2-FLAIR mismatch sign."
+  "description": "Well-circumscribed frontoparietal lesion with heterogeneous calcifications and prominent T2-FLAIR mismatch sign.",
+  "type": "brain",
+  "src_idx": 1,
+  "flip": true
 }

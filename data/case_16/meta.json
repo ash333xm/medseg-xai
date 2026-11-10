@@ -15,5 +15,6 @@
   "spearman": 0.045,
   "ssim": 0.51,
   "passed": true,
-  "description": "Sub-optimal gadolinium timing resulting in diminished lesion contrast-to-noise ratio. Model parameters remain coupled (Audit PASS)."
+  "description": "Sub-optimal gadolinium timing resulting in diminished lesion contrast-to-noise ratio. Model parameters remain coupled (Audit PASS).",
+  "type": "stress_low_snr"
 }

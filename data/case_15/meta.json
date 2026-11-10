@@ -15,5 +15,6 @@
   "spearman": 0.468,
   "ssim": 0.618,
   "passed": false,
-  "description": "Radiofrequency coil spike artifact creating linear geometric streaks across the field of view. Saliency map latches onto noise (Audit FAIL)."
+  "description": "Radiofrequency coil spike artifact creating linear geometric streaks across the field of view. Saliency map latches onto noise (Audit FAIL).",
+  "type": "stress_rf"
 }

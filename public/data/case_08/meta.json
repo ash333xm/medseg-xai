@@ -15,5 +15,8 @@
   "spearman": 0.028,
   "ssim": 0.512,
   "passed": true,
-  "description": "Solitary cerebellar metastasis from primary non-small cell lung carcinoma with disproportionate surrounding vasogenic edema."
+  "description": "Solitary cerebellar metastasis from primary non-small cell lung carcinoma with disproportionate surrounding vasogenic edema.",
+  "type": "brain",
+  "src_idx": 2,
+  "flip": true
 }

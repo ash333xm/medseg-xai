@@ -14,7 +14,7 @@
     <header class="enterprise-header">
       <div class="brand-section">
         <div class="brand-icon-box">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="#2563eb">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#2563eb">
             <path d="M19 10.5V8.8C19 4.7 15.7 1.4 11.6 1.4 7.5 1.4 4.2 4.7 4.2 8.8v1.7C2.4 11.2 1.2 13 1.2 15.1c0 2.8 2.2 5 5 5h11.6c2.8 0 5-2.2 5-5 0-2.1-1.2-3.9-3-4.6zM11 7h2v3h3v2h-3v3h-2v-3H8v-2h3V7z"/>
           </svg>
         </div>
@@ -32,50 +32,72 @@
       </div>
     </header>
 
-    <!-- Visual Teaser Hero Banner (Inspired by medsam2.github.io) -->
+    <!-- Symmetrical, Pixel-Perfect Hero Architecture Banner (Figures 1A, 1B, 1C) -->
     <section class="hero-illustration-banner">
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
-        <div>
-          <div class="badge-tag badge-blue" style="margin-bottom: 8px;">Technical Architecture & Illustration Overview</div>
-          <h1 class="hero-banner-title">MedSAM-2 Foundation 3D Segmentation & Auditable Explainability</h1>
-          <p class="hero-banner-desc">
-            An open-source radiological foundation framework for 3D multi-organ volumetric segmentation with Human-in-the-Loop cyclical refinement. Integrates Transformer Multi-Modal Explainability (TMME) layer-wise attention rollout and Model Parameter Randomization (MPRT) sanity audits to guarantee clinical safety.
-          </p>
-        </div>
+      <div style="margin-bottom: 12px;">
+        <div class="badge-tag badge-blue" style="margin-bottom: 6px;">Technical Architecture & Illustration Overview</div>
+        <h1 class="hero-banner-title">MedSAM-2 Foundation 3D Segmentation & Auditable Saliency</h1>
+        <p class="hero-banner-desc">
+          An open-source radiological foundation platform for 3D multi-organ volumetric segmentation with Human-in-the-Loop cyclical refinement. Integrates Transformer Multi-Modal Explainability (TMME) layer-wise attention rollout and Model Parameter Randomization (MPRT) sanity audits to guarantee clinical safety.
+        </p>
       </div>
 
-      <!-- 3 Core Illustrated Pillars -->
+      <!-- Symmetrical 3-Card Grid with Identical Aspect Ratio & Padding -->
       <div class="hero-visual-grid">
-        <!-- Illustration 1: 3D Segmentation -->
+        <!-- Figure 1A: Segmentation -->
         <div class="hero-visual-card">
-          <div class="hero-visual-media">
-            <img src="data/case_01/figure.png" alt="Foundation 3D Volumetric Segmentation">
+          <div class="hero-card-header">
+            <span class="badge-tag badge-blue">Pillar 1: Segmentation</span>
+            <span style="font-size: 0.72rem; font-weight: 700; color: #059669;">Dice: 0.9029</span>
           </div>
-          <div class="hero-visual-title">Figure 1A: Foundation 3D Prompt Segmentation</div>
+          <div class="hero-visual-title">Figure 1A: Prompt Conditioning & 3D Segmentation</div>
+          <div class="hero-visual-media">
+            <img src="data/case_01/segmentation.png" alt="Foundation 3D Prompt Segmentation">
+          </div>
           <div class="hero-visual-caption">
-            Prompt-driven volumetric segmentation via MedSAM-2. Bounding box conditioning on landmark axial slice propagates across 155 slices using temporal memory attention.
+            Prompt-driven volumetric segmentation via MedSAM-2. Bounding box conditioning on landmark axial slice propagates across 155 slices via bidirectional memory attention.
+          </div>
+          <div class="hero-visual-footer">
+            <span>MedSAM-2 ViT</span>
+            <span>+12px Prompt Margin</span>
           </div>
         </div>
 
-        <!-- Illustration 2: TMME Explainability -->
+        <!-- Figure 1B: Explainability (TMME) -->
         <div class="hero-visual-card">
+          <div class="hero-card-header">
+            <span class="badge-tag badge-cyan">Pillar 2: Explainability</span>
+            <span style="font-size: 0.72rem; font-weight: 700; color: #0284c7;">Chefer Rollout</span>
+          </div>
+          <div class="hero-visual-title">Figure 1B: Layer-Wise Attention Saliency (TMME)</div>
           <div class="hero-visual-media">
             <img src="data/case_01/heatmap_turbo.png" alt="TMME Attention Relevance Heatmap">
           </div>
-          <div class="hero-visual-title">Figure 1B: Transformer Relevance Rollout (TMME)</div>
           <div class="hero-visual-caption">
             Chefer gradient-weighted attention rollout isolating clinical lesion relevance across transformer layers while suppressing non-specific background noise.
           </div>
+          <div class="hero-visual-footer">
+            <span>Positive ReLU Filter</span>
+            <span>Multi-Head Attention</span>
+          </div>
         </div>
 
-        <!-- Illustration 3: MPRT Safety Audit -->
+        <!-- Figure 1C: Safety Auditing (MPRT) -->
         <div class="hero-visual-card">
-          <div class="hero-visual-media">
-            <img src="data/case_01/montage.png" alt="MPRT Parameter Randomization Montage">
+          <div class="hero-card-header">
+            <span class="badge-tag badge-green">Pillar 3: Safety Audit</span>
+            <span style="font-size: 0.72rem; font-weight: 700; color: #059669;">&rho; = 0.027 &le; 0.30</span>
           </div>
-          <div class="hero-visual-title">Figure 1C: 8-Stage Cascading Safety Audit (MPRT)</div>
+          <div class="hero-visual-title">Figure 1C: Parameter Randomization Residual (MPRT)</div>
+          <div class="hero-visual-media">
+            <img src="data/case_01/residual_turbo.png" alt="MPRT Parameter Randomization Residual">
+          </div>
           <div class="hero-visual-caption">
-            Adebayo weight randomization sanity checks. Saliency map demonstrates strict parametric dependence (Spearman &rho; collapses to 0.027 &le; 0.30 at full decoder stage).
+            Adebayo weight randomization sanity checks. Difference map (|Heatmap A &minus; Heatmap B|) certifies that saliency strictly depends on learned weights.
+          </div>
+          <div class="hero-visual-footer">
+            <span>Cascading MPRT Gate</span>
+            <span style="color: #059669;">Audit Certified</span>
           </div>
         </div>
       </div>
@@ -204,11 +226,11 @@
         <section id="tab-clinician" class="tab-pane active">
           
           <!-- Case Header Banner -->
-          <div class="glass-card" style="padding: 18px 24px; margin-bottom: 18px;">
+          <div class="glass-card" style="padding: 16px 22px; margin-bottom: 16px;">
             <div style="display: flex; justify-content: space-between; align-items: flex-end;">
               <div>
-                <h2 id="caseHeaderTitle" style="font-size: 1.4rem; font-weight: 800; color: var(--text-primary); margin-bottom: 4px;"></h2>
-                <div id="caseHeaderDesc" style="color: var(--text-muted); font-size: 0.86rem;"></div>
+                <h2 id="caseHeaderTitle" style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary); margin-bottom: 3px;"></h2>
+                <div id="caseHeaderDesc" style="color: var(--text-muted); font-size: 0.84rem;"></div>
               </div>
               <div style="text-align: right; flex-shrink: 0;">
                 <span class="badge-tag badge-cyan" id="caseCategoryBadge">Brain MRI</span>
@@ -232,7 +254,7 @@
 
           <!-- Triple PACS Synchronized View -->
           <div style="margin-bottom: 10px;">
-            <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--text-primary);">The Clinician's View (Triple-Synchronized Diagnostics)</h3>
+            <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--text-primary);">The Clinician's View (Triple-Synchronized Diagnostics)</h3>
             <div class="glass-subtext">Synchronized clinical PACS comparing raw input prompt, 3D segmentation boundary agreement, and certified TMME attention attribution.</div>
           </div>
 
@@ -260,11 +282,11 @@
               <div class="image-viewport">
                 <img id="p2-image" alt="Segmentation Contours">
               </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                <span style="font-size: 0.76rem; color: #059669; font-weight: 700;">Green: Ground Truth</span>
-                <span style="font-size: 0.76rem; color: #dc2626; font-weight: 700;">Red: MedSAM-2 Prediction</span>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                <span style="font-size: 0.74rem; color: #059669; font-weight: 700;">Green: Ground Truth</span>
+                <span style="font-size: 0.74rem; color: #dc2626; font-weight: 700;">Red: MedSAM-2 Prediction</span>
               </div>
-              <div id="p2-case05-alert" class="alert-case05-glass" style="display: none; margin-top: 10px; background: #fffbeb; border: 1px solid #fde68a; padding: 10px 12px; border-radius: 8px; font-size: 0.76rem; color: #92400e;">
+              <div id="p2-case05-alert" class="alert-case05-glass" style="display: none; margin-top: 8px; background: #fffbeb; border: 1px solid #fde68a; padding: 8px 10px; border-radius: 6px; font-size: 0.74rem; color: #92400e;">
                 <strong>Audit Notice: Under-Segmentation Observed (Dice: 0.6405)</strong><br>
                 Diffuse infiltrative margins. Model isolates hyperintense core but under-segments faint peripheral infiltration. Preserved without suppression for honest failure-mode transparency.
               </div>
@@ -332,9 +354,9 @@
 
             <!-- Interactive Human-in-the-Loop Annotation Cycle (Matching User Diagram) -->
             <div class="hitl-diagram-container">
-              <div style="text-align: center; margin-bottom: 16px;">
-                <h4 style="font-size: 1.15rem; font-weight: 800; color: var(--text-primary);">Human-in-the-Loop Clinical Annotation Pipeline</h4>
-                <div style="font-size: 0.82rem; color: var(--text-muted);">Select any stage below to explore the live visual transformation and mathematical operation:</div>
+              <div style="text-align: center; margin-bottom: 14px;">
+                <h4 style="font-size: 1.1rem; font-weight: 800; color: var(--text-primary);">Human-in-the-Loop Clinical Annotation Pipeline</h4>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Select any stage below to explore the live visual transformation and mathematical operation:</div>
               </div>
 
               <!-- 5 Interactive Cyclical Nodes (Emoji-free) -->
@@ -378,8 +400,8 @@
                 </div>
                 <div>
                   <div style="font-size: 0.74rem; font-weight: 700; color: var(--accent-blue); text-transform: uppercase;" id="hitlDetailStage">Stage 1 of 5</div>
-                  <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin: 4px 0 8px 0;" id="hitlDetailTitle">Middle Slice ROI Bounding Box Selection</h3>
-                  <p style="font-size: 0.84rem; color: var(--text-secondary); line-height: 1.6;" id="hitlDetailDesc">
+                  <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--text-primary); margin: 3px 0 6px 0;" id="hitlDetailTitle">Middle Slice ROI Bounding Box Selection</h3>
+                  <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.55;" id="hitlDetailDesc">
                     The clinician inspects the 3D scan and navigates to the middle axial slice exhibiting the largest tumor cross-sectional area (Key Slice). A tight bounding box prompt with a +12px margin is placed around the lesion boundary, initializing the token prompt embeddings.
                   </p>
                   <div class="code-box" id="hitlDetailFormula">
@@ -390,7 +412,7 @@
             </div>
 
             <!-- Multi-Modality Dataset Gallery (Inspired by medsam2.github.io) -->
-            <div style="margin-top: 28px;">
+            <div style="margin-top: 24px;">
               <div class="glass-header">
                 <span>MedSAM-2 Multi-Organ & Video Streaming Benchmark Gallery</span>
                 <span class="badge-tag badge-blue">medsam2.github.io Datasets</span>
@@ -403,11 +425,11 @@
                 <!-- Domain 1: Abdominal CT (BTCV) -->
                 <div class="medsam-showcase-card">
                   <div class="showcase-media-box">
-                    <img src="data/case_09/figure.png" alt="Abdominal CT Multi-Organ">
+                    <img src="data/case_09/raw.png" alt="Abdominal CT Multi-Organ">
                     <span class="media-tag-overlay">Abdominal 3D CT &bull; BTCV</span>
                   </div>
-                  <h4 style="font-size: 0.94rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Visceral Abdominal Organs (Liver, Kidneys, Spleen, Pancreas)</h4>
-                  <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 10px;">
+                  <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Visceral Abdominal Organs (Liver, Kidneys, Spleen, Pancreas)</h4>
+                  <div style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 10px;">
                     Segments 13 critical organs in contrast-enhanced abdominal CT scans. Demonstrates seamless cross-slice memory propagation through complex parenchymal tissue boundaries.
                   </div>
                   <button class="design-btn" onclick="document.getElementById('caseSelector').value='case_09'; document.getElementById('caseSelector').dispatchEvent(new Event('change')); document.querySelector('[data-tab=clinician]').click();" style="width: 100%;">Inspect Case 09 (Liver HCC) in Viewer</button>
@@ -416,11 +438,11 @@
                 <!-- Domain 2: Brain MRI (BraTS) -->
                 <div class="medsam-showcase-card">
                   <div class="showcase-media-box">
-                    <img src="data/case_01/figure.png" alt="Brain MRI Glioma">
+                    <img src="data/case_01/raw.png" alt="Brain MRI Glioma">
                     <span class="media-tag-overlay">Neuro-Oncology 3D MRI &bull; BraTS 2023</span>
                   </div>
-                  <h4 style="font-size: 0.94rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Multimodal Brain Glioma (FLAIR, T1ce, T2, Edema)</h4>
-                  <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 10px;">
+                  <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Multimodal Brain Glioma (FLAIR, T1ce, T2, Edema)</h4>
+                  <div style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 10px;">
                     Whole-tumour, core, and enhancing lesion delineation across 155 axial slices at native 240&times;240 grid with robust percentile intensity normalization.
                   </div>
                   <button class="design-btn" onclick="document.getElementById('caseSelector').value='case_01'; document.getElementById('caseSelector').dispatchEvent(new Event('change')); document.querySelector('[data-tab=clinician]').click();" style="width: 100%;">Inspect Case 01 (Glioblastoma) in Viewer</button>
@@ -429,11 +451,11 @@
                 <!-- Domain 3: Thoracic Chest CT (DeepLesion) -->
                 <div class="medsam-showcase-card">
                   <div class="showcase-media-box">
-                    <img src="data/case_13/figure.png" alt="Chest CT Pulmonary">
+                    <img src="data/case_13/raw.png" alt="Chest CT Pulmonary">
                     <span class="media-tag-overlay">Thoracic Universal CT &bull; DeepLesion</span>
                   </div>
-                  <h4 style="font-size: 0.94rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Sub-Centimeter Pulmonary Nodules & Lymph Nodes</h4>
-                  <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 10px;">
+                  <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Sub-Centimeter Pulmonary Nodules & Lymph Nodes</h4>
+                  <div style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 10px;">
                     High-resolution lung windowing isolating subtle sub-centimeter lung lesions and pulmonary consolidations without false-positive chest wall latching.
                   </div>
                   <button class="design-btn" onclick="document.getElementById('caseSelector').value='case_13'; document.getElementById('caseSelector').dispatchEvent(new Event('change')); document.querySelector('[data-tab=clinician]').click();" style="width: 100%;">Inspect Case 13 (Lung Nodule) in Viewer</button>
@@ -442,11 +464,11 @@
                 <!-- Domain 4: Echocardiogram & Cine MRI -->
                 <div class="medsam-showcase-card">
                   <div class="showcase-media-box">
-                    <img src="data/case_07/figure.png" alt="Cardiac Video Tracking">
+                    <img src="data/case_07/raw.png" alt="Cardiac Video Tracking">
                     <span class="media-tag-overlay">Dynamic Video &bull; Echocardiography</span>
                   </div>
-                  <h4 style="font-size: 0.94rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Cardiac Chamber Tracking & Motion Dynamics</h4>
-                  <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 10px;">
+                  <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Cardiac Chamber Tracking & Motion Dynamics</h4>
+                  <div style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 10px;">
                     Dynamic temporal memory cross-attention tracking ventricular ejection fraction and myocardium wall motion throughout the complete cardiac cycle.
                   </div>
                   <button class="design-btn" onclick="document.getElementById('caseSelector').value='case_07'; document.getElementById('caseSelector').dispatchEvent(new Event('change')); document.querySelector('[data-tab=clinician]').click();" style="width: 100%;">Inspect Case 07 (Meningioma) in Viewer</button>
@@ -455,22 +477,22 @@
             </div>
 
             <!-- Technical Architecture Blueprint -->
-            <div style="margin-top: 28px;">
+            <div style="margin-top: 24px;">
               <div class="glass-header">
                 <span>MedSAM-2 & MedSeg-XAI Technical Architecture Breakdown</span>
               </div>
-              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 12px;">
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 10px;">
                 <div class="sidebar-card">
-                  <div style="font-size: 0.84rem; font-weight: 700; color: var(--accent-blue);">1. Hiera Vision Encoder</div>
-                  <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">Hierarchical multi-scale windowed self-attention capturing fine anatomical margins and high-frequency textural edema.</div>
+                  <div style="font-size: 0.82rem; font-weight: 700; color: var(--accent-blue);">1. Hiera Vision Encoder</div>
+                  <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 3px;">Hierarchical multi-scale windowed self-attention capturing fine anatomical margins and high-frequency textural edema.</div>
                 </div>
                 <div class="sidebar-card">
-                  <div style="font-size: 0.84rem; font-weight: 700; color: var(--accent-blue);">2. Temporal Memory Bank</div>
-                  <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">Bidirectional video memory attention routing contextual lesion representations forward and reverse across all 155 slices.</div>
+                  <div style="font-size: 0.82rem; font-weight: 700; color: var(--accent-blue);">2. Temporal Memory Bank</div>
+                  <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 3px;">Bidirectional video memory attention routing contextual lesion representations forward and reverse across all 155 slices.</div>
                 </div>
                 <div class="sidebar-card">
-                  <div style="font-size: 0.84rem; font-weight: 700; color: var(--accent-blue);">3. TMME & MPRT Audit Gate</div>
-                  <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">Chefer gradient-weighted attention rollout coupled with 8-stage cascading weight destruction to guarantee clinical safety.</div>
+                  <div style="font-size: 0.82rem; font-weight: 700; color: var(--accent-blue);">3. TMME & MPRT Audit Gate</div>
+                  <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 3px;">Chefer gradient-weighted attention rollout coupled with 8-stage cascading weight destruction to guarantee clinical safety.</div>
                 </div>
               </div>
             </div>
@@ -490,19 +512,19 @@
             </div>
 
             <!-- Mathematical Formulation Card -->
-            <div class="sidebar-card" style="margin-bottom: 18px;">
-              <div style="font-weight: 700; color: var(--accent-blue); font-size: 0.9rem; margin-bottom: 6px;">Mathematical Formulation of TMME Relevance:</div>
+            <div class="sidebar-card" style="margin-bottom: 16px;">
+              <div style="font-weight: 700; color: var(--accent-blue); font-size: 0.88rem; margin-bottom: 6px;">Mathematical Formulation of TMME Relevance:</div>
               <div class="code-box">
                 A_bar^{(l)} = (1 / H) * &Sigma;_{h=1}^H max(0, A_h^{(l)} &odot; &nabla;_{A_h^{(l)}} L)<br>
                 R^{(l)} = R^{(l-1)} + A_bar^{(l)} &middot; R^{(l-1)}, with base condition R^{(0)} = I_{N&times;N}
               </div>
-              <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+              <div style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.5;">
                 Where <code>A_h^{(l)}</code> is the multi-head attention map, <code>&nabla; L</code> is the gradient of the lesion segmentation loss, <code>&odot;</code> is Hadamard elementwise multiplication, and <code>max(0, &middot;)</code> is ReLU activation isolating positive relevance.
               </div>
             </div>
 
             <!-- Interactive Before/After Split Slider -->
-            <div style="text-align: center; margin: 18px 0 8px 0; font-weight: 700; font-size: 0.88rem; color: var(--text-primary);">
+            <div style="text-align: center; margin: 16px 0 8px 0; font-weight: 700; font-size: 0.86rem; color: var(--text-primary);">
               Interactive Saliency Wipe Comparator (Drag horizontal slider to inspect anatomy vs attention)
             </div>
             <div class="split-comparator" id="splitComparator">
@@ -513,17 +535,17 @@
               </div>
             </div>
 
-            <div style="display: flex; justify-content: center; gap: 12px; margin-bottom: 24px;">
+            <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 22px;">
               <button class="design-btn active" id="wipeModeClean">Clean Heatmap vs Raw MRI</button>
               <button class="design-btn" id="wipeModeScrambled">Clean vs Scrambled (MPRT Wipe)</button>
               <button class="design-btn" id="wipeModeSegmentation">Heatmap vs Segmentation</button>
             </div>
 
             <!-- Heatmap Gallery Grid -->
-            <div class="glass-header" style="margin-top: 24px;">
+            <div class="glass-header" style="margin-top: 20px;">
               <span>Full Clinical Heatmap Design Catalog</span>
             </div>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 14px;" id="designCatalogGrid">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 12px;" id="designCatalogGrid">
               <!-- Dynamically populated -->
             </div>
           </div>
@@ -541,8 +563,8 @@
             </div>
 
             <!-- 8-Stage Cascade Tracker -->
-            <div style="margin: 18px 0;">
-              <div style="font-size: 0.9rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">
+            <div style="margin: 16px 0;">
+              <div style="font-size: 0.88rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">
                 The 8 Cascading Randomization Stages (Output &rarr; Input):
               </div>
               <div class="stage-cascade-list" id="stageCascadeList">
@@ -551,27 +573,27 @@
             </div>
 
             <!-- Side-by-Side Saliency Degradation Visualizer -->
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 0;">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 18px 0;">
               <div>
-                <div style="font-size: 0.84rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">Heatmap A: Intact Model (Baseline)</div>
+                <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Heatmap A: Intact Model (Baseline)</div>
                 <div class="image-viewport">
                   <img id="mprt-intact-img" alt="Intact Heatmap">
                 </div>
-                <div style="font-size: 0.74rem; color: #059669; font-weight: 700; margin-top: 6px;">Spearman: 1.000 | Intact Dice: 0.892</div>
+                <div style="font-size: 0.72rem; color: #059669; font-weight: 700; margin-top: 4px;">Spearman: 1.000 | Intact Dice: 0.892</div>
               </div>
               <div>
-                <div style="font-size: 0.84rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">Heatmap B: Scrambled Model (Stage 4 Full Decoder)</div>
+                <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Heatmap B: Scrambled Model (Stage 4 Full Decoder)</div>
                 <div class="image-viewport">
                   <img id="mprt-scrambled-img" alt="Scrambled Heatmap">
                 </div>
-                <div style="font-size: 0.74rem; color: #dc2626; font-weight: 700; margin-top: 6px;">Spearman: 0.027 | Scrambled Dice: 0.080</div>
+                <div style="font-size: 0.72rem; color: #dc2626; font-weight: 700; margin-top: 4px;">Spearman: 0.027 | Scrambled Dice: 0.080</div>
               </div>
               <div>
-                <div style="font-size: 0.84rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">Residual Delta (&Delta; = |Heatmap A &minus; Heatmap B|)</div>
+                <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Residual Delta (&Delta; = |Heatmap A &minus; Heatmap B|)</div>
                 <div class="image-viewport">
                   <img id="mprt-residual-img" alt="Residual Delta">
                 </div>
-                <div style="font-size: 0.74rem; color: var(--accent-blue); font-weight: 700; margin-top: 6px;">Mean Residual: 0.648 | Complete Disruption</div>
+                <div style="font-size: 0.72rem; color: var(--accent-blue); font-weight: 700; margin-top: 4px;">Mean Residual: 0.648 | Complete Disruption</div>
               </div>
             </div>
 
@@ -600,14 +622,14 @@
             </div>
 
             <!-- Progressive Randomization Trajectory Chart -->
-            <div style="margin-top: 24px;">
+            <div style="margin-top: 22px;">
               <div class="glass-header">
                 <span>Figure 8: Cascading Randomization Trajectory (Spearman vs SSIM)</span>
               </div>
               <div class="panoramic-viewport">
                 <img id="transparency-curve-img" alt="Degradation Trajectory Curve">
               </div>
-              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 8px; text-align: center;">
+              <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 6px; text-align: center;">
                 Blue curve: Spearman rank correlation drops sharply to 0.027 at Stage 4 (full decoder). Red curve: SSIM plateaus at ~0.50 due to low-frequency smoothness floor.
               </div>
             </div>
@@ -622,16 +644,16 @@
               <span class="badge-tag badge-blue">BraTS 2023 &bull; BTCV &bull; DeepLesion &bull; Stress</span>
             </div>
             <div class="glass-subtext">
-              Comprehensive cross-case evaluation comparing clean 3D Dice accuracy, scrambled model destruction, and parameter randomization audit outcomes across 16 multi-organ cases.
+              Comprehensive cross-case evaluation comparing clean 3D Dice accuracy, scrambled model destruction, and parameter randomization audit outcomes across 16 authentic clinical cases.
             </div>
 
-            <!-- Visual Case Gallery Grid (Illustrations for all cases) -->
-            <div style="margin-bottom: 24px;">
-              <div style="font-size: 0.9rem; font-weight: 700; color: var(--text-primary); margin-bottom: 10px;">
+            <!-- Visual Case Gallery Grid (Authentic scans for all cases) -->
+            <div style="margin-bottom: 22px;">
+              <div style="font-size: 0.88rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;">
                 Visual Case Catalog (Click any card to load into 3D PACS):
               </div>
               <div class="visual-case-grid" id="visualCaseGrid">
-                <!-- Dynamically populated or static cards -->
+                <!-- Dynamically populated -->
               </div>
             </div>
 
@@ -656,7 +678,7 @@
             </table>
 
             <!-- Aggregated Cohort Metrics -->
-            <div style="margin-top: 28px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+            <div style="margin-top: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
               <div class="metric-badge">
                 <div class="metric-label">Mean Diagnostic Cohort 3D Dice</div>
                 <div class="metric-value" style="color: var(--accent-blue);">0.871 &plusmn; 0.042</div>
@@ -698,7 +720,7 @@
             </div>
 
             <!-- Active Case Audit Montage -->
-            <div style="margin-top: 22px;">
+            <div style="margin-top: 20px;">
               <div class="glass-header">
                 <span>Active Case 8-Stage Audit Montage (outputs/audit/case_XX_montage.png)</span>
               </div>
@@ -718,20 +740,20 @@
             </div>
             <div class="glass-subtext">Clinical neuro-oncology data governance adhering to 45 CFR &sect; 164.514(b)(2) and GDPR.</div>
             
-            <h4 style="font-size: 0.94rem; font-weight: 700; color: var(--text-primary); margin: 16px 0 6px 0;">1. Safe Harbor De-Identification Protocol</h4>
-            <div style="font-size: 0.84rem; color: var(--text-secondary); line-height: 1.6;">
+            <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--text-primary); margin: 14px 0 6px 0;">1. Safe Harbor De-Identification Protocol</h4>
+            <div style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.55;">
               All clinical DICOM studies have undergone complete automated redaction of all eighteen (18) Protected Health Information (PHI) identifiers: names, dates, geographic data, MRNs, biometric markers, and serial numbers.
             </div>
 
-            <h4 style="font-size: 0.94rem; font-weight: 700; color: var(--text-primary); margin: 16px 0 6px 0;">2. Zero-VRAM PACS Isolation Architecture</h4>
-            <div style="font-size: 0.84rem; color: var(--text-secondary); line-height: 1.6;">
+            <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--text-primary); margin: 14px 0 6px 0;">2. Zero-VRAM PACS Isolation Architecture</h4>
+            <div style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.55;">
               - <strong>No External Network Leakage</strong>: All patient pixel arrays are processed client-side or within isolated container boundaries.<br>
               - <strong>Stateless Execution</strong>: Patient volumes are purged upon session termination.<br>
               - <strong>Zero Model Mutation</strong>: Weights are read-only; no backpropagation or parameter updates occur during audit.
             </div>
 
-            <h4 style="font-size: 0.94rem; font-weight: 700; color: var(--text-primary); margin: 16px 0 6px 0;">3. Software-as-a-Medical-Device (SaMD) Research Disclaimer</h4>
-            <div style="font-size: 0.84rem; color: #dc2626; font-weight: 700; line-height: 1.6;">
+            <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--text-primary); margin: 14px 0 6px 0;">3. Software-as-a-Medical-Device (SaMD) Research Disclaimer</h4>
+            <div style="font-size: 0.82rem; color: #dc2626; font-weight: 700; line-height: 1.55;">
               Research Use Only (RUO). This software is NOT approved by the FDA or EMA for primary clinical diagnosis, surgical navigation, or treatment planning.
             </div>
           </div>
@@ -751,30 +773,30 @@
   <div id="gpuHubModal" class="modal-overlay">
     <div class="modal-window">
       <button id="closeGpuHubBtn" class="modal-close-btn">&times;</button>
-      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-        <span class="badge-tag badge-blue" style="font-size: 0.82rem; font-weight: 700;">GPU Hub</span>
-        <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary);">Local & Cloud GPU Deployment Hub</h3>
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <span class="badge-tag badge-blue" style="font-size: 0.8rem; font-weight: 700;">GPU Hub</span>
+        <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--text-primary);">Local & Cloud GPU Deployment Hub</h3>
       </div>
-      <div style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;">
+      <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px;">
         Connect this dashboard seamlessly to a dedicated NVIDIA GPU instance running locally or on RunPod / Vast.ai for live real-time MedSAM-2 inference.
       </div>
 
       <!-- Live Connection Form -->
-      <div class="sidebar-card" style="margin-bottom: 16px;">
-        <div style="font-size: 0.84rem; font-weight: 700; color: var(--accent-blue); margin-bottom: 6px;">Live Backend API Endpoint</div>
+      <div class="sidebar-card" style="margin-bottom: 14px;">
+        <div style="font-size: 0.82rem; font-weight: 700; color: var(--accent-blue); margin-bottom: 6px;">Live Backend API Endpoint</div>
         <div style="display: flex; gap: 8px;">
-          <input type="text" id="gpuEndpointInput" class="clinical-select" style="font-family: var(--font-mono); font-size: 0.8rem;" placeholder="http://localhost:8000 or https://xxxx-8000.proxy.runpod.net" value="http://localhost:8000">
-          <button id="btnConnectGpu" class="design-btn active" style="white-space: nowrap; padding: 0 18px;">Connect & Ping</button>
+          <input type="text" id="gpuEndpointInput" class="clinical-select" style="font-family: var(--font-mono); font-size: 0.78rem;" placeholder="http://localhost:8000 or https://xxxx-8000.proxy.runpod.net" value="http://localhost:8000">
+          <button id="btnConnectGpu" class="design-btn active" style="white-space: nowrap; padding: 0 16px;">Connect & Ping</button>
         </div>
-        <div id="gpuConnectionResult" style="font-size: 0.78rem; margin-top: 8px; color: var(--text-muted);">
+        <div id="gpuConnectionResult" style="font-size: 0.76rem; margin-top: 6px; color: var(--text-muted);">
           Current Status: <strong>Precomputed Mode Active (Zero GPU Required)</strong>
         </div>
       </div>
 
       <!-- 1-Click RunPod Setup Instructions -->
-      <div style="margin-bottom: 16px;">
-        <h4 style="font-size: 0.94rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">Option A: 1-Click RunPod Cloud GPU ($0.34 / hr)</h4>
-        <div style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;">
+      <div style="margin-bottom: 14px;">
+        <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Option A: 1-Click RunPod Cloud GPU ($0.34 / hr)</h4>
+        <div style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.45;">
           1. Rent an <strong>RTX 4090 (24GB)</strong> or <strong>A40 (48GB)</strong> Community Cloud instance on RunPod.<br>
           2. Open the Web Terminal and run:
         </div>
@@ -783,15 +805,15 @@
           cd medseg-xai<br>
           bash scripts/start_runpod.sh
         </div>
-        <div style="font-size: 0.78rem; color: var(--text-muted);">
+        <div style="font-size: 0.76rem; color: var(--text-muted);">
           3. Click "Connect HTTP Service [Port 8000]" on RunPod and paste the generated URL into the input above.
         </div>
       </div>
 
       <!-- Option B: Local NVIDIA GPU -->
       <div>
-        <h4 style="font-size: 0.94rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">Option B: Local NVIDIA GPU (Docker or Native)</h4>
-        <div style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;">
+        <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Option B: Local NVIDIA GPU (Docker or Native)</h4>
+        <div style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.45;">
           Run directly with CUDA acceleration on your local machine:
         </div>
         <div class="code-box">
