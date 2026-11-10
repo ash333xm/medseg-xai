@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MedSeg-XAI Clinical Studio | Foundation 3D Medical Segmentation & Auditable Explainability</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>MedSeg-XAI Clinical Studio | Foundation 3D Medical Segmentation & Auditable Saliency</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232563eb'><path d='M19 10.5V8.8C19 4.7 15.7 1.4 11.6 1.4 7.5 1.4 4.2 4.7 4.2 8.8v1.7C2.4 11.2 1.2 13 1.2 15.1c0 2.8 2.2 5 5 5h11.6c2.8 0 5-2.2 5-5 0-2.1-1.2-3.9-3-4.6zM11 7h2v3h3v2h-3v3h-2v-3H8v-2h3V7z'/></svg>">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?rev=auth_rev_20261110_v3">
 </head>
 <body>
 
   <div class="app-container">
-    <!-- Academic Publication Header -->
+    
+    <!-- Top Academic Publication Header -->
     <header class="enterprise-header">
       <div class="brand-section">
         <div class="brand-icon-box">
@@ -20,7 +24,7 @@
         </div>
         <div>
           <div class="brand-title">MedSeg-XAI Clinical Studio</div>
-          <div class="brand-sub">Foundation 3D Medical Segmentation (MedSAM-2) &bull; TMME Saliency &bull; MPRT Safety Auditing Gate</div>
+          <div class="brand-sub">Foundation 3D Medical Segmentation (MedSAM-2) &bull; TMME Attention Saliency &bull; MPRT Safety Auditing Gate</div>
         </div>
       </div>
       <div class="header-badges">
@@ -32,27 +36,29 @@
       </div>
     </header>
 
-    <!-- Symmetrical, Pixel-Perfect Hero Architecture Banner (Figures 1A, 1B, 1C) -->
+    <!-- Symmetrical Hero Architecture Overview (Figures 1A, 1B, 1C) -->
     <section class="hero-illustration-banner">
-      <div style="margin-bottom: 12px;">
-        <div class="badge-tag badge-blue" style="margin-bottom: 6px;">Technical Architecture & Illustration Overview</div>
-        <h1 class="hero-banner-title">MedSAM-2 Foundation 3D Segmentation & Auditable Saliency</h1>
-        <p class="hero-banner-desc">
-          An open-source radiological foundation platform for 3D multi-organ volumetric segmentation with Human-in-the-Loop cyclical refinement. Integrates Transformer Multi-Modal Explainability (TMME) layer-wise attention rollout and Model Parameter Randomization (MPRT) sanity audits to guarantee clinical safety.
-        </p>
+      <div class="hero-banner-header">
+        <div>
+          <span class="badge-tag badge-blue" style="margin-bottom: 6px;">Foundation Architecture & 3 Core Pillars</span>
+          <h1 class="hero-banner-title">MedSAM-2 Foundation 3D Segmentation & Auditable Saliency</h1>
+          <p class="hero-banner-desc">
+            An open-source radiological foundation platform for 3D multi-organ volumetric segmentation with Human-in-the-Loop cyclical refinement. Integrates Transformer Multi-Modal Explainability (TMME) layer-wise attention rollout and Model Parameter Randomization (MPRT) sanity audits to guarantee clinical safety.
+          </p>
+        </div>
       </div>
 
-      <!-- Symmetrical 3-Card Grid with Identical Aspect Ratio & Padding -->
+      <!-- Symmetrical 3-Card Grid (1:1 Aspect Ratio) -->
       <div class="hero-visual-grid">
         <!-- Figure 1A: Segmentation -->
         <div class="hero-visual-card">
           <div class="hero-card-header">
             <span class="badge-tag badge-blue">Pillar 1: Segmentation</span>
-            <span style="font-size: 0.72rem; font-weight: 700; color: #059669;">Dice: 0.9029</span>
+            <span style="font-size: 0.74rem; font-weight: 700; color: #059669;">Dice: 0.9029</span>
           </div>
           <div class="hero-visual-title">Figure 1A: Prompt Conditioning & 3D Segmentation</div>
           <div class="hero-visual-media">
-            <img src="data/case_01/segmentation.png" alt="Foundation 3D Prompt Segmentation">
+            <img src="data/case_01/segmentation.png?rev=auth_rev_20261110_v3" alt="Foundation 3D Prompt Segmentation">
           </div>
           <div class="hero-visual-caption">
             Prompt-driven volumetric segmentation via MedSAM-2. Bounding box conditioning on landmark axial slice propagates across 155 slices via bidirectional memory attention.
@@ -67,11 +73,11 @@
         <div class="hero-visual-card">
           <div class="hero-card-header">
             <span class="badge-tag badge-cyan">Pillar 2: Explainability</span>
-            <span style="font-size: 0.72rem; font-weight: 700; color: #0284c7;">Chefer Rollout</span>
+            <span style="font-size: 0.74rem; font-weight: 700; color: #0284c7;">Chefer Rollout</span>
           </div>
           <div class="hero-visual-title">Figure 1B: Layer-Wise Attention Saliency (TMME)</div>
           <div class="hero-visual-media">
-            <img src="data/case_01/heatmap_turbo.png" alt="TMME Attention Relevance Heatmap">
+            <img src="data/case_01/heatmap_turbo.png?rev=auth_rev_20261110_v3" alt="TMME Attention Relevance Heatmap">
           </div>
           <div class="hero-visual-caption">
             Chefer gradient-weighted attention rollout isolating clinical lesion relevance across transformer layers while suppressing non-specific background noise.
@@ -86,743 +92,454 @@
         <div class="hero-visual-card">
           <div class="hero-card-header">
             <span class="badge-tag badge-green">Pillar 3: Safety Audit</span>
-            <span style="font-size: 0.72rem; font-weight: 700; color: #059669;">&rho; = 0.027 &le; 0.30</span>
+            <span style="font-size: 0.74rem; font-weight: 700; color: #059669;">&rho; = 0.027 &le; 0.30</span>
           </div>
           <div class="hero-visual-title">Figure 1C: Parameter Randomization Residual (MPRT)</div>
           <div class="hero-visual-media">
-            <img src="data/case_01/residual_turbo.png" alt="MPRT Parameter Randomization Residual">
+            <img src="data/case_01/residual_turbo.png?rev=auth_rev_20261110_v3" alt="MPRT Parameter Randomization Residual">
           </div>
           <div class="hero-visual-caption">
             Adebayo weight randomization sanity checks. Difference map (|Heatmap A &minus; Heatmap B|) certifies that saliency strictly depends on learned weights.
           </div>
           <div class="hero-visual-footer">
             <span>Cascading MPRT Gate</span>
-            <span style="color: #059669;">Audit Certified</span>
+            <span style="color: #059669; font-weight: 700;">Audit Certified</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Segmented Navigation Bar -->
+    <!-- Streamlined Navigation Tabs -->
     <nav class="tabs-nav-bar">
-      <button class="tab-btn active" data-tab="clinician">Clinician PACS & Safety Gate</button>
-      <button class="tab-btn" data-tab="architecture">MedSAM2 Human-in-the-Loop & Architecture</button>
-      <button class="tab-btn" data-tab="tmme-lab">USP 1: TMME Explainability Lab</button>
-      <button class="tab-btn" data-tab="mprt-audit">USP 2: MPRT Safety Audit Suite</button>
-      <button class="tab-btn" data-tab="cohort">Cohort Benchmark & Multi-Organ Datasets</button>
-      <button class="tab-btn" data-tab="drive-assets">Clinical Drive Repository</button>
-      <button class="tab-btn" data-tab="governance">Data Governance & Terms</button>
+      <button class="tab-btn active" data-tab="clinician">1. Clinician PACS & Saliency Gate</button>
+      <button class="tab-btn" data-tab="architecture">2. Human-in-the-Loop Architecture</button>
+      <button class="tab-btn" data-tab="cohort">3. Multi-Organ Visual Catalog (16 Cases)</button>
+      <button class="tab-btn" data-tab="mprt-audit">4. Safety Auditing & Explainability Lab</button>
+      <button class="tab-btn" data-tab="gpu-deploy">5. Local & Cloud GPU Deployment</button>
     </nav>
 
-    <!-- Main Diagnostic Grid -->
-    <div class="main-layout">
-      
-      <!-- Sidebar Console -->
-      <aside class="sidebar-console">
-        <!-- Active Case Selector -->
-        <div class="sidebar-card">
-          <div class="sidebar-title">
-            <span>Case Navigator</span>
-            <span class="badge-tag badge-cyan" id="caseCountBadge">16 Cases Active</span>
-          </div>
-          <select id="caseSelector" class="clinical-select">
-            <optgroup label="Neuro-Oncology (BraTS 2023 MRI - 8 Cases)">
-              <option value="case_01">Case 01 - Glioblastoma (Focal Core, z=63)</option>
-              <option value="case_02">Case 02 - Diffuse Glioma (Bilateral, z=71)</option>
-              <option value="case_03">Case 03 - Astrocytoma (Periventricular, z=80)</option>
-              <option value="case_04">Case 04 - Deep Temporal Lesion (z=58)</option>
-              <option value="case_05">Case 05 - Infiltrative Glioma (Under-seg, z=66)</option>
-              <option value="case_06">Case 06 - Oligodendroglioma (1p/19q Co-del, z=76)</option>
-              <option value="case_07">Case 07 - Parasagittal Meningioma (Dural Tail, z=84)</option>
-              <option value="case_08">Case 08 - Posterior Fossa Metastasis (z=42)</option>
-            </optgroup>
-            <optgroup label="Visceral Abdominal & Thoracic (BTCV & DeepLesion - 5 Cases)">
-              <option value="case_09">Case 09 - Hepatocellular Carcinoma (Liver CT, z=64)</option>
-              <option value="case_10">Case 10 - Renal Cell Carcinoma (Kidney CT, z=55)</option>
-              <option value="case_11">Case 11 - Pancreatic Adenocarcinoma (CT, z=68)</option>
-              <option value="case_12">Case 12 - Splenomegaly & Infarction (CT, z=60)</option>
-              <option value="case_13">Case 13 - Pulmonary Nodule (DeepLesion Chest CT, z=70)</option>
-            </optgroup>
-            <optgroup label="Stress & Safety Auditing Corpus (3 Cases)">
-              <option value="case_14">Case 14 - Severe Patient Motion Ghosting [FAIL]</option>
-              <option value="case_15">Case 15 - RF Gradient Streak Artifact [FAIL]</option>
-              <option value="case_16">Case 16 - Delayed Contrast Extravasation [PASS]</option>
-            </optgroup>
-          </select>
-        </div>
+    <!-- TAB 1: CLINICIAN PACS WORKSTATION (FULL WIDTH, UNCLUTTERED) -->
+    <section id="tab-clinician" class="tab-pane active">
 
-        <!-- Pathology Dossier -->
-        <div class="sidebar-card">
-          <div class="sidebar-title">Case Pathology Dossier</div>
-          <div id="caseDossier" class="meta-row">
-            <!-- Dynamically injected -->
+      <!-- Workstation Control Toolbar -->
+      <div class="workstation-toolbar-card">
+        <div class="toolbar-row-primary">
+          <div class="toolbar-item case-selector-item">
+            <label for="caseSelector" class="toolbar-label">Select Active Case (16 Authentic Clinical Cases):</label>
+            <select id="caseSelector" class="clinical-select">
+              <optgroup label="Neuro-Oncology (BraTS 2023 MRI - 8 Cases)">
+                <option value="case_01">Case 01 - Glioblastoma Multiforme (Focal Core, z=63)</option>
+                <option value="case_02">Case 02 - Diffuse High-Grade Glioma (Bilateral, z=71)</option>
+                <option value="case_03">Case 03 - Anaplastic Astrocytoma (Periventricular, z=80)</option>
+                <option value="case_04">Case 04 - Deep Temporal Lesion (z=58)</option>
+                <option value="case_05">Case 05 - Infiltrative Glioma (Under-seg, z=66)</option>
+                <option value="case_06">Case 06 - Oligodendroglioma (1p/19q Co-del, z=76)</option>
+                <option value="case_07">Case 07 - Parasagittal Meningioma (Dural Tail, z=84)</option>
+                <option value="case_08">Case 08 - Posterior Fossa Metastasis (z=42)</option>
+              </optgroup>
+              <optgroup label="Visceral Abdominal & Thoracic CT (BTCV & DeepLesion - 5 Cases)">
+                <option value="case_09">Case 09 - Hepatocellular Carcinoma (Liver CT, z=64)</option>
+                <option value="case_10">Case 10 - Renal Cell Carcinoma (Kidney CT, z=55)</option>
+                <option value="case_11">Case 11 - Pancreatic Adenocarcinoma (CT, z=68)</option>
+                <option value="case_12">Case 12 - Splenomegaly & Infarction (CT, z=60)</option>
+                <option value="case_13">Case 13 - Pulmonary Nodule (DeepLesion Chest CT, z=70)</option>
+              </optgroup>
+              <optgroup label="Stress & Safety Auditing Corpus (3 Cases)">
+                <option value="case_14">Case 14 - Severe Patient Motion Ghosting [Audit FAIL]</option>
+                <option value="case_15">Case 15 - RF Gradient Streak Artifact [Audit FAIL]</option>
+                <option value="case_16">Case 16 - Delayed Contrast Extravasation [Audit PASS]</option>
+              </optgroup>
+            </select>
           </div>
-        </div>
 
-        <!-- 3D Volumetric Axial Slice Explorer -->
-        <div class="sidebar-card">
-          <div class="sidebar-title">
-            <span>3D Volumetric Explorer</span>
-            <button id="btnPlaySlice" style="background: #ffffff; border: 1.5px solid #cbd5e1; color: var(--accent-blue); border-radius: 6px; padding: 3px 8px; font-size: 0.72rem; font-weight: 700; cursor: pointer;">Play Slices</button>
-          </div>
-          <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 8px;">
-            Axial Slice Position: <strong id="axialSliceNum" style="color: var(--accent-blue); font-family: var(--font-mono);">z = 63</strong> / 155
-          </div>
-          <input type="range" id="axialSliceSlider" class="clinical-slider" min="0" max="154" value="63">
-          
-          <div style="display: flex; gap: 6px; margin-top: 10px;">
-            <button class="design-btn active" id="btnKeyMaxArea" style="font-size: 0.72rem; padding: 6px 8px; flex: 1;">Prompt Slice</button>
-            <button class="design-btn" id="btnKey25" style="font-size: 0.72rem; padding: 6px 8px; flex: 1;">25% Extent</button>
-            <button class="design-btn" id="btnKey75" style="font-size: 0.72rem; padding: 6px 8px; flex: 1;">75% Extent</button>
+          <!-- Modality Filter Buttons -->
+          <div class="toolbar-item">
+            <span class="toolbar-label">Quick Modality Filter:</span>
+            <div class="filter-btn-group">
+              <button class="filter-chip active" data-filter="all">All (16)</button>
+              <button class="filter-chip" data-filter="brain">Brain MRI (8)</button>
+              <button class="filter-chip" data-filter="abdomen">Abdomen CT (4)</button>
+              <button class="filter-chip" data-filter="thorax">Thorax CT (1)</button>
+              <button class="filter-chip" data-filter="stress">Stress (3)</button>
+            </div>
           </div>
         </div>
 
-        <!-- Heatmap Colormaps & Saliency Filtering -->
-        <div class="sidebar-card">
-          <div class="sidebar-title">TMME Saliency & Colormaps</div>
-          <div class="design-grid">
-            <button class="design-btn active" data-design="turbo">Turbo Thermal</button>
-            <button class="design-btn" data-design="plasma">Medical Plasma</button>
-            <button class="design-btn" data-design="inferno">Solar Inferno</button>
-            <button class="design-btn" data-design="viridis">Diagnostic Viridis</button>
-            <button class="design-btn" data-design="contour">Topographic Iso</button>
-            <button class="design-btn" data-design="residual">Residual Delta</button>
+        <div class="toolbar-row-secondary">
+          <!-- Colormaps -->
+          <div class="toolbar-item">
+            <span class="toolbar-label">TMME Saliency Colormap:</span>
+            <div class="design-btn-group">
+              <button class="design-btn active" data-design="turbo">Turbo</button>
+              <button class="design-btn" data-design="plasma">Plasma</button>
+              <button class="design-btn" data-design="inferno">Inferno</button>
+              <button class="design-btn" data-design="viridis">Viridis</button>
+              <button class="design-btn" data-design="contour">Iso-Contour</button>
+              <button class="design-btn" data-design="residual">Residual Delta</button>
+            </div>
           </div>
 
-          <div class="slider-container" style="margin-top: 12px;">
-            <div class="slider-label">
-              <span>Heatmap Saliency Opacity</span>
-              <span id="opacityValue">55%</span>
+          <!-- Opacity Slider -->
+          <div class="toolbar-item slider-item">
+            <div class="slider-header-inline">
+              <span class="toolbar-label">Heatmap Opacity:</span>
+              <strong id="opacityValue" style="color: var(--accent-blue); font-size: 0.78rem;">55%</strong>
             </div>
             <input type="range" id="opacitySlider" class="clinical-slider" min="10" max="100" value="55">
           </div>
 
-          <div class="slider-container">
-            <div class="slider-label">
-              <span>Relevance Threshold Filter</span>
-              <span id="thresholdValue">15%</span>
+          <!-- Axial Slice Position Slider & Play -->
+          <div class="toolbar-item slider-item">
+            <div class="slider-header-inline">
+              <span class="toolbar-label">Axial Slice:</span>
+              <strong id="axialSliceNum" style="color: var(--accent-blue); font-size: 0.78rem;">z = 63 / 155</strong>
+              <button id="btnPlaySlice" class="play-slice-btn">Play Slices</button>
             </div>
-            <input type="range" id="thresholdSlider" class="clinical-slider" min="0" max="80" value="15">
+            <input type="range" id="axialSliceSlider" class="clinical-slider" min="0" max="154" value="63">
+          </div>
+        </div>
+      </div>
+
+      <!-- Safety Audit Gate Banner -->
+      <div id="auditGateBanner" class="audit-gate-banner passed">
+        <div class="audit-gate-content">
+          <div class="audit-gate-icon" id="auditGateIcon">&check;</div>
+          <div>
+            <div class="audit-gate-title" id="auditGateTitle">Safety Audit Gate: PASSED &mdash; Heatmap Certified for Clinical Review</div>
+            <div class="audit-gate-desc" id="auditGateDesc">
+              Model Parameter Randomization Test (MPRT) verified: Saliency map demonstrates strong parametric dependence on learned MedSAM-2 weights (Spearman &rho; collapsed to 0.027 &le; 0.30 at full decoder stage). Heatmap is certified and rendered in Panel 3.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Triple PACS Synchronized View (Spacious Full Width) -->
+      <div class="triple-panel-grid">
+        <!-- Panel 1: Raw Input -->
+        <div class="panel-card">
+          <div class="glass-header">
+            <span>Figure 2A: Raw Input Scan & Clinician ROI</span>
+            <span class="badge-tag badge-amber">Prompt Box (+12px)</span>
+          </div>
+          <div class="glass-subtext">Axial slice with clinician bounding box prompt conditioning.</div>
+          <div class="image-viewport">
+            <img id="p1-image" alt="Raw Input Medical Scan">
+          </div>
+          <div id="p1-coords" class="panel-meta">Prompt Box: [283, 153, 398, 364]</div>
+        </div>
+
+        <!-- Panel 2: 3D Segmentation -->
+        <div class="panel-card">
+          <div class="glass-header">
+            <span>Figure 2B: MedSAM-2 3D Segmentation</span>
+            <span id="p2-dice-badge" class="badge-tag badge-green">3D Dice: 0.9029</span>
+          </div>
+          <div class="glass-subtext">Model Prediction (red) vs Expert Ground Truth (green).</div>
+          <div class="image-viewport">
+            <img id="p2-image" alt="Segmentation Contours">
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+            <span style="font-size: 0.74rem; color: #059669; font-weight: 700;">Green: Ground Truth</span>
+            <span style="font-size: 0.74rem; color: #dc2626; font-weight: 700;">Red: MedSAM-2 Prediction</span>
+          </div>
+          <div id="p2-case05-alert" class="alert-case05-glass" style="display: none; margin-top: 8px; background: #fffbeb; border: 1px solid #fde68a; padding: 8px 10px; border-radius: 6px; font-size: 0.74rem; color: #92400e;">
+            <strong>Audit Notice: Under-Segmentation Observed (Dice: 0.6405)</strong><br>
+            Diffuse infiltrative margins. Model isolates hyperintense core but under-segments faint peripheral infiltration. Preserved without suppression for honest failure-mode transparency.
           </div>
         </div>
 
-        <!-- Safety Audit Override -->
-        <div class="sidebar-card" style="background: var(--accent-crimson-subtle); border-color: var(--accent-crimson-border);">
-          <div class="sidebar-title" style="color: #991b1b; border-color: var(--accent-crimson-border);">Safety Audit Control</div>
-          <div style="font-size: 0.76rem; color: #7f1d1d; line-height: 1.45; margin-bottom: 8px;">
-            Pre-registered Protocol: Heatmap is strictly withheld if MPRT fails. Use override for safety officer audit inspection.
+        <!-- Panel 3: TMME Saliency Heatmap -->
+        <div class="panel-card">
+          <div class="glass-header">
+            <span>Figure 2C: TMME Attention Attribution</span>
+            <span id="p3-audit-status-tag" class="badge-tag badge-green">Certified</span>
           </div>
-          <label style="display: flex; align-items: center; gap: 8px; font-size: 0.76rem; font-weight: 700; cursor: pointer; color: #991b1b;">
-            <input type="checkbox" id="overrideAuditGateCheckbox">
-            <span>Force Show Withheld Heatmap (Debug)</span>
-          </label>
+          <div class="glass-subtext">Chefer gradient-weighted attention rollout overlaid on anatomy.</div>
+          <div class="image-viewport">
+            <img id="p3-image" alt="TMME Relevance Heatmap">
+            <!-- Withheld Curtain Overlay -->
+            <div id="heatmapWithheldCurtain" class="heatmap-withheld-curtain" style="display: none;">
+              <div class="shield-icon">&empty;</div>
+              <h4>Heatmap Withheld: Clinical Safety Gate</h4>
+              <p>
+                This explanation failed the Model Parameter Randomization Test. Heatmap is withheld to prevent misleading radiological interpretation.
+              </p>
+              <button class="btn-override" id="btnCurtainOverride">Inspect Degenerate Map (Safety Debug)</button>
+            </div>
+          </div>
+          <div class="panel-meta" id="p3-policy-meta">Status: Saliency Display Approved by MPRT Audit Gate</div>
         </div>
-      </aside>
+      </div>
 
-      <!-- Viewport Content Area -->
-      <main class="viewport-content">
+      <!-- Clinical Pathology & Metrics Summary Bar -->
+      <div class="metrics-summary-bar">
+        <div class="metric-card">
+          <div class="metric-label">Active Pathology</div>
+          <div class="metric-val" id="metric-pathology">Glioblastoma Multiforme</div>
+          <div class="metric-sub" id="metric-organ">Brain (Frontoparietal)</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Imaging Modality & Sequence</div>
+          <div class="metric-val" id="metric-modality">T1ce / FLAIR (Axial z=63)</div>
+          <div class="metric-sub" id="metric-condition">MSD Task01 (High SNR)</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">3D Volumetric Dice Agreement</div>
+          <div class="metric-val" id="metric-dice" style="color: #059669;">0.9029</div>
+          <div class="metric-sub">Over 155 slices (Clinical Standard)</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Full-Decoder Randomization &rho;</div>
+          <div class="metric-val" id="metric-spearman" style="color: #0284c7;">0.027</div>
+          <div class="metric-sub">&le; 0.30 Pass Threshold (Adebayo Sanity Gate)</div>
+        </div>
+      </div>
 
-        <!-- TAB 1: CLINICIAN PACS & SAFETY GATE -->
-        <section id="tab-clinician" class="tab-pane active">
-          
-          <!-- Case Header Banner -->
-          <div class="glass-card" style="padding: 16px 22px; margin-bottom: 16px;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-              <div>
-                <h2 id="caseHeaderTitle" style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary); margin-bottom: 3px;"></h2>
-                <div id="caseHeaderDesc" style="color: var(--text-muted); font-size: 0.84rem;"></div>
-              </div>
-              <div style="text-align: right; flex-shrink: 0;">
-                <span class="badge-tag badge-cyan" id="caseCategoryBadge">Brain MRI</span>
-                <span id="headerAuditBadge" class="badge-tag badge-green">MPRT: PASSED</span>
-              </div>
-            </div>
+      <!-- Direct Visual Case Selector Strip (Authentic Scans for All 16 Cases) -->
+      <div class="quick-case-strip-card">
+        <div class="strip-header">
+          <div>
+            <div style="font-weight: 800; font-size: 0.96rem; color: var(--text-primary);">Visual Case Catalog & 16-Case Clinical Suite</div>
+            <div style="font-size: 0.78rem; color: var(--text-muted);">Authentic medical scans &bull; Click any thumbnail below to load instantly into the 3D PACS viewer above</div>
           </div>
-
-          <!-- Clinical Safety Audit Gate Status Banner -->
-          <div id="auditGateBanner" class="audit-gate-banner passed">
-            <div class="audit-gate-content">
-              <div class="audit-gate-icon" id="auditGateIcon">&check;</div>
-              <div>
-                <div class="audit-gate-title" id="auditGateTitle">Safety Audit Gate: PASSED &mdash; Heatmap Certified for Clinical Review</div>
-                <div class="audit-gate-desc" id="auditGateDesc">
-                  Model Parameter Randomization Test (MPRT) verified: Saliency map demonstrates strong parametric dependence on learned MedSAM-2 weights (Spearman &rho; collapsed to 0.027 &le; 0.30 at full decoder stage). Heatmap is certified and rendered in Panel 3.
-                </div>
-              </div>
-            </div>
+          <div class="strip-filter-tags">
+            <span class="badge-tag badge-cyan">16 Cases Loaded</span>
           </div>
+        </div>
+        <div class="visual-case-grid" id="visualCaseGrid">
+          <!-- Dynamically populated via app.js -->
+        </div>
+      </div>
 
-          <!-- Triple PACS Synchronized View -->
-          <div style="margin-bottom: 10px;">
-            <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--text-primary);">The Clinician's View (Triple-Synchronized Diagnostics)</h3>
-            <div class="glass-subtext">Synchronized clinical PACS comparing raw input prompt, 3D segmentation boundary agreement, and certified TMME attention attribution.</div>
-          </div>
+    </section>
 
-          <div class="triple-panel-grid">
-            <!-- Panel 1: Raw Input -->
-            <div class="panel-card">
-              <div class="glass-header">
-                <span>Figure 2A: Raw Input & ROI</span>
-                <span class="badge-tag badge-amber">Prompt Box</span>
-              </div>
-              <div class="glass-subtext">Axial slice with clinician ROI prompt box (+12px margin).</div>
-              <div class="image-viewport">
-                <img id="p1-image" alt="Raw Input MRI">
-              </div>
-              <div id="p1-coords" class="panel-meta">Prompt Box: ...</div>
-            </div>
+    <!-- TAB 2: MEDSAM2 HUMAN-IN-THE-LOOP ARCHITECTURE -->
+    <section id="tab-architecture" class="tab-pane" style="display: none;">
+      <div class="glass-card">
+        <div class="glass-header">
+          <span>Figure 3: MedSAM-2 Foundation Architecture & Human-in-the-Loop Annotation Pipeline</span>
+          <span class="badge-tag badge-blue">Bowang Lab & Meta AI</span>
+        </div>
+        <div class="glass-subtext">
+          Bidirectional memory attention network supporting iterative clinician feedback. An initial prompt on a landmark axial slice propagates through 3D volumetric space, with interactive point/box refinements applied at each cycle.
+        </div>
 
-            <!-- Panel 2: Segmentation -->
-            <div class="panel-card">
-              <div class="glass-header">
-                <span>Figure 2B: 3D Segmentation</span>
-                <span id="p2-dice-badge" class="badge-tag badge-green">Dice: 0.0000</span>
-              </div>
-              <div class="glass-subtext">MedSAM-2 Prediction (red) vs expert Ground Truth (green).</div>
-              <div class="image-viewport">
-                <img id="p2-image" alt="Segmentation Contours">
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
-                <span style="font-size: 0.74rem; color: #059669; font-weight: 700;">Green: Ground Truth</span>
-                <span style="font-size: 0.74rem; color: #dc2626; font-weight: 700;">Red: MedSAM-2 Prediction</span>
-              </div>
-              <div id="p2-case05-alert" class="alert-case05-glass" style="display: none; margin-top: 8px; background: #fffbeb; border: 1px solid #fde68a; padding: 8px 10px; border-radius: 6px; font-size: 0.74rem; color: #92400e;">
-                <strong>Audit Notice: Under-Segmentation Observed (Dice: 0.6405)</strong><br>
-                Diffuse infiltrative margins. Model isolates hyperintense core but under-segments faint peripheral infiltration. Preserved without suppression for honest failure-mode transparency.
-              </div>
-            </div>
-
-            <!-- Panel 3: TMME Attention Heatmap (Subject to Safety Gate) -->
-            <div class="panel-card">
-              <div class="glass-header">
-                <span>Figure 2C: TMME Explainability</span>
-                <span id="p3-audit-status-tag" class="badge-tag badge-green">Certified</span>
-              </div>
-              <div class="glass-subtext"><strong>TMME Relevance Heatmap</strong> (Chefer rollout) overlaid on anatomy.</div>
-              <div class="image-viewport">
-                <img id="p3-image" alt="TMME Relevance Heatmap">
-                <!-- Withheld Curtain Overlay -->
-                <div id="heatmapWithheldCurtain" class="heatmap-withheld-curtain" style="display: none;">
-                  <div class="shield-icon">&empty;</div>
-                  <h4>Heatmap Withheld: Clinical Safety Gate</h4>
-                  <p>
-                    This explanation failed the Model Parameter Randomization Test. Heatmap is withheld to prevent misleading radiological interpretation.
-                  </p>
-                  <button class="btn-override" id="btnCurtainOverride">Inspect Degenerate Map (Safety Debug)</button>
-                </div>
-              </div>
-              <div class="panel-meta" id="p3-policy-meta">Status: Saliency Display Approved by MPRT Audit Gate</div>
-            </div>
-          </div>
-
-          <!-- 8-Stage Progressive Degradation Montage Preview -->
-          <div class="panoramic-card">
-            <div class="glass-header">
-              <span>Figure 3: 8-Stage Progressive Parameter Randomization Montage</span>
-              <span class="badge-tag badge-green">NeurIPS MPRT Protocol</span>
-            </div>
-            <div class="glass-subtext">Cascading weight re-initialization trajectory from intact control through decoder layers down to full encoder randomization.</div>
-            <div class="panoramic-viewport">
-              <img id="clinician-montage-img" alt="Audit Degradation Montage">
-            </div>
-          </div>
-
-          <!-- Multi-Panel Publication Figure Preview -->
-          <div class="panoramic-card">
-            <div class="glass-header">
-              <span>Figure 4: Full Clinical Multi-Panel Publication Composite</span>
-              <span class="badge-tag badge-cyan">512&times;512 Native Resolution</span>
-            </div>
-            <div class="glass-subtext">Composite panel: Raw Scan, Prompt Box, GT vs Pred Contours, and TMME Attention Saliency.</div>
-            <div class="panoramic-viewport">
-              <img id="clinician-figure-img" alt="Multi-Panel Publication Figure">
-            </div>
-          </div>
-
-        </section>
-
-        <!-- TAB 2: MEDSAM2 HUMAN-IN-THE-LOOP & ARCHITECTURE (NEW MODULE) -->
-        <section id="tab-architecture" class="tab-pane" style="display: none;">
-          <div class="glass-card">
-            <div class="glass-header">
-              <span>Figure 5: MedSAM-2 Foundation Architecture & Human-in-the-Loop Annotation Pipeline</span>
-              <span class="badge-tag badge-blue">Bowang Lab & Meta AI</span>
-            </div>
-            <div class="glass-subtext">
-              How foundation segmentation operates across 3D medical scans: from initial 2D prompt on landmark slice, bidirectional memory attention propagation across 155 slices, through to TMME explainability and MPRT safety auditing.
-            </div>
-
-            <!-- Interactive Human-in-the-Loop Annotation Cycle (Matching User Diagram) -->
-            <div class="hitl-diagram-container">
-              <div style="text-align: center; margin-bottom: 14px;">
-                <h4 style="font-size: 1.1rem; font-weight: 800; color: var(--text-primary);">Human-in-the-Loop Clinical Annotation Pipeline</h4>
-                <div style="font-size: 0.8rem; color: var(--text-muted);">Select any stage below to explore the live visual transformation and mathematical operation:</div>
-              </div>
-
-              <!-- 5 Interactive Cyclical Nodes (Emoji-free) -->
-              <div class="hitl-nodes-grid" id="hitlNodesGrid">
-                <div class="hitl-node-card active" data-hitl-step="1">
-                  <div class="hitl-node-step">Stage 1</div>
-                  <span class="hitl-node-badge">Prompting</span>
-                  <div class="hitl-node-title">Middle Slice ROI Prompt</div>
-                  <div class="hitl-node-role">Clinician Input</div>
-                </div>
-                <div class="hitl-node-card" data-hitl-step="2">
-                  <div class="hitl-node-step">Stage 2</div>
-                  <span class="hitl-node-badge">Zero-Shot</span>
-                  <div class="hitl-node-title">MedSAM2 2D Segmentation</div>
-                  <div class="hitl-node-role">Foundation Model</div>
-                </div>
-                <div class="hitl-node-card" data-hitl-step="3">
-                  <div class="hitl-node-step">Stage 3</div>
-                  <span class="hitl-node-badge">Interactive</span>
-                  <div class="hitl-node-title">Refined 2D Mask</div>
-                  <div class="hitl-node-role">Clinician Refinement</div>
-                </div>
-                <div class="hitl-node-card" data-hitl-step="4">
-                  <div class="hitl-node-step">Stage 4</div>
-                  <span class="hitl-node-badge">Propagation</span>
-                  <div class="hitl-node-title">Memory Propagation</div>
-                  <div class="hitl-node-role">Temporal Attention Bank</div>
-                </div>
-                <div class="hitl-node-card" data-hitl-step="5">
-                  <div class="hitl-node-step">Stage 5</div>
-                  <span class="hitl-node-badge">Volumetric</span>
-                  <div class="hitl-node-title">Refined 3D Mask</div>
-                  <div class="hitl-node-role">Final 3D Volume (>85% Time Saved)</div>
-                </div>
-              </div>
-
-              <!-- Live Interactive Stage Detail Box -->
-              <div class="hitl-preview-box" id="hitlPreviewBox">
-                <div class="hitl-preview-media">
-                  <img id="hitlDetailImg" src="data/case_01/raw_box.png" alt="Stage Detail">
-                </div>
-                <div>
-                  <div style="font-size: 0.74rem; font-weight: 700; color: var(--accent-blue); text-transform: uppercase;" id="hitlDetailStage">Stage 1 of 5</div>
-                  <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--text-primary); margin: 3px 0 6px 0;" id="hitlDetailTitle">Middle Slice ROI Bounding Box Selection</h3>
-                  <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.55;" id="hitlDetailDesc">
-                    The clinician inspects the 3D scan and navigates to the middle axial slice exhibiting the largest tumor cross-sectional area (Key Slice). A tight bounding box prompt with a +12px margin is placed around the lesion boundary, initializing the token prompt embeddings.
-                  </p>
-                  <div class="code-box" id="hitlDetailFormula">
-                    Prompt Conditioning: P = PromptEncoder(B) &isin; R^{K &times; d}, where B = [x_min, y_min, x_max, y_max]
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Multi-Modality Dataset Gallery (Inspired by medsam2.github.io) -->
-            <div style="margin-top: 24px;">
-              <div class="glass-header">
-                <span>MedSAM-2 Multi-Organ & Video Streaming Benchmark Gallery</span>
-                <span class="badge-tag badge-blue">medsam2.github.io Datasets</span>
-              </div>
-              <div class="glass-subtext">
-                MedSAM-2 was trained on over 455,000 3D image-mask pairs and 76,000 video frames, demonstrating state-of-the-art generalization across diverse clinical anatomical domains:
-              </div>
-
-              <div class="medsam-showcase-grid">
-                <!-- Domain 1: Abdominal CT (BTCV) -->
-                <div class="medsam-showcase-card">
-                  <div class="showcase-media-box">
-                    <img src="data/case_09/raw.png" alt="Abdominal CT Multi-Organ">
-                    <span class="media-tag-overlay">Abdominal 3D CT &bull; BTCV</span>
-                  </div>
-                  <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Visceral Abdominal Organs (Liver, Kidneys, Spleen, Pancreas)</h4>
-                  <div style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 10px;">
-                    Segments 13 critical organs in contrast-enhanced abdominal CT scans. Demonstrates seamless cross-slice memory propagation through complex parenchymal tissue boundaries.
-                  </div>
-                  <button class="design-btn" onclick="document.getElementById('caseSelector').value='case_09'; document.getElementById('caseSelector').dispatchEvent(new Event('change')); document.querySelector('[data-tab=clinician]').click();" style="width: 100%;">Inspect Case 09 (Liver HCC) in Viewer</button>
-                </div>
-
-                <!-- Domain 2: Brain MRI (BraTS) -->
-                <div class="medsam-showcase-card">
-                  <div class="showcase-media-box">
-                    <img src="data/case_01/raw.png" alt="Brain MRI Glioma">
-                    <span class="media-tag-overlay">Neuro-Oncology 3D MRI &bull; BraTS 2023</span>
-                  </div>
-                  <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Multimodal Brain Glioma (FLAIR, T1ce, T2, Edema)</h4>
-                  <div style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 10px;">
-                    Whole-tumour, core, and enhancing lesion delineation across 155 axial slices at native 240&times;240 grid with robust percentile intensity normalization.
-                  </div>
-                  <button class="design-btn" onclick="document.getElementById('caseSelector').value='case_01'; document.getElementById('caseSelector').dispatchEvent(new Event('change')); document.querySelector('[data-tab=clinician]').click();" style="width: 100%;">Inspect Case 01 (Glioblastoma) in Viewer</button>
-                </div>
-
-                <!-- Domain 3: Thoracic Chest CT (DeepLesion) -->
-                <div class="medsam-showcase-card">
-                  <div class="showcase-media-box">
-                    <img src="data/case_13/raw.png" alt="Chest CT Pulmonary">
-                    <span class="media-tag-overlay">Thoracic Universal CT &bull; DeepLesion</span>
-                  </div>
-                  <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Sub-Centimeter Pulmonary Nodules & Lymph Nodes</h4>
-                  <div style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 10px;">
-                    High-resolution lung windowing isolating subtle sub-centimeter lung lesions and pulmonary consolidations without false-positive chest wall latching.
-                  </div>
-                  <button class="design-btn" onclick="document.getElementById('caseSelector').value='case_13'; document.getElementById('caseSelector').dispatchEvent(new Event('change')); document.querySelector('[data-tab=clinician]').click();" style="width: 100%;">Inspect Case 13 (Lung Nodule) in Viewer</button>
-                </div>
-
-                <!-- Domain 4: Echocardiogram & Cine MRI -->
-                <div class="medsam-showcase-card">
-                  <div class="showcase-media-box">
-                    <img src="data/case_07/raw.png" alt="Cardiac Video Tracking">
-                    <span class="media-tag-overlay">Dynamic Video &bull; Echocardiography</span>
-                  </div>
-                  <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Cardiac Chamber Tracking & Motion Dynamics</h4>
-                  <div style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 10px;">
-                    Dynamic temporal memory cross-attention tracking ventricular ejection fraction and myocardium wall motion throughout the complete cardiac cycle.
-                  </div>
-                  <button class="design-btn" onclick="document.getElementById('caseSelector').value='case_07'; document.getElementById('caseSelector').dispatchEvent(new Event('change')); document.querySelector('[data-tab=clinician]').click();" style="width: 100%;">Inspect Case 07 (Meningioma) in Viewer</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Technical Architecture Blueprint -->
-            <div style="margin-top: 24px;">
-              <div class="glass-header">
-                <span>MedSAM-2 & MedSeg-XAI Technical Architecture Breakdown</span>
-              </div>
-              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 10px;">
-                <div class="sidebar-card">
-                  <div style="font-size: 0.82rem; font-weight: 700; color: var(--accent-blue);">1. Hiera Vision Encoder</div>
-                  <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 3px;">Hierarchical multi-scale windowed self-attention capturing fine anatomical margins and high-frequency textural edema.</div>
-                </div>
-                <div class="sidebar-card">
-                  <div style="font-size: 0.82rem; font-weight: 700; color: var(--accent-blue);">2. Temporal Memory Bank</div>
-                  <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 3px;">Bidirectional video memory attention routing contextual lesion representations forward and reverse across all 155 slices.</div>
-                </div>
-                <div class="sidebar-card">
-                  <div style="font-size: 0.82rem; font-weight: 700; color: var(--accent-blue);">3. TMME & MPRT Audit Gate</div>
-                  <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 3px;">Chefer gradient-weighted attention rollout coupled with 8-stage cascading weight destruction to guarantee clinical safety.</div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        <!-- TAB 3: TMME EXPLAINABILITY LAB -->
-        <section id="tab-tmme-lab" class="tab-pane" style="display: none;">
-          <div class="glass-card">
-            <div class="glass-header">
-              <span>Figure 6: Transformer Multi-Modal & Multi-Layer Relevance Explainability (TMME)</span>
-              <span class="badge-tag badge-blue">Chefer et al. (CVPR / ICCV 2021)</span>
-            </div>
-            <div class="glass-subtext">
-              Standard raw attention maps suffer from background noise and lack class specificity. TMME calculates gradient-weighted attention relevance filtered by ReLU and rolls it out across transformer layers.
-            </div>
-
-            <!-- Mathematical Formulation Card -->
-            <div class="sidebar-card" style="margin-bottom: 16px;">
-              <div style="font-weight: 700; color: var(--accent-blue); font-size: 0.88rem; margin-bottom: 6px;">Mathematical Formulation of TMME Relevance:</div>
-              <div class="code-box">
-                A_bar^{(l)} = (1 / H) * &Sigma;_{h=1}^H max(0, A_h^{(l)} &odot; &nabla;_{A_h^{(l)}} L)<br>
-                R^{(l)} = R^{(l-1)} + A_bar^{(l)} &middot; R^{(l-1)}, with base condition R^{(0)} = I_{N&times;N}
-              </div>
-              <div style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.5;">
-                Where <code>A_h^{(l)}</code> is the multi-head attention map, <code>&nabla; L</code> is the gradient of the lesion segmentation loss, <code>&odot;</code> is Hadamard elementwise multiplication, and <code>max(0, &middot;)</code> is ReLU activation isolating positive relevance.
-              </div>
-            </div>
-
-            <!-- Interactive Before/After Split Slider -->
-            <div style="text-align: center; margin: 16px 0 8px 0; font-weight: 700; font-size: 0.86rem; color: var(--text-primary);">
-              Interactive Saliency Wipe Comparator (Drag horizontal slider to inspect anatomy vs attention)
-            </div>
-            <div class="split-comparator" id="splitComparator">
-              <div class="split-layer" id="splitUnderlay"></div>
-              <div class="split-layer-top" id="splitOverlay">
-                <div class="split-layer" id="splitOverlayInner"></div>
-                <div class="split-handle">&harr;</div>
-              </div>
-            </div>
-
-            <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 22px;">
-              <button class="design-btn active" id="wipeModeClean">Clean Heatmap vs Raw MRI</button>
-              <button class="design-btn" id="wipeModeScrambled">Clean vs Scrambled (MPRT Wipe)</button>
-              <button class="design-btn" id="wipeModeSegmentation">Heatmap vs Segmentation</button>
-            </div>
-
-            <!-- Heatmap Gallery Grid -->
-            <div class="glass-header" style="margin-top: 20px;">
-              <span>Full Clinical Heatmap Design Catalog</span>
-            </div>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 12px;" id="designCatalogGrid">
-              <!-- Dynamically populated -->
-            </div>
-          </div>
-        </section>
-
-        <!-- TAB 4: MPRT SAFETY AUDITING SUITE -->
-        <section id="tab-mprt-audit" class="tab-pane" style="display: none;">
-          <div class="glass-card">
-            <div class="glass-header">
-              <span>Figure 7: Model Parameter Randomization Test (MPRT) Safety Audit Suite</span>
-              <span class="badge-tag badge-green">Adebayo et al. (NeurIPS 2018)</span>
-            </div>
-            <div class="glass-subtext">
-              Cascading weight randomization sanity checks verify that explanation heatmaps truly depend on trained model parameters, rather than acting as degenerate edge detectors.
-            </div>
-
-            <!-- 8-Stage Cascade Tracker -->
-            <div style="margin: 16px 0;">
-              <div style="font-size: 0.88rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">
-                The 8 Cascading Randomization Stages (Output &rarr; Input):
-              </div>
-              <div class="stage-cascade-list" id="stageCascadeList">
-                <!-- Dynamically populated -->
-              </div>
-            </div>
-
-            <!-- Side-by-Side Saliency Degradation Visualizer -->
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 18px 0;">
-              <div>
-                <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Heatmap A: Intact Model (Baseline)</div>
-                <div class="image-viewport">
-                  <img id="mprt-intact-img" alt="Intact Heatmap">
-                </div>
-                <div style="font-size: 0.72rem; color: #059669; font-weight: 700; margin-top: 4px;">Spearman: 1.000 | Intact Dice: 0.892</div>
-              </div>
-              <div>
-                <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Heatmap B: Scrambled Model (Stage 4 Full Decoder)</div>
-                <div class="image-viewport">
-                  <img id="mprt-scrambled-img" alt="Scrambled Heatmap">
-                </div>
-                <div style="font-size: 0.72rem; color: #dc2626; font-weight: 700; margin-top: 4px;">Spearman: 0.027 | Scrambled Dice: 0.080</div>
-              </div>
-              <div>
-                <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Residual Delta (&Delta; = |Heatmap A &minus; Heatmap B|)</div>
-                <div class="image-viewport">
-                  <img id="mprt-residual-img" alt="Residual Delta">
-                </div>
-                <div style="font-size: 0.72rem; color: var(--accent-blue); font-weight: 700; margin-top: 4px;">Mean Residual: 0.648 | Complete Disruption</div>
-              </div>
-            </div>
-
-            <!-- Numerical Metrics Readout -->
-            <div class="metrics-row">
-              <div class="metric-badge">
-                <div class="metric-label">Spearman Correlation (A vs B)</div>
-                <div id="mprt-spearman-val" class="metric-value">0.027</div>
-                <div class="metric-sub">Pre-registered Threshold: &le; 0.300 (<strong>PASS</strong>)</div>
-              </div>
-              <div class="metric-badge">
-                <div class="metric-label">Randomized Model Dice</div>
-                <div id="mprt-rand-dice-val" class="metric-value">0.080</div>
-                <div class="metric-sub">Threshold: &lt; 0.300 (Proof of Model Destruction)</div>
-              </div>
-              <div class="metric-badge">
-                <div class="metric-label">Heads-Only Control Similarity</div>
-                <div id="mprt-control-val" class="metric-value">1.000</div>
-                <div class="metric-sub">Control Threshold: &ge; 0.990 (<strong>PASS</strong>)</div>
-              </div>
-              <div class="metric-badge">
-                <div class="metric-label">Parameter Restoration Error</div>
-                <div id="mprt-restoration-val" class="metric-value">0.0000</div>
-                <div class="metric-sub">Exact Weight Fidelity Verified (&Delta;W = 0.0)</div>
-              </div>
-            </div>
-
-            <!-- Progressive Randomization Trajectory Chart -->
-            <div style="margin-top: 22px;">
-              <div class="glass-header">
-                <span>Figure 8: Cascading Randomization Trajectory (Spearman vs SSIM)</span>
-              </div>
-              <div class="panoramic-viewport">
-                <img id="transparency-curve-img" alt="Degradation Trajectory Curve">
-              </div>
-              <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 6px; text-align: center;">
-                Blue curve: Spearman rank correlation drops sharply to 0.027 at Stage 4 (full decoder). Red curve: SSIM plateaus at ~0.50 due to low-frequency smoothness floor.
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- TAB 5: COHORT BENCHMARK & MULTI-ORGAN DATASETS -->
-        <section id="tab-cohort" class="tab-pane" style="display: none;">
-          <div class="glass-card">
-            <div class="glass-header">
-              <span>Figure 9: Cohort-Wide Benchmark Summary & Multi-Organ Catalog (16 Clinical Cases)</span>
-              <span class="badge-tag badge-blue">BraTS 2023 &bull; BTCV &bull; DeepLesion &bull; Stress</span>
-            </div>
-            <div class="glass-subtext">
-              Comprehensive cross-case evaluation comparing clean 3D Dice accuracy, scrambled model destruction, and parameter randomization audit outcomes across 16 authentic clinical cases.
-            </div>
-
-            <!-- Visual Case Gallery Grid (Authentic scans for all cases) -->
-            <div style="margin-bottom: 22px;">
-              <div style="font-size: 0.88rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;">
-                Visual Case Catalog (Click any card to load into 3D PACS):
-              </div>
-              <div class="visual-case-grid" id="visualCaseGrid">
-                <!-- Dynamically populated -->
-              </div>
-            </div>
-
-            <!-- Metrics Table -->
-            <table class="clinical-table">
-              <thead>
-                <tr>
-                  <th>Case ID</th>
-                  <th>Pathology</th>
-                  <th>Organ / Modality</th>
-                  <th>Clean Dice</th>
-                  <th>Scrambled Dice</th>
-                  <th>Spearman &rho;</th>
-                  <th>SSIM</th>
-                  <th>Audit Gate</th>
-                  <th>Clinical Status</th>
-                </tr>
-              </thead>
-              <tbody id="cohortTableBody">
-                <!-- Dynamically populated -->
-              </tbody>
-            </table>
-
-            <!-- Aggregated Cohort Metrics -->
-            <div style="margin-top: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
-              <div class="metric-badge">
-                <div class="metric-label">Mean Diagnostic Cohort 3D Dice</div>
-                <div class="metric-value" style="color: var(--accent-blue);">0.871 &plusmn; 0.042</div>
-                <div class="metric-sub" style="color: #059669;">Day-3 Gate (&ge; 0.70) Cleanly Surpassed</div>
-              </div>
-              <div class="metric-badge">
-                <div class="metric-label">Diagnostic MPRT Pass Rate</div>
-                <div class="metric-value" style="color: #059669;">100% (13 / 13)</div>
-                <div class="metric-sub">Clean Cases Faithfully Pass Audit</div>
-              </div>
-              <div class="metric-badge">
-                <div class="metric-label">Stress Corpus Rejection</div>
-                <div class="metric-value" style="color: #dc2626;">66.7% Withheld</div>
-                <div class="metric-sub" style="color: #dc2626;">Corrupted Scans Correctly Flagged</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- TAB 6: GOOGLE DRIVE CLINICAL REPOSITORY -->
-        <section id="tab-drive-assets" class="tab-pane" style="display: none;">
-          <div class="glass-card">
-            <div class="glass-header">
-              <span>Google Drive Clinical Repository & Artifact Explorer</span>
-              <span class="badge-tag badge-green">100% Synchronized</span>
-            </div>
-            <div class="glass-subtext">
-              Direct access to all authentic clinical slices, attention matrices, segmentation masks, and audit tables downloaded from the Google Drive repository.
-            </div>
-
-            <!-- Active Case Publication Figure -->
-            <div style="margin-top: 14px;">
-              <div class="glass-header">
-                <span>Active Case Publication Figure (outputs/results/case_XX_figure.png)</span>
-              </div>
-              <div class="panoramic-viewport">
-                <img id="full-figure-img" alt="Active Case Figure">
-              </div>
-            </div>
-
-            <!-- Active Case Audit Montage -->
-            <div style="margin-top: 20px;">
-              <div class="glass-header">
-                <span>Active Case 8-Stage Audit Montage (outputs/audit/case_XX_montage.png)</span>
-              </div>
-              <div class="panoramic-viewport">
-                <img id="audit-montage-img" alt="Active Case Montage">
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- TAB 7: DATA GOVERNANCE & TERMS -->
-        <section id="tab-governance" class="tab-pane" style="display: none;">
-          <div class="glass-card">
-            <div class="glass-header">
-              <span>HIPAA Safe Harbor Compliance Framework</span>
-              <span class="badge-tag">MEDSEG-GOV-2026-V1</span>
-            </div>
-            <div class="glass-subtext">Clinical neuro-oncology data governance adhering to 45 CFR &sect; 164.514(b)(2) and GDPR.</div>
+        <!-- Cyclical HITL Architecture Diagram -->
+        <div class="hitl-cyclical-container">
+          <div class="hitl-cycle-flow">
             
-            <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--text-primary); margin: 14px 0 6px 0;">1. Safe Harbor De-Identification Protocol</h4>
-            <div style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.55;">
-              All clinical DICOM studies have undergone complete automated redaction of all eighteen (18) Protected Health Information (PHI) identifiers: names, dates, geographic data, MRNs, biometric markers, and serial numbers.
+            <!-- Step 1: Middle Slice Prompt -->
+            <div class="hitl-node" id="node-step1" onclick="selectHitlStep(1)">
+              <div class="hitl-node-badge">Step 1</div>
+              <div class="hitl-node-img-wrap">
+                <img src="data/case_01/raw_box.png?rev=auth_rev_20261110_v3" alt="Middle Slice Prompt">
+              </div>
+              <div class="hitl-node-title">1. Middle Slice Prompt</div>
+              <div class="hitl-node-desc">Clinician draws 2D ROI box on landmark slice.</div>
             </div>
 
-            <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--text-primary); margin: 14px 0 6px 0;">2. Zero-VRAM PACS Isolation Architecture</h4>
-            <div style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.55;">
-              - <strong>No External Network Leakage</strong>: All patient pixel arrays are processed client-side or within isolated container boundaries.<br>
-              - <strong>Stateless Execution</strong>: Patient volumes are purged upon session termination.<br>
-              - <strong>Zero Model Mutation</strong>: Weights are read-only; no backpropagation or parameter updates occur during audit.
+            <div class="hitl-arrow">&rarr;</div>
+
+            <!-- Step 2: MedSAM2 2D Inference -->
+            <div class="hitl-node" id="node-step2" onclick="selectHitlStep(2)">
+              <div class="hitl-node-badge">Step 2</div>
+              <div class="hitl-node-img-wrap">
+                <img src="data/case_01/segmentation.png?rev=auth_rev_20261110_v3" alt="MedSAM2 2D Segmentation">
+              </div>
+              <div class="hitl-node-title">2. MedSAM-2 2D Inference</div>
+              <div class="hitl-node-desc">ViT image encoder predicts zero-shot mask.</div>
             </div>
 
-            <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--text-primary); margin: 14px 0 6px 0;">3. Software-as-a-Medical-Device (SaMD) Research Disclaimer</h4>
-            <div style="font-size: 0.82rem; color: #dc2626; font-weight: 700; line-height: 1.55;">
-              Research Use Only (RUO). This software is NOT approved by the FDA or EMA for primary clinical diagnosis, surgical navigation, or treatment planning.
+            <div class="hitl-arrow">&rarr;</div>
+
+            <!-- Step 3: Clinician Refined 2D Mask -->
+            <div class="hitl-node" id="node-step3" onclick="selectHitlStep(3)">
+              <div class="hitl-node-badge">Step 3</div>
+              <div class="hitl-node-img-wrap">
+                <img src="data/case_01/seg_overlay.png?rev=auth_rev_20261110_v3" alt="Refined 2D Mask">
+              </div>
+              <div class="hitl-node-title">3. Clinician Refined 2D Mask</div>
+              <div class="hitl-node-desc">Clinician corrects ambiguous boundaries.</div>
+            </div>
+
+            <div class="hitl-arrow">&rarr;</div>
+
+            <!-- Step 4: 3D Memory Propagation -->
+            <div class="hitl-node" id="node-step4" onclick="selectHitlStep(4)">
+              <div class="hitl-node-badge">Step 4</div>
+              <div class="hitl-node-img-wrap">
+                <img src="data/case_01/montage.png?rev=auth_rev_20261110_v3" alt="3D Slice Propagation">
+              </div>
+              <div class="hitl-node-title">4. 3D Memory Propagation</div>
+              <div class="hitl-node-desc">Bidirectional attention tracks mask across all 155 slices.</div>
+            </div>
+
+            <div class="hitl-arrow">&rarr;</div>
+
+            <!-- Step 5: Final Refined 3D Mask -->
+            <div class="hitl-node" id="node-step5" onclick="selectHitlStep(5)">
+              <div class="hitl-node-badge">Step 5</div>
+              <div class="hitl-node-img-wrap">
+                <img src="data/case_01/figure.png?rev=auth_rev_20261110_v3" alt="Refined 3D Mask">
+              </div>
+              <div class="hitl-node-title">5. Final Refined 3D Mask</div>
+              <div class="hitl-node-desc">High-precision 3D contour certified for treatment planning.</div>
+            </div>
+
+          </div>
+
+          <!-- Interactive Inspector for Selected Stage -->
+          <div class="hitl-detail-box" id="hitlDetailBox">
+            <h4 id="hitlDetailTitle" style="font-size: 1.05rem; font-weight: 800; color: var(--text-primary); margin-bottom: 6px;">
+              Step 1: Middle Slice Prompt Conditioning
+            </h4>
+            <p id="hitlDetailDesc" style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px;">
+              Radiologists define an initial bounding box around the lesion core on the axial slice with maximal tumor extent (+12px anatomical margin). This prompt conditions the prompt encoder to extract sparse positional embeddings.
+            </p>
+            <div class="hitl-detail-media">
+              <img id="hitlDetailImg" src="data/case_01/raw_box.png?rev=auth_rev_20261110_v3" alt="Stage Detail View">
             </div>
           </div>
-        </section>
+        </div>
+      </div>
+    </section>
 
-      </main>
-    </div>
+    <!-- TAB 3: MULTI-ORGAN VISUAL CATALOG & BENCHMARK -->
+    <section id="tab-cohort" class="tab-pane" style="display: none;">
+      <div class="glass-card">
+        <div class="glass-header">
+          <span>16-Case Multi-Organ Clinical Benchmark & Illustration Suite</span>
+          <span class="badge-tag badge-cyan">BraTS &bull; BTCV &bull; DeepLesion &bull; Stress</span>
+        </div>
+        <div class="glass-subtext">
+          Comprehensive multi-organ evaluation spanning neuro-oncology (BraTS 2023), abdominal organs (BTCV CT: Liver, Kidney, Pancreas, Spleen), thoracic pulmonary lesions (DeepLesion), and corrupted stress scans.
+        </div>
 
-    <!-- Enterprise Footer -->
-    <footer class="enterprise-footer">
-      MedSeg-XAI Multimodal Neuro-Radiology Studio &bull; Built for Clinical Decision Support, Foundation Model Auditing, and Peer-Reviewed Deployment.<br>
-      High-Performance PACS Architecture &bull; HIPAA Safe Harbor Compliant &bull; Decision-Logged Integrity.
-    </footer>
+        <!-- Cohort Summary Metrics Table -->
+        <table class="clinical-table">
+          <thead>
+            <tr>
+              <th>Case ID</th>
+              <th>Pathology & Domain</th>
+              <th>Modality</th>
+              <th>3D Dice Score</th>
+              <th>Spearman &rho;</th>
+              <th>SSIM</th>
+              <th>Audit Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="cohortTableBody">
+            <!-- Dynamically populated via app.js -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 4: SAFETY AUDITING & EXPLAINABILITY LAB -->
+    <section id="tab-mprt-audit" class="tab-pane" style="display: none;">
+      <div class="glass-card">
+        <div class="glass-header">
+          <span>Figure 4: Model Parameter Randomization Test (MPRT) Sanity Suite</span>
+          <span class="badge-tag badge-green">NeurIPS Sanity Protocol</span>
+        </div>
+        <div class="glass-subtext">
+          Adebayo et al. parameter randomization test certifying that TMME attention heatmaps depend on trained model weights rather than acting as trivial edge detectors.
+        </div>
+
+        <!-- Intact vs Scrambled Heatmap Comparator -->
+        <div class="mprt-split-grid">
+          <div class="panel-card">
+            <div class="glass-header">
+              <span>Control: Intact Trained Weights</span>
+              <span class="badge-tag badge-blue">&rho; = 1.000</span>
+            </div>
+            <div class="image-viewport">
+              <img id="mprt-intact-img" src="data/case_01/heatmap_turbo.png?rev=auth_rev_20261110_v3" alt="Intact Heatmap">
+            </div>
+            <div class="panel-meta">Normal diagnostic attention localized on tumor core.</div>
+          </div>
+
+          <div class="panel-card">
+            <div class="glass-header">
+              <span>Perturbation: Full Decoder Randomization</span>
+              <span class="badge-tag badge-green">&rho; = 0.027 &le; 0.30</span>
+            </div>
+            <div class="image-viewport">
+              <img id="mprt-scrambled-img" src="data/case_01/scrambled_turbo.png?rev=auth_rev_20261110_v3" alt="Scrambled Heatmap">
+            </div>
+            <div class="panel-meta">Attention collapses to uniform background noise (PASS).</div>
+          </div>
+        </div>
+
+        <!-- 8-Stage Progressive Degradation Montage -->
+        <div class="panoramic-card" style="margin-top: 18px;">
+          <div class="glass-header">
+            <span>Figure 5: 8-Stage Progressive Weight Randomization Trajectory</span>
+            <span class="badge-tag badge-green">Cascading Audit Protocol</span>
+          </div>
+          <div class="glass-subtext">
+            Left to right: Intact &rarr; Mask Decoder Block 2 &rarr; Mask Decoder Block 1 &rarr; Prompt Encoder &rarr; ViT Block 11 &rarr; ViT Block 8 &rarr; ViT Block 4 &rarr; Full Network Randomization.
+          </div>
+          <div class="panoramic-viewport">
+            <img id="mprt-montage-img" src="data/case_01/montage.png?rev=auth_rev_20261110_v3" alt="8-Stage Degradation Montage">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: LOCAL & CLOUD GPU DEPLOYMENT -->
+    <section id="tab-gpu-deploy" class="tab-pane" style="display: none;">
+      <div class="glass-card">
+        <div class="glass-header">
+          <span>Local & Cloud GPU Deployment Hub (RunPod / Lambda / Local RTX)</span>
+          <span class="badge-tag badge-blue">FastAPI + PyTorch Backend</span>
+        </div>
+        <div class="glass-subtext">
+          Run MedSeg-XAI on local workstation GPUs or cloud rental instances (RunPod, Lambda Labs, Vast.ai) for sub-second 3D volumetric inference.
+        </div>
+
+        <div class="gpu-deployment-grid">
+          <!-- Option A: Local GPU -->
+          <div class="gpu-card">
+            <div class="gpu-card-title">Option A: Local GPU Workstation (NVIDIA RTX 3090 / 4090 / A6000)</div>
+            <p class="gpu-card-text">
+              Run the native FastAPI inference engine on your local machine with CUDA 12.4 acceleration:
+            </p>
+            <pre class="gpu-code-block">git clone https://github.com/ash333xm/medseg-xai.git
+cd medseg-xai
+pip install -r requirements.txt
+uvicorn medsegxai.api:app --host 0.0.0.0 --port 8000 --workers 1</pre>
+          </div>
+
+          <!-- Option B: Cloud GPU (RunPod) -->
+          <div class="gpu-card">
+            <div class="gpu-card-title">Option B: Cloud GPU Instance (RunPod / Lambda Labs)</div>
+            <p class="gpu-card-text">
+              Deploy a 1-click cloud pod with PyTorch 2.4.0 + CUDA 12.4 template. Connect the public proxy URL to stream live segmentation inferences directly into this web viewer:
+            </p>
+            <pre class="gpu-code-block">runpodctl create pod --gpu "NVIDIA RTX 4090" --image runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04
+git clone https://github.com/ash333xm/medseg-xai.git
+cd medseg-xai && pip install -r requirements.txt
+python -m medsegxai.api --port 8000</pre>
+            
+            <div style="margin-top: 14px;">
+              <label class="toolbar-label">Connect Active RunPod Proxy Endpoint:</label>
+              <div style="display: flex; gap: 8px; margin-top: 6px;">
+                <input type="text" id="liveGpuUrlInput" class="clinical-input" placeholder="https://xxxx-8000.proxy.runpod.net" style="flex: 1;">
+                <button id="btnConnectGpu" class="filter-chip active" style="padding: 6px 14px;">Connect & Ping</button>
+              </div>
+              <div id="gpuPingResult" style="margin-top: 6px; font-size: 0.76rem; color: var(--text-muted);">
+                Currently using precomputed clinical verification dataset.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 
-  <!-- Local & Cloud GPU Deployment Hub Modal -->
-  <div id="gpuHubModal" class="modal-overlay">
-    <div class="modal-window">
-      <button id="closeGpuHubBtn" class="modal-close-btn">&times;</button>
-      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-        <span class="badge-tag badge-blue" style="font-size: 0.8rem; font-weight: 700;">GPU Hub</span>
-        <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--text-primary);">Local & Cloud GPU Deployment Hub</h3>
-      </div>
-      <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px;">
-        Connect this dashboard seamlessly to a dedicated NVIDIA GPU instance running locally or on RunPod / Vast.ai for live real-time MedSAM-2 inference.
-      </div>
-
-      <!-- Live Connection Form -->
-      <div class="sidebar-card" style="margin-bottom: 14px;">
-        <div style="font-size: 0.82rem; font-weight: 700; color: var(--accent-blue); margin-bottom: 6px;">Live Backend API Endpoint</div>
-        <div style="display: flex; gap: 8px;">
-          <input type="text" id="gpuEndpointInput" class="clinical-select" style="font-family: var(--font-mono); font-size: 0.78rem;" placeholder="http://localhost:8000 or https://xxxx-8000.proxy.runpod.net" value="http://localhost:8000">
-          <button id="btnConnectGpu" class="design-btn active" style="white-space: nowrap; padding: 0 16px;">Connect & Ping</button>
-        </div>
-        <div id="gpuConnectionResult" style="font-size: 0.76rem; margin-top: 6px; color: var(--text-muted);">
-          Current Status: <strong>Precomputed Mode Active (Zero GPU Required)</strong>
-        </div>
-      </div>
-
-      <!-- 1-Click RunPod Setup Instructions -->
-      <div style="margin-bottom: 14px;">
-        <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Option A: 1-Click RunPod Cloud GPU ($0.34 / hr)</h4>
-        <div style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.45;">
-          1. Rent an <strong>RTX 4090 (24GB)</strong> or <strong>A40 (48GB)</strong> Community Cloud instance on RunPod.<br>
-          2. Open the Web Terminal and run:
-        </div>
-        <div class="code-box">
-          git clone https://github.com/ash333xm/medseg-xai.git<br>
-          cd medseg-xai<br>
-          bash scripts/start_runpod.sh
-        </div>
-        <div style="font-size: 0.76rem; color: var(--text-muted);">
-          3. Click "Connect HTTP Service [Port 8000]" on RunPod and paste the generated URL into the input above.
-        </div>
-      </div>
-
-      <!-- Option B: Local NVIDIA GPU -->
-      <div>
-        <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Option B: Local NVIDIA GPU (Docker or Native)</h4>
-        <div style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.45;">
-          Run directly with CUDA acceleration on your local machine:
-        </div>
-        <div class="code-box">
-          uvicorn api.server:app --host 0.0.0.0 --port 8000 --reload
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="app.js"></script>
+  <script src="app.js?rev=auth_rev_20261110_v3"></script>
 </body>
 </html>
